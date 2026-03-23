@@ -1,4 +1,5 @@
 import PostCard, { PostCardProps } from "./PostCard";
+import EmptyState from "./EmptyState";
 import { getPosts } from "../../lib/hashnode";
 
 export default async function RecentPosts() {
@@ -30,11 +31,39 @@ export default async function RecentPosts() {
           </div>
 
           {/* Grid — constrained width to keep cards compact */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {posts.map((post: PostCardProps, i: number) => (
-              <PostCard key={i} {...post} />
-            ))}
-          </div>
+          {posts.length === 0 ? (
+            <EmptyState
+              title="no posts yet..."
+              description="building in public means starting empty ✨"
+              buttonText="write first post"
+              buttonLink="https://hashnode.com/dashboard"
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                  <path d="M5 3v4" />
+                  <path d="M19 17v4" />
+                  <path d="M3 5h4" />
+                  <path d="M17 19h4" />
+                </svg>
+              }
+            />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {posts.map((post: PostCardProps, i: number) => (
+                <PostCard key={i} {...post} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
