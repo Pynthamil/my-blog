@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import ShareButtons from "@/components/ShareButtons";
 import TableOfContents from "@/components/TableOfContents";
 import ReadingProgress from "@/components/ReadingProgress";
+import SyntaxHighlighter from "@/components/SyntaxHighlighter";
 import PostCard, { PostCardProps } from "@/components/PostCard";
 import { getPost, getPosts } from "../../../../lib/hashnode";
 import { notFound } from "next/navigation";
@@ -83,6 +84,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   return (
     <main className="flex-1 flex flex-col">
       <ReadingProgress />
+      <SyntaxHighlighter />
 
       {/* ── Article wrapper ── */}
       <article className="relative w-full flex flex-col items-center pt-[120px] pb-16 px-4">
