@@ -108,10 +108,11 @@ export default function BlogPost() {
           </div>
         </div>
 
-        {/* ── Article Body (glass container) ── */}
-        <div className="w-full max-w-[720px]">
-          <div className="glow-border-strong rounded-3xl bg-[#111115]/60 backdrop-blur-md px-6 md:px-10 py-10 md:py-12">
-            <div className="prose-blog max-w-[65ch] mx-auto">
+        {/* ── Article Body ── */}
+        <div className="relative w-full max-w-[720px]">
+          {/* Soft ambient mask to dim the dot grid behind body text */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[110%] bg-[#0f0f11] opacity-45 blur-[100px] rounded-full pointer-events-none -z-10" />
+          <div className="prose-blog">
               <p>
                 I was seeing an increase in my &ldquo;serverless&rdquo; usage and
                 it didn&rsquo;t make sense. So I decided to switch things up and
@@ -183,8 +184,7 @@ export default function BlogPost() {
               </p>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
 
       {/* ── Related Posts ── */}
       <section className="w-full flex justify-center px-4 pt-4 pb-16">

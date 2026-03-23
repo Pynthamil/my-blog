@@ -1,47 +1,9 @@
-"use client";
-
 import PostCard, { PostCardProps } from "./PostCard";
+import { getPosts } from "../../lib/hashnode";
 
-const posts: PostCardProps[] = [
-  {
-    title: "using analytics again with simple analytics",
-    description: "I was seeing an increase in my 'serverless' usage and it didn't make sense. So I decided to add Simple Analytics and wanted to share a review of this privacy focused service.",
-    category: "Website",
-    date: "10th Mar 2025",
-    categoryIcon: "folder",
-    imageUrl: "/images/post-1.svg",
-    imageBg: "bg-gradient-to-br from-blue-50 to-indigo-50",
-  },
-  {
-    title: "rules i follow when typesetting",
-    description: "I've developed some habits over the years when it comes to the display of text in a design with the aim of readability and aesthetic balance. And it feels like it could be useful to...",
-    category: "Typography",
-    date: "10th Mar 2025",
-    categoryIcon: "ai",
-    imageUrl: "/images/post-2.svg",
-    imageBg: "bg-[#f8f6f0]",
-  },
-  {
-    title: "notes that future me will thank me for...",
-    description: "Easily generates a readme which you can integrate to...",
-    category: "codeSheet",
-    date: "8th Mar 2025",
-    categoryIcon: "folder",
-    imageUrl: "/images/post-3.svg",
-    imageBg: "bg-[#fdf2f8]",
-  },
-  {
-    title: "i built this instead of studying for my exams...",
-    description: "Easily generates a readme which you can integrate to...",
-    category: "projects",
-    date: "5th Mar 2025",
-    categoryIcon: "folder",
-    imageUrl: "/images/post-4.svg",
-    imageBg: "bg-[#fffbeb]",
-  },
-];
+export default async function RecentPosts() {
+  const posts = await getPosts();
 
-export default function RecentPosts() {
   return (
     <section className="w-full flex justify-center px-4 py-12">
       <div className="w-full max-w-[900px]">
@@ -69,7 +31,7 @@ export default function RecentPosts() {
 
           {/* Grid — constrained width to keep cards compact */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {posts.map((post, i) => (
+            {posts.map((post: PostCardProps, i: number) => (
               <PostCard key={i} {...post} />
             ))}
           </div>
