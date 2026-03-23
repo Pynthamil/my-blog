@@ -1,40 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
-import PostCard from "@/components/PostCard";
+import PostCard, { PostCardProps } from "@/components/PostCard";
+import { getPost, getPosts } from "../../../../lib/hashnode";
+import { notFound } from "next/navigation";
 
-/* ── Sample post data (replace with CMS / MDX later) ── */
-const post = {
-  title: "using analytics again with simple analytics",
-  date: "10th Mar 2025",
-  readingTime: "5 min read",
-  tags: ["Website", "Analytics", "Privacy"],
-  imageUrl: "/images/post-1.svg",
-  imageBg: "bg-gradient-to-br from-blue-50 to-indigo-50",
-};
+export default async function BlogPost({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+  const post = await getPost(slug);
 
-const relatedPosts = [
-  {
-    title: "rules i follow when typesetting",
-    description:
-      "I've developed some habits over the years when it comes to the display of text in a design with the aim of readability and aesthetic balance.",
-    category: "Typography",
-    date: "10th Mar 2025",
-    categoryIcon: "ai" as const,
-    imageUrl: "/images/post-2.svg",
-    imageBg: "bg-[#f8f6f0]",
-  },
-  {
-    title: "notes that future me will thank me for...",
-    description: "Easily generates a readme which you can integrate to...",
-    category: "codeSheet",
-    date: "8th Mar 2025",
-    categoryIcon: "folder" as const,
-    imageUrl: "/images/post-3.svg",
-    imageBg: "bg-[#fdf2f8]",
-  },
-];
+  if (!post) {
+    return notFound();
+  }
 
-export default function BlogPost() {
+  // Fetch related posts (all posts excluding current, max 2)
+  const allPosts = await getPosts();
+  const relatedPosts = allPosts
+    .filter((p: any) => !p.href.endsWith(`/${slug}`))
+    .slice(0, 2);
+
   return (
     <main className="flex-1 flex flex-col">
 
@@ -71,7 +54,7 @@ export default function BlogPost() {
         <header className="w-full max-w-[720px] mb-10">
           {/* Meta chips row */}
           <div className="flex flex-wrap items-center gap-3 mb-6">
-            {post.tags.map((tag) => (
+            {post.tags.map((tag: string) => (
               <span
                 key={tag}
                 className="text-xs font-semibold tracking-wide uppercase px-3 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/8 text-purple-300"
@@ -93,7 +76,7 @@ export default function BlogPost() {
         {/* ── Cover Image ── */}
         <div className="w-full max-w-[720px] mb-12">
           <div
-            className={`relative w-full aspect-[16/9] ${post.imageBg} rounded-2xl overflow-hidden`}
+            className={`relative w-full aspect-[16/9] ${post.imageBg} rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/10`}
           >
             <Image
               src={post.imageUrl}
@@ -109,93 +92,28 @@ export default function BlogPost() {
         <div className="relative w-full max-w-[720px]">
           {/* Soft ambient mask to dim the dot grid behind body text */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[110%] bg-[#0f0f11] opacity-45 blur-[100px] rounded-full pointer-events-none -z-10" />
-          <div className="prose-blog">
-              <p>
-                I was seeing an increase in my &ldquo;serverless&rdquo; usage and
-                it didn&rsquo;t make sense. So I decided to switch things up and
-                add <a href="#">Simple Analytics</a> to my website. Here&rsquo;s
-                a quick review of the experience so far.
-              </p>
-
-              <h2>Why I switched</h2>
-              <p>
-                After months of relying on a generic analytics tool, I noticed
-                the data didn&rsquo;t align with what I was actually seeing in my
-                server logs. Page-view counts were inflated by bots, the
-                real-time panel was unreliable, and worst of all&mdash;I was
-                burning through my free tier.
-              </p>
-
-              <blockquote>
-                &ldquo;The best analytics tool is the one that gives you
-                actionable data without compromising your users&rsquo;
-                privacy.&rdquo;
-              </blockquote>
-
-              <h2>Setting it up</h2>
-              <p>
-                Installation was straightforward. Drop a single{" "}
-                <code>&lt;script&gt;</code> tag into your layout and you&rsquo;re
-                done. No cookie banners, no GDPR headaches.
-              </p>
-
-              <pre>
-                <code>{`// Add to your layout.tsx or _document
-<script
-  async
-  defer
-  src="https://scripts.simpleanalyticscdn.com/latest.js"
-/>`}</code>
-              </pre>
-
-              <h3>Key features I like</h3>
-              <ul>
-                <li>Privacy-first: no cookies, no personal data collected</li>
-                <li>Lightweight script (~3 KB)</li>
-                <li>Clean, minimal dashboard</li>
-                <li>Built-in goal & event tracking</li>
-                <li>Works without any configuration</li>
-              </ul>
-
-              <h2>Performance impact</h2>
-              <p>
-                The script is tiny and loaded asynchronously, so there is
-                virtually <strong>zero impact</strong> on Core Web Vitals. My
-                Lighthouse scores stayed identical before and after installation.
-              </p>
-
-              <ol>
-                <li>Install the script (one line of HTML)</li>
-                <li>Deploy your site</li>
-                <li>Watch real, human traffic appear in the dashboard</li>
-              </ol>
-
-              <hr />
-
-              <h2>Final thoughts</h2>
-              <p>
-                If you care about privacy, simplicity, and clean data, Simple
-                Analytics is a fantastic choice. I&rsquo;ve been using it for a
-                few weeks now and the difference in data quality is night and
-                day. Highly recommend giving it a shot.
-              </p>
-            </div>
-          </div>
-        </article>
+          <div 
+            className="prose-blog w-full max-w-none text-gray-300 leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+        </div>
+      </article>
 
       {/* ── Related Posts ── */}
-      <section className="w-full flex justify-center px-4 pt-4 pb-16">
-        <div className="w-full max-w-[1100px]">
-          <h2 className="font-syne text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-800 via-purple-300 to-white bg-clip-text text-transparent mb-8">
-            Related Posts
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {relatedPosts.map((rp, i) => (
-              <PostCard key={i} {...rp} />
-            ))}
+      {relatedPosts.length > 0 && (
+        <section className="w-full flex justify-center px-4 pt-4 pb-16">
+          <div className="w-full max-w-[1100px]">
+            <h2 className="font-syne text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-800 via-purple-300 to-white bg-clip-text text-transparent mb-8">
+              Related Posts
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {relatedPosts.map((rp: PostCardProps, i: number) => (
+                <PostCard key={i} {...rp} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
     </main>
   );
