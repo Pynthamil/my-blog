@@ -4,7 +4,7 @@ export default function Newsletter() {
   return (
     <section className="w-full flex justify-center px-4 py-12">
       <div className="w-full max-w-[1100px]">
-        <div className="glow-border-strong rounded-3xl bg-[#111115]/80 px-6 md:px-10 py-8 md:py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="glow-border-strong rounded-3xl bg-[#111115]/60 backdrop-blur-md px-6 md:px-10 py-8 md:py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           {/* Text */}
           <div className="flex-shrink-0">
             <h2

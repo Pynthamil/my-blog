@@ -4,7 +4,9 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="flex flex-col items-center justify-center pt-[140px] pb-16 px-4">
+    <section className="relative flex flex-col items-center justify-center pt-[140px] pb-16 px-4">
+      {/* Ultra-soft ambient focus layer to gently dim the grid dots right behind the text */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[400px] bg-[#0f0f11] opacity-50 blur-[120px] rounded-full pointer-events-none -z-10"></div>
       {/* Emoticon Line */}
       <div className="flex items-center gap-3 mb-8 text-4xl md:text-5xl">
         <span className="font-syne font-bold text-white">
@@ -27,9 +29,9 @@ export default function Hero() {
       <h1
         className="font-syne text-4xl md:text-6xl lg:text-7xl font-extrabold text-center leading-tight mb-4"
       >
-        <span className="text-white">Learn from my</span>
+        <span className="bg-[linear-gradient(to_left,#E9D5FF,#A78BFA,#F0ABFC,#E5E7EB)] bg-clip-text text-transparent">Learn from my</span>
         <br />
-        <span className="bg-gradient-to-l from-violet-200 via-purple-400 to-violet-600 bg-clip-text text-transparent">experience.</span>
+        <span className="bg-[linear-gradient(to_right,#E9D5FF,#A78BFA,#F0ABFC,#E5E7EB)] bg-clip-text text-transparent flex-1">experience.</span>
       </h1>
 
       {/* Subtitle */}

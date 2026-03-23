@@ -35,7 +35,7 @@ export default function PostCard({
       >
         <div className="rounded-[23px] overflow-hidden h-full flex flex-col shadow-lg bg-[#222222]">
           {/* Image Area */}
-          <div className={`relative w-full aspect-[4/3] ${imageBg} overflow-hidden`}>
+          <div className={`relative w-full aspect-[5/4] ${imageBg} overflow-hidden`}>
             <Image
               src={imageUrl}
               alt={title}
@@ -47,10 +47,10 @@ export default function PostCard({
           {/* Content */}
           <div className="p-6 md:p-8 flex flex-col flex-1 bg-shadow-200">
             {/* Metadata Badges */}
-            <div className="flex flex-wrap items-center gap-3 mb-5">
+            <div className="flex items-center gap-3 mb-5">
               {/* Category Badge */}
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#222222]">
-                <div className="shadow-sm bg-[#402F2C] border border-[#ECECEC] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
+                <div className="shadow-sm bg-[#0F1117] border border-[#ECECEC] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
                   {categoryIcon === "folder" ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ export default function PostCard({
 
               {/* Date Badge */}
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#222222] shadow-sm">
-                <div className="shadow-sm bg-[#402F2C] border border-[#ECECEC] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
+                <div className="shadow-sm bg-[#0F1117] border border-[#ECECEC] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -108,7 +108,7 @@ export default function PostCard({
             </div>
 
             {/* Title */}
-            <h3 className="font-syne text-[26px] md:text-[28px] font-extrabold mb-3 leading-[1.1] tracking-[-0.03em] bg-gradient-to-br from-pink-200 via-purple-400 to-purple-600 bg-clip-text text-transparent group-hover:from-pink-300 group-hover:via-purple-500 group-hover:to-purple-700 transition-all">
+            <h3 className="font-syne text-[26px] md:text-[28px] font-extrabold mb-3 leading-[1.1] tracking-[-0.03em] bg-gradient-to-br from-pink-200 via-purple-400 to-purple-700 bg-clip-text text-transparent group-hover:from-pink-400 group-hover:via-purple-700 group-hover:to-purple-900 transition-all">
               {title}
             </h3>
 
