@@ -14,6 +14,7 @@ export interface PostCardProps {
   imageBg?: string;
   href?: string;
   tags?: string[];
+  priority?: boolean;
 }
 
 export default function PostCard({
@@ -27,6 +28,7 @@ export default function PostCard({
   href = "#",
   tags = [],
   rawTitle,
+  priority = false,
 }: PostCardProps) {
   return (
     <a href={href} className="block group">
@@ -44,6 +46,7 @@ export default function PostCard({
               src={imageUrl}
               alt={rawTitle || (typeof title === 'string' ? title : "Blog post cover")}
               fill
+              priority={priority}
               className="object-cover"
             />
           </div>

@@ -26,14 +26,14 @@ export default function Navbar() {
         </Link>
 
         {/* Nav Items */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 sm:gap-6">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-sm transition-all ${
+                className={`text-[13px] sm:text-sm transition-all ${
                   isActive
                     ? "text-white font-semibold drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
                     : "text-gray-300 hover:text-white"
