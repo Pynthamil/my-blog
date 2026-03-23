@@ -38,7 +38,8 @@ export default function Navbar() {
           </Link>
 
           {/* Search Icon */}
-          <button
+          <Link
+            href="/search"
             className="text-gray-300 hover:text-white transition-colors"
             aria-label="Search"
           >
@@ -56,7 +57,7 @@ export default function Navbar() {
               <circle cx="11" cy="11" r="8" />
               <path d="m21 21-4.3-4.3" />
             </svg>
-          </button>
+          </Link>
 
           {/* GitHub Icon */}
           <a

@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PostCard from "@/components/PostCard";
 
 /* ── Sample post data (replace with CMS / MDX later) ── */
@@ -39,7 +37,6 @@ const relatedPosts = [
 export default function BlogPost() {
   return (
     <main className="flex-1 flex flex-col">
-      <Navbar />
 
       {/* ── Article wrapper ── */}
       <article className="relative w-full flex flex-col items-center pt-[120px] pb-16 px-4">
@@ -200,7 +197,6 @@ export default function BlogPost() {
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }
