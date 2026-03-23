@@ -1,12 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import React from "react";
 
-interface PostCardProps {
+export interface PostCardProps {
   title: string;
   description: string;
-  tag: string;
-  tagColor?: string;
+  category: string;
+  date: string;
+  categoryIcon?: "folder" | "ai";
   imageUrl: string;
   imageBg?: string;
   href?: string;
@@ -15,48 +17,106 @@ interface PostCardProps {
 export default function PostCard({
   title,
   description,
-  tag,
+  category,
+  date,
+  categoryIcon = "folder",
   imageUrl,
-  imageBg = "bg-pink-100",
+  imageBg = "bg-blue-50",
   href = "#",
 }: PostCardProps) {
   return (
     <a href={href} className="block group">
-      <div className="glow-border card-hover rounded-2xl overflow-hidden bg-[#16161a] h-full flex flex-col">
-        {/* Image Area */}
-        <div className={`relative w-full aspect-[4/3] ${imageBg} overflow-hidden`}>
-          <Image
-            src={imageUrl}
-            alt={title}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        </div>
-
-        {/* Content */}
-        <div className="p-5 flex flex-col flex-1">
-          {/* Tag */}
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-5 h-5 rounded bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="white">
-                <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16M6 21a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <span className="text-xs text-purple-400 font-medium">{tag}</span>
+      {/* Gradient border wrapper */}
+      <div
+        className="p-[4px] rounded-[24px] h-full transition-all duration-300 group-hover:-translate-y-1"
+        style={{
+          background: "linear-gradient(135deg, #A69EFF, #E8B4F4)",
+        }}
+      >
+        <div className="rounded-[23px] overflow-hidden h-full flex flex-col shadow-lg bg-[#222222]">
+          {/* Image Area */}
+          <div className={`relative w-full aspect-[4/3] ${imageBg} overflow-hidden`}>
+            <Image
+              src={imageUrl}
+              alt={title}
+              fill
+              className="object-cover"
+            />
           </div>
 
-          {/* Title */}
-          <h3
-            className="text-lg font-bold text-purple-300 mb-2 leading-snug group-hover:text-purple-200 transition-colors"
-            style={{ fontFamily: "var(--font-display, 'Space Grotesk', sans-serif)" }}
-          >
-            {title}
-          </h3>
+          {/* Content */}
+          <div className="p-6 md:p-8 flex flex-col flex-1 bg-shadow-200">
+            {/* Metadata Badges */}
+            <div className="flex flex-wrap items-center gap-3 mb-5">
+              {/* Category Badge */}
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#222222]">
+                <div className="shadow-sm bg-[#402F2C] border border-[#ECECEC] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
+                  {categoryIcon === "folder" ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-blue-500"
+                    >
+                      <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-1.22-1.8A2 2 0 0 0 7.53 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                    </svg>
+                  ) : (
+                    <span className="text-[13px] font-bold text-[#FFFCE1] font-serif italic pr-0.5">
+                      AI
+                    </span>
+                  )}
+                </div>
+                <span className="text-sm font-semibold text-[#FFFCE1] tracking-tight">
+                  {category}
+                </span>
+              </div>
 
-          {/* Description */}
-          <p className="text-sm text-gray-500 leading-relaxed mt-auto">
-            {description}
-          </p>
+              {/* Date Badge */}
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#222222] shadow-sm">
+                <div className="shadow-sm bg-[#402F2C] border border-[#ECECEC] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-blue-400"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                    <rect x="8" y="14" width="2" height="2" fill="currentColor" stroke="none" />
+                    <rect x="12" y="14" width="2" height="2" fill="currentColor" stroke="none" />
+                    <rect x="16" y="14" width="2" height="2" fill="currentColor" stroke="none" />
+                  </svg>
+                </div>
+                <span className="text-sm font-semibold text-[#FFFCE1] tracking-tight">
+                  {date}
+                </span>
+              </div>
+            </div>
+
+            {/* Title */}
+            <h3 className="font-syne text-[26px] md:text-[28px] font-extrabold mb-3 leading-[1.1] tracking-[-0.03em] bg-gradient-to-br from-pink-200 via-purple-400 to-purple-600 bg-clip-text text-transparent group-hover:from-pink-300 group-hover:via-purple-500 group-hover:to-purple-700 transition-all">
+              {title}
+            </h3>
+
+            {/* Description */}
+            <p className="text-[#52525b] text-[15px] leading-relaxed mt-auto tracking-[-0.01em]">
+              {description}
+            </p>
+          </div>
         </div>
       </div>
     </a>

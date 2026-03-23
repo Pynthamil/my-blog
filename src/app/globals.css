@@ -13,6 +13,7 @@
   --color-muted: #888;
   --font-sans: var(--font-space-grotesk), sans-serif;
   --font-display: var(--font-space-grotesk), sans-serif;
+  --font-syne: var(--font-syne), sans-serif;
 }
 
 /* Dotted grid background */
