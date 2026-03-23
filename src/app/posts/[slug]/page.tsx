@@ -188,7 +188,7 @@ export default function BlogPost() {
 
       {/* ── Related Posts ── */}
       <section className="w-full flex justify-center px-4 pt-4 pb-16">
-        <div className="w-full max-w-[720px]">
+        <div className="w-full max-w-[1100px]">
           <h2 className="font-syne text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-800 via-purple-300 to-white bg-clip-text text-transparent mb-8">
             Related Posts
           </h2>

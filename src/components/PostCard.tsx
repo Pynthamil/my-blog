@@ -35,7 +35,7 @@ export default function PostCard({
       >
         <div className="rounded-[23px] overflow-hidden h-full flex flex-col shadow-lg bg-[#222222]">
           {/* Image Area */}
-          <div className={`relative w-full aspect-[5/4] ${imageBg} overflow-hidden`}>
+          <div className={`relative w-full aspect-[4/3] ${imageBg} overflow-hidden`}>
             <Image
               src={imageUrl}
               alt={title}
@@ -113,7 +113,7 @@ export default function PostCard({
             </h3>
 
             {/* Description */}
-            <p className="text-[#52525b] text-[15px] leading-relaxed mt-auto tracking-[-0.01em]">
+            <p className="text-[#52525b] text-[15px] leading-relaxed mt-auto tracking-[-0.01em] line-clamp-2">
               {description}
             </p>
           </div>

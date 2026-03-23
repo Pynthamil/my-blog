@@ -44,7 +44,7 @@ const posts: PostCardProps[] = [
 export default function RecentPosts() {
   return (
     <section className="w-full flex justify-center px-4 py-12">
-      <div className="w-full max-w-[1100px]">
+      <div className="w-full max-w-[900px]">
         {/* Section Header */}
         <h2 className="font-syne text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-800 via-purple-300 to-white bg-clip-text text-transparent mb-8">
           Recent Posts
@@ -67,7 +67,7 @@ export default function RecentPosts() {
             </a>
           </div>
 
-          {/* Grid */}
+          {/* Grid — constrained width to keep cards compact */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {posts.map((post, i) => (
               <PostCard key={i} {...post} />
