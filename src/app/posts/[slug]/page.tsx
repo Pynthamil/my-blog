@@ -25,20 +25,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: post.publishedAt,
       url: `/posts/${slug}`,
       siteName: "pyndu logs()",
-      images: [
-        {
-          url: post.imageUrl.startsWith("http") ? post.imageUrl : `https://pyndu-logs.hashnode.dev${post.imageUrl}`,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
+      ...(post.imageUrl.startsWith("http") 
+        ? { images: [{ url: post.imageUrl, width: 1200, height: 630, alt: post.title }] } 
+        : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: [post.imageUrl.startsWith("http") ? post.imageUrl : `https://pyndu-logs.hashnode.dev${post.imageUrl}`],
+      ...(post.imageUrl.startsWith("http") 
+        ? { images: [post.imageUrl] } 
+        : {}),
     },
   };
 }
