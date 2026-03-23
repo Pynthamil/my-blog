@@ -29,7 +29,7 @@ export default function Hero() {
       >
         <span className="text-white">Learn from my</span>
         <br />
-        <span className="text-gradient-purple">experience.</span>
+        <span className="bg-gradient-to-l from-violet-200 via-purple-400 to-violet-600 bg-clip-text text-transparent">experience.</span>
       </h1>
 
       {/* Subtitle */}

@@ -8,10 +8,10 @@ export default function Navbar() {
       <div className="w-full max-w-[1100px] glow-border glass rounded-2xl px-6 py-3.5 flex items-center justify-between pointer-events-auto">
         {/* Logo */}
         <Link href="/" className="font-syne flex flex-col leading-tight group">
-          <span className="text-purple-400 font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
+          <span className="bg-gradient-to-l from-violet-200 via-purple-400 to-violet-600 bg-clip-text text-transparent font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
             pyndu
           </span>
-          <span className="text-purple-400 font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
+          <span className="bg-gradient-to-l from-violet-200 via-purple-400 to-violet-600 bg-clip-text text-transparent font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
             logs()
           </span>
         </Link>
