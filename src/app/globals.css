@@ -19,7 +19,7 @@
 /* Dotted grid background */
 body {
   background-color: #0f0f11;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1.8px, transparent 1.8px);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
   color: var(--color-foreground);
   font-family: var(--font-sans);

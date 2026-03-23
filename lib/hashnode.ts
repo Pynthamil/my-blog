@@ -72,6 +72,10 @@ export async function getPost(slug: string) {
           tags {
             name
           }
+          author {
+            name
+            profilePicture
+          }
         }
       }
     }
@@ -100,6 +104,10 @@ export async function getPost(slug: string) {
       publishedAt: post.publishedAt,
       readingTime: `${post.readTimeInMinutes} min read`,
       tags: post.tags?.map((t: any) => t.name) || [],
+      author: {
+        name: post.author?.name || "pyndu",
+        picture: post.author?.profilePicture || "/images/SmileyFace.svg"
+      },
       imageUrl: post.coverImage?.url || "/images/post-1.svg",
       imageBg: "bg-gradient-to-br from-purple-500/10 to-indigo-500/10"
     };

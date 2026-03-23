@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import ShareButtons from "@/components/ShareButtons";
 import TableOfContents from "@/components/TableOfContents";
+import ReadingProgress from "@/components/ReadingProgress";
 import PostCard, { PostCardProps } from "@/components/PostCard";
 import { getPost, getPosts } from "../../../../lib/hashnode";
 import { notFound } from "next/navigation";
@@ -81,6 +82,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="flex-1 flex flex-col">
+      <ReadingProgress />
 
       {/* ── Article wrapper ── */}
       <article className="relative w-full flex flex-col items-center pt-[120px] pb-16 px-4">
@@ -88,48 +90,55 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <div className="absolute top-[140px] left-1/2 -translate-x-1/2 w-full max-w-[700px] h-[500px] bg-[#0f0f11] opacity-40 blur-[100px] rounded-full pointer-events-none -z-10" />
 
         {/* Back link */}
-        <div className="w-full max-w-[720px] mb-8">
+        <div className="w-full max-w-[720px] mb-10">
           <Link
             href="/"
-            className="text-sm text-gray-500 hover:text-purple-400 transition-colors inline-flex items-center gap-1.5"
+            className="text-sm font-medium text-gray-500 hover:text-purple-400 transition-colors inline-flex items-center gap-2 group"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M19 12H5" />
-              <path d="m12 19-7-7 7-7" />
-            </svg>
+            <div className="w-6 h-6 rounded-full bg-[#16161a] border border-purple-500/20 flex items-center justify-center group-hover:border-purple-500/50 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5" />
+                <path d="m12 19-7-7 7-7" />
+              </svg>
+            </div>
             Back to posts
           </Link>
         </div>
 
         {/* ── Header ── */}
         <header className="w-full max-w-[720px] mb-10">
-          {/* Meta chips row */}
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            {post.tags.map((tag: string) => (
-              <span
-                key={tag}
-                className="text-xs font-semibold tracking-wide uppercase px-3 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/8 text-purple-300"
-              >
-                {tag}
-              </span>
-            ))}
-            <span className="text-gray-500 text-sm">{post.date}</span>
-            <span className="text-gray-600">·</span>
-            <span className="text-gray-500 text-sm">{post.readingTime}</span>
+          
+          {/* Author Profile Row */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
+            <div className="flex items-center gap-4">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)] bg-[#111115]">
+                <Image src={post.author.picture} alt={post.author.name} fill className="object-cover" />
+              </div>
+              <div className="flex flex-col justify-center">
+                <span className="font-syne font-bold text-gray-200 tracking-wide">{post.author.name}</span>
+                <div className="flex items-center gap-2 text-[13px] text-gray-500">
+                  <span>{post.date}</span>
+                  <span className="text-gray-700">•</span>
+                  <span>{post.readingTime}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Meta chips row */}
+            <div className="flex flex-wrap items-center gap-2">
+              {post.tags.slice(0, 3).map((tag: string) => (
+                <span
+                  key={tag}
+                  className="text-[11px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full border border-purple-500/20 bg-[#16161a] text-purple-300 shadow-inner"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* Title */}
-          <h1 className="font-syne text-3xl md:text-5xl lg:text-[3.25rem] font-extrabold leading-[1.15] tracking-[-0.02em] text-white mb-2">
+          <h1 className="font-syne text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-[-0.03em] text-white">
             {post.title}
           </h1>
         </header>
