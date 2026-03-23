@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function Hero() {
   return (
     <section className="flex flex-col items-center justify-center pt-[140px] pb-16 px-4">
@@ -8,29 +10,16 @@ export default function Hero() {
         <span className="font-syne font-bold text-white">
           if (
         </span>
-        {/* Cute face circle */}
-        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-pink-300 to-purple-400 flex items-center justify-center text-2xl md:text-3xl shadow-lg shadow-purple-500/20">
-          <span role="img" aria-label="cute face">•ᴗ•</span>
+        {/* Cute face image */}
+        <div className="relative w-16 h-16 md:w-20 md:h-20 drop-shadow-2xl hover:scale-105 transition-transform duration-300">
+          <Image src="/images/SmileyFace.svg" alt="cute face" fill className="object-contain" priority />
         </div>
         <span className="font-syne font-bold text-white">
           ) →
         </span>
         {/* Terminal icon */}
-        <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gray-700/60 border border-gray-600/50 flex items-center justify-center shadow-lg">
-          <svg
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-gray-300"
-          >
-            <polyline points="4 17 10 11 4 5" />
-            <line x1="12" y1="19" x2="20" y2="19" />
-          </svg>
+        <div className="relative w-14 h-14 md:w-16 md:h-16 drop-shadow-2xl hover:scale-105 transition-transform duration-300">
+          <Image src="/images/TerminalIcon.svg" alt="terminal icon" fill className="object-contain" priority />
         </div>
       </div>
 
