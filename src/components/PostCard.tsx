@@ -4,14 +4,16 @@ import Image from "next/image";
 import React from "react";
 
 export interface PostCardProps {
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  rawTitle?: string;
+  description: React.ReactNode;
   category: string;
   date: string;
   categoryIcon?: "folder" | "ai";
   imageUrl: string;
   imageBg?: string;
   href?: string;
+  tags?: string[];
 }
 
 export default function PostCard({
@@ -23,6 +25,8 @@ export default function PostCard({
   imageUrl,
   imageBg = "bg-blue-50",
   href = "#",
+  tags = [],
+  rawTitle,
 }: PostCardProps) {
   return (
     <a href={href} className="block group">
@@ -38,7 +42,7 @@ export default function PostCard({
           <div className={`relative w-full aspect-[4/3] ${imageBg} overflow-hidden`}>
             <Image
               src={imageUrl}
-              alt={title}
+              alt={rawTitle || (typeof title === 'string' ? title : "Blog post cover")}
               fill
               className="object-cover"
             />
@@ -47,7 +51,7 @@ export default function PostCard({
           {/* Content */}
           <div className="p-6 md:p-8 flex flex-col flex-1 bg-shadow-200">
             {/* Metadata Badges */}
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex flex-wrap items-center gap-3 mb-5">
               {/* Category Badge */}
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#222222]">
                 <div className="shadow-sm bg-[#0F1117] border border-[#ECECEC] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
@@ -105,6 +109,15 @@ export default function PostCard({
                   {date}
                 </span>
               </div>
+
+              {/* Tags */}
+              {tags && tags.length > 0 && tags.slice(0, 2).map(tag => (
+                <div key={tag} className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#222222] shadow-sm border border-purple-500/10">
+                  <span className="text-xs font-semibold text-purple-200 tracking-wider uppercase">
+                    {tag}
+                  </span>
+                </div>
+              ))}
             </div>
 
             {/* Title */}

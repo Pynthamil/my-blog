@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SearchBar() {
@@ -8,14 +8,12 @@ export default function SearchBar() {
   const searchParams = useSearchParams();
   const currentQuery = searchParams.get("q") || "";
   const [query, setQuery] = useState(currentQuery);
-
-  useEffect(() => {
-    // Sync internal state if URL changes externally
-    setQuery(searchParams.get("q") || "");
-  }, [searchParams]);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     const handler = setTimeout(() => {
+      if (query === (searchParams.get("q") || "")) return;
+
       const params = new URLSearchParams(searchParams.toString());
       if (query) {
         params.set("q", query);
@@ -25,7 +23,9 @@ export default function SearchBar() {
       
       // Prevent pushing the exact same URL
       const newUrl = `/search${params.toString() ? '?' + params.toString() : ''}`;
-      router.replace(newUrl);
+      startTransition(() => {
+        router.replace(newUrl, { scroll: false });
+      });
     }, 300);
 
     return () => clearTimeout(handler);
@@ -40,7 +40,9 @@ export default function SearchBar() {
       } else {
         params.delete("q");
       }
-      router.replace(`/search${params.toString() ? '?' + params.toString() : ''}`);
+      startTransition(() => {
+        router.replace(`/search${params.toString() ? '?' + params.toString() : ''}`, { scroll: false });
+      });
     }
   };
 

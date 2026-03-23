@@ -16,6 +16,9 @@ export async function getPosts() {
                 url
               }
               publishedAt
+              tags {
+                name
+              }
             }
           }
         }
@@ -44,7 +47,8 @@ export async function getPosts() {
       date: formattedDate,
       categoryIcon: "folder" as const,
       imageUrl: node.coverImage?.url || "/images/post-1.svg",
-      href: `/posts/${node.slug}`
+      href: `/posts/${node.slug}`,
+      tags: node.tags?.map((t: any) => t.name) || []
     };
   });
 }

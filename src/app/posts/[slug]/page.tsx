@@ -103,7 +103,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
       {relatedPosts.length > 0 && (
         <section className="w-full flex justify-center px-4 pt-4 pb-16">
           <div className="w-full max-w-[1100px]">
-            <h2 className="font-syne text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-800 via-purple-300 to-white bg-clip-text text-transparent mb-8">
+            <h2 className="font-syne text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent mb-8">
               Related Posts
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

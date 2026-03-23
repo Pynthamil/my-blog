@@ -17,10 +17,10 @@ export default function Navbar() {
       <div className="w-full max-w-[1100px] glow-border rounded-2xl px-6 py-3.5 flex items-center justify-between pointer-events-auto bg-[#1a1328]/60 backdrop-blur-[20px] shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.15)]">
         {/* Logo */}
         <Link href="/" className="font-syne flex flex-col leading-tight group">
-          <span className="bg-gradient-to-l from-violet-200 via-purple-400 to-violet-600 bg-clip-text text-transparent font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
+          <span className="bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
             pyndu
           </span>
-          <span className="bg-gradient-to-l from-violet-200 via-purple-400 to-violet-600 bg-clip-text text-transparent font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
+          <span className="bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
             logs()
           </span>
         </Link>

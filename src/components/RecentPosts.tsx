@@ -9,7 +9,7 @@ export default async function RecentPosts() {
     <section className="w-full flex justify-center px-4 py-12">
       <div className="w-full max-w-[1100px]">
         {/* Section Header */}
-        <h2 className="font-syne text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-800 via-purple-300 to-white bg-clip-text text-transparent mb-8">
+        <h2 className="font-syne text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent mb-8">
           Recent Posts
         </h2>
 
