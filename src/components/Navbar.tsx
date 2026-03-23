@@ -72,7 +72,7 @@ export default function Navbar() {
 
           {/* GitHub Icon */}
           <a
-            href="https://github.com/Pynthamil/my-blog"
+            href="https://github.com/Pynthamil"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-300 hover:text-white transition-colors"

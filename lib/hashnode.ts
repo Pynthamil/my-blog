@@ -93,8 +93,10 @@ export async function getPost(slug: string) {
 
   return {
     title: post.title,
+    description: post.brief,
     content: post.content.html,
     date: formattedDate,
+    publishedAt: post.publishedAt,
     readingTime: `${post.readTimeInMinutes} min read`,
     tags: post.tags?.map((t: any) => t.name) || [],
     imageUrl: post.coverImage?.url || "/images/post-1.svg",
