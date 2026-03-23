@@ -8,8 +8,7 @@ export default function Newsletter() {
           {/* Text */}
           <div className="flex-shrink-0">
             <h2
-              className="text-2xl md:text-3xl font-extrabold text-white mb-1.5"
-              style={{ fontFamily: "var(--font-display, 'Space Grotesk', sans-serif)" }}
+              className="font-syne text-2xl md:text-3xl font-extrabold text-white mb-1.5"
             >
               Stay in the loop.
             </h2>

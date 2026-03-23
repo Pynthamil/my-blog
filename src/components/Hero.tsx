@@ -5,14 +5,14 @@ export default function Hero() {
     <section className="flex flex-col items-center justify-center pt-[140px] pb-16 px-4">
       {/* Emoticon Line */}
       <div className="flex items-center gap-3 mb-8 text-4xl md:text-5xl">
-        <span className="font-bold text-white" style={{ fontFamily: "var(--font-display, 'Space Grotesk', sans-serif)" }}>
+        <span className="font-syne font-bold text-white">
           if (
         </span>
         {/* Cute face circle */}
         <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-pink-300 to-purple-400 flex items-center justify-center text-2xl md:text-3xl shadow-lg shadow-purple-500/20">
           <span role="img" aria-label="cute face">•ᴗ•</span>
         </div>
-        <span className="font-bold text-white" style={{ fontFamily: "var(--font-display, 'Space Grotesk', sans-serif)" }}>
+        <span className="font-syne font-bold text-white">
           ) →
         </span>
         {/* Terminal icon */}
@@ -36,8 +36,7 @@ export default function Hero() {
 
       {/* Title */}
       <h1
-        className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-center leading-tight mb-4"
-        style={{ fontFamily: "var(--font-display, 'Space Grotesk', sans-serif)" }}
+        className="font-syne text-4xl md:text-6xl lg:text-7xl font-extrabold text-center leading-tight mb-4"
       >
         <span className="text-white">Learn from my</span>
         <br />

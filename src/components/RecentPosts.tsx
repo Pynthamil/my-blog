@@ -46,7 +46,7 @@ export default function RecentPosts() {
     <section className="w-full flex justify-center px-4 py-12">
       <div className="w-full max-w-[1100px]">
         {/* Section Header */}
-        <h2 className="text-3xl md:text-4xl font-extrabold text-gradient-purple mb-8">
+        <h2 className="font-syne text-3xl md:text-4xl font-extrabold text-gradient-purple mb-8">
           Recent Posts
         </h2>
 

@@ -7,11 +7,11 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center pt-6 px-4 pointer-events-none">
       <div className="w-full max-w-[1100px] glow-border glass rounded-2xl px-6 py-3.5 flex items-center justify-between pointer-events-auto">
         {/* Logo */}
-        <Link href="/" className="flex flex-col leading-tight group">
-          <span className="text-purple-400 font-semibold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
+        <Link href="/" className="font-syne flex flex-col leading-tight group">
+          <span className="text-purple-400 font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
             pyndu
           </span>
-          <span className="text-purple-400 font-semibold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
+          <span className="text-purple-400 font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
             logs()
           </span>
         </Link>
