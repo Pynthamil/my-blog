@@ -1,8 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
+  const navLinks = [
+    { name: "Posts", href: "/posts" },
+    { name: "Tags", href: "/tags" },
+    { name: "About", href: "/about" },
+  ];
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center pt-6 px-4 pointer-events-none">
       <div className="w-full max-w-[1100px] glow-border rounded-2xl px-6 py-3.5 flex items-center justify-between pointer-events-auto bg-[#1a1328]/60 backdrop-blur-[20px] shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.15)]">
@@ -18,29 +27,31 @@ export default function Navbar() {
 
         {/* Nav Items */}
         <div className="flex items-center gap-6">
-          <Link
-            href="/posts"
-            className="text-sm text-gray-300 hover:text-white transition-colors"
-          >
-            Posts
-          </Link>
-          <Link
-            href="/tags"
-            className="text-sm text-gray-300 hover:text-white transition-colors"
-          >
-            Tags
-          </Link>
-          <Link
-            href="/about"
-            className="text-sm text-gray-300 hover:text-white transition-colors"
-          >
-            About
-          </Link>
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`text-sm transition-all ${
+                  isActive
+                    ? "text-white font-semibold drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
+                    : "text-gray-300 hover:text-white"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
 
           {/* Search Icon */}
           <Link
             href="/search"
-            className="text-gray-300 hover:text-white transition-colors"
+            className={`transition-all inline-block ${
+              pathname === "/search" 
+                ? "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" 
+                : "text-gray-300 hover:text-white"
+            }`}
             aria-label="Search"
           >
             <svg
@@ -61,7 +72,7 @@ export default function Navbar() {
 
           {/* GitHub Icon */}
           <a
-            href="https://github.com"
+            href="https://github.com/Pynthamil/my-blog"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-300 hover:text-white transition-colors"

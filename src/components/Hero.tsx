@@ -27,11 +27,11 @@ export default function Hero() {
 
       {/* Title */}
       <h1
-        className="font-syne text-4xl md:text-6xl lg:text-7xl font-extrabold text-center leading-tight mb-4"
+        className="font-syne text-4xl md:text-6xl lg:text-7xl font-extrabold text-center leading-tight mb-4 bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent"
       >
-        <span className="bg-[linear-gradient(to_left,#E9D5FF,#A78BFA,#F0ABFC,#E5E7EB)] bg-clip-text text-transparent">Learn from my</span>
+        Learn from my
         <br />
-        <span className="bg-[linear-gradient(to_right,#E9D5FF,#A78BFA,#F0ABFC,#E5E7EB)] bg-clip-text text-transparent flex-1">experience.</span>
+        experience.
       </h1>
 
       {/* Subtitle */}
