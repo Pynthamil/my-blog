@@ -12,6 +12,7 @@
     "@giscus/react": "^3.1.0",
     "framer-motion": "^12.38.0",
     "graphql-request": "^7.4.0",
+    "gsap": "^3.14.2",
     "highlight.js": "^11.11.1",
     "next": "16.2.1",
     "react": "19.2.4",

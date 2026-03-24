@@ -41,7 +41,7 @@ export default function PostCard({
       >
         <div className="rounded-[23px] overflow-hidden h-full flex flex-col shadow-lg bg-[#222222]">
           {/* Image Area */}
-          <div className={`relative w-full aspect-[4/3] ${imageBg} overflow-hidden`}>
+          <div className={`relative w-full aspect-[16/9] ${imageBg} overflow-hidden`}>
             <Image
               src={imageUrl}
               alt={rawTitle || (typeof title === 'string' ? title : "Blog post cover")}
