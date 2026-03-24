@@ -163,7 +163,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </div>
 
         {/* ── Content & TOC Layout ── */}
-        <div className="relative w-full max-w-[1000px] flex items-start justify-center gap-12 xl:gap-16">
+        <div className="relative w-full max-w-[1280px] flex items-start justify-center xl:justify-between gap-8">
+
+          {/* ── TOC (Left Sidebar) ── */}
+          <div className="hidden xl:block w-[240px] shrink-0">
+            <TableOfContents headings={headings} />
+          </div>
 
           {/* ── Article Body ── */}
           <div className="relative w-full max-w-[720px] shrink-0">
@@ -194,7 +199,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <Comments />
           </div>
 
-          <TableOfContents headings={headings} />
+          {/* ── Right Spacer (To balance TOC and center body) ── */}
+          <div className="hidden xl:block w-[240px] shrink-0" />
 
         </div>
       </article>
