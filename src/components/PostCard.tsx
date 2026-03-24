@@ -46,6 +46,7 @@ export default function PostCard({
               src={imageUrl}
               alt={rawTitle || (typeof title === 'string' ? title : "Blog post cover")}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority={priority}
               className="object-cover"
             />

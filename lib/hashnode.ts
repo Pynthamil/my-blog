@@ -1,6 +1,13 @@
 import { GraphQLClient, gql } from "graphql-request";
 
-const client = new GraphQLClient("https://gql.hashnode.com");
+const client = new GraphQLClient("https://gql.hashnode.com", {
+  fetch(url, options) {
+    return fetch(url, {
+      ...options,
+      next: { revalidate: 3600 },
+    });
+  },
+});
 
 export async function getPosts() {
   const query = gql`

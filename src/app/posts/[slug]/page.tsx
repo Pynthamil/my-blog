@@ -28,16 +28,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: post.publishedAt,
       url: `/posts/${slug}`,
       siteName: "pyndu logs()",
-      ...(post.imageUrl.startsWith("http") 
-        ? { images: [{ url: post.imageUrl, width: 1200, height: 630, alt: post.title }] } 
+      ...(post.imageUrl.startsWith("http")
+        ? { images: [{ url: post.imageUrl, width: 1200, height: 630, alt: post.title }] }
         : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      ...(post.imageUrl.startsWith("http") 
-        ? { images: [post.imageUrl] } 
+      ...(post.imageUrl.startsWith("http")
+        ? { images: [post.imageUrl] }
         : {}),
     },
   };
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 function parseContentAndHeadings(html: string) {
   const headingRegex = /<h([23])([^>]*)>(.*?)<\/h\1>/gi;
   const headings: { id: string; text: string; level: number }[] = [];
-  
+
   const parsedHtml = html.replace(headingRegex, (fullMatch, level, attrs, innerHtml) => {
     const idMatch = attrs.match(/id="([^"]+)"/);
     let id = idMatch ? idMatch[1] : null;
@@ -54,7 +54,7 @@ function parseContentAndHeadings(html: string) {
 
     if (!id) {
       id = rawText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      attrs = ` id="${id}"` + attrs; 
+      attrs = ` id="${id}"` + attrs;
     }
 
     if (rawText) {
@@ -110,7 +110,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
         {/* ── Header ── */}
         <header className="w-full max-w-[720px] mb-10">
-          
+
           {/* Author Profile Row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
             <div className="flex items-center gap-4">
@@ -163,12 +163,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
         {/* ── Content & TOC Layout ── */}
         <div className="relative w-full max-w-[1000px] flex items-start justify-center gap-12 xl:gap-16">
-          
+
           {/* ── Article Body ── */}
           <div className="relative w-full max-w-[720px] shrink-0">
             {/* Soft ambient mask to dim the dot grid behind body text */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[110%] bg-[#0f0f11] opacity-45 blur-[100px] rounded-full pointer-events-none -z-10" />
-            <div 
+            <div
               className="prose-blog w-full max-w-none text-gray-300 leading-relaxed mb-16"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
@@ -191,7 +191,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </div>
 
           <TableOfContents headings={headings} />
-          
+
         </div>
       </article>
 
