@@ -27,7 +27,7 @@ export default function Hero() {
 
       {/* Title */}
       <h1
-        className="font-syne text-4xl md:text-6xl lg:text-7xl font-extrabold text-center leading-tight mb-4 bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent"
+        className="font-syne text-4xl md:text-6xl lg:text-7xl font-extrabold text-center leading-tight mb-4 bg-gradient-to-r from-fuchsia-400 via-purple-300 to-white bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(232,121,249,0.3)]"
       >
         Learn from my
         <br />
