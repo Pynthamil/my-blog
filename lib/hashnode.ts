@@ -23,6 +23,7 @@ export async function getPosts() {
                 url
               }
               publishedAt
+              readTimeInMinutes
               tags {
                 name
               }
@@ -55,7 +56,8 @@ export async function getPosts() {
       categoryIcon: "folder" as const,
       imageUrl: node.coverImage?.url || "/images/post-1.svg",
       href: `/posts/${node.slug}`,
-      tags: node.tags?.map((t: any) => t.name) || []
+      tags: node.tags?.map((t: any) => t.name) || [],
+      readingTime: `${node.readTimeInMinutes} min read`
     };
   });
 }
