@@ -4,7 +4,7 @@ const client = new GraphQLClient("https://gql.hashnode.com", {
   fetch(url, options) {
     return fetch(url, {
       ...options,
-      next: { revalidate: 3600 },
+      next: { revalidate: 60 },
     });
   },
 });
@@ -90,7 +90,7 @@ export async function getPost(slug: string) {
 
   try {
     const data: any = await client.request(query, { host: "pyndu-logs.hashnode.dev", slug });
-    
+
     const post = data?.publication?.post;
     if (!post) return null;
 
