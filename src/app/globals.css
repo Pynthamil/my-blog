@@ -128,9 +128,23 @@ body {
   line-height: 1.25;
 }
 
-.prose-blog h1 { font-size: 2rem; margin-top: 2.5rem; margin-bottom: 1rem; }
-.prose-blog h2 { font-size: 1.5rem; margin-top: 2.25rem; margin-bottom: 0.75rem; }
-.prose-blog h3 { font-size: 1.2rem; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+.prose-blog h1 {
+  font-size: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose-blog h2 {
+  font-size: 1.5rem;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-blog h3 {
+  font-size: 1.2rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
 
 .prose-blog p {
   margin-bottom: 1.35rem;
@@ -141,6 +155,7 @@ body {
   text-decoration: none;
   transition: color 0.2s ease;
 }
+
 .prose-blog a:hover {
   color: #c4b5fd;
   text-decoration: underline;
@@ -151,10 +166,22 @@ body {
   padding-left: 1.5rem;
   margin-bottom: 1.35rem;
 }
-.prose-blog ul { list-style: disc; }
-.prose-blog ol { list-style: decimal; }
-.prose-blog li { margin-bottom: 0.35rem; }
-.prose-blog li::marker { color: #8b5cf6; }
+
+.prose-blog ul {
+  list-style: disc;
+}
+
+.prose-blog ol {
+  list-style: decimal;
+}
+
+.prose-blog li {
+  margin-bottom: 0.35rem;
+}
+
+.prose-blog li::marker {
+  color: #8b5cf6;
+}
 
 .prose-blog blockquote {
   border-left: 3px solid rgba(139, 92, 246, 0.5);
@@ -183,6 +210,7 @@ body {
   margin: 1.5rem 0;
   overflow-x: auto;
 }
+
 .prose-blog pre code {
   background: none;
   color: #d4d4d8;

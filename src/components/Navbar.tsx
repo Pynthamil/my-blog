@@ -14,13 +14,13 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center pt-6 px-4 pointer-events-none">
-      <div className="w-full max-w-[1100px] border border-white/5 border-t-white/10 border-b-black/50 rounded-[20px] px-6 py-3.5 flex items-center justify-between pointer-events-auto bg-[#111115]/75 backdrop-blur-[24px] shadow-[0_20px_40px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)]">
+      <div className="w-full max-w-[1100px] border border-purple-500/50 rounded-[20px] px-6 py-3.5 flex items-center justify-between pointer-events-auto bg-[#0a0a0c]/90 backdrop-blur-xl shadow-[0_0_30px_rgba(139,92,246,0.15)]">
         {/* Logo */}
         <Link href="/" className="font-syne flex flex-col leading-tight group">
-          <span className="bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
+          <span className="text-fuchsia-500 font-extrabold text-[15px] italic tracking-tight group-hover:text-fuchsia-400 transition-colors">
             pyndu
           </span>
-          <span className="bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent font-extrabold text-[15px] italic tracking-tight group-hover:text-purple-300 transition-colors">
+          <span className="text-fuchsia-500 font-extrabold text-[15px] italic tracking-tight group-hover:text-fuchsia-400 transition-colors">
             logs()
           </span>
         </Link>
@@ -33,13 +33,16 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-[13px] sm:text-sm transition-all ${
+                className={`relative text-[13px] sm:text-sm transition-all py-1 ${
                   isActive
                     ? "text-white font-semibold drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-                    : "text-gray-300 hover:text-white"
+                    : "text-gray-400 hover:text-white"
                 }`}
               >
                 {link.name}
+                {isActive && (
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-fuchsia-500 to-purple-500 rounded-full shadow-[0_0_10px_rgba(168,85,247,0.5)]" />
+                )}
               </Link>
             );
           })}
@@ -47,10 +50,10 @@ export default function Navbar() {
           {/* Search Icon */}
           <Link
             href="/search"
-            className={`transition-all inline-block ${
+            className={`transition-all inline-block hover:scale-110 active:scale-95 ${
               pathname === "/search" 
-                ? "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" 
-                : "text-gray-300 hover:text-white"
+                ? "text-fuchsia-400 drop-shadow-[0_0_10px_rgba(192,38,211,0.5)]" 
+                : "text-gray-400 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
             }`}
             aria-label="Search"
           >
@@ -75,7 +78,7 @@ export default function Navbar() {
             href="https://github.com/Pynthamil"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-300 hover:text-white transition-colors"
+            className="w-9 h-9 flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-200 transition-all hover:scale-105 active:scale-95"
             aria-label="GitHub"
           >
             <svg
