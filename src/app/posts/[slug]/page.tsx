@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import ShareButtons from "@/components/ShareButtons";
 import LikeButton from "@/components/LikeButton";
+import Comments from "@/components/Comments";
 import TableOfContents from "@/components/TableOfContents";
 import ReadingProgress from "@/components/ReadingProgress";
 import SyntaxHighlighter from "@/components/SyntaxHighlighter";
@@ -188,6 +189,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 <ShareButtons title={post.title} />
               </div>
             </div>
+
+            {/* ── Comments Section ── */}
+            <Comments />
           </div>
 
           <TableOfContents headings={headings} />
