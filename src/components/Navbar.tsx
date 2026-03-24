@@ -14,7 +14,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center pt-6 px-4 pointer-events-none">
-      <div className="w-full max-w-[1100px] border border-purple-500/50 rounded-[20px] px-6 py-3.5 flex items-center justify-between pointer-events-auto bg-[#0a0a0c]/90 backdrop-blur-xl shadow-[0_0_30px_rgba(139,92,246,0.15)]">
+      <div className="w-full max-w-[1100px] border border-white/10 rounded-[12px] px-6 py-3.5 flex items-center justify-between pointer-events-auto bg-black/40 backdrop-blur-[20px] shadow-[0_8px_32px_0_rgba(0,0,0,0.8),inset_0_0_0_1px_rgba(255,255,255,0.05)] ring-1 ring-purple-500/20">
         {/* Logo */}
         <Link href="/" className="font-syne flex flex-col leading-tight group">
           <span className="text-fuchsia-500 font-extrabold text-[15px] italic tracking-tight group-hover:text-fuchsia-400 transition-colors">
