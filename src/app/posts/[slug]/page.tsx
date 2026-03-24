@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import ShareButtons from "@/components/ShareButtons";
+import LikeButton from "@/components/LikeButton";
 import TableOfContents from "@/components/TableOfContents";
 import ReadingProgress from "@/components/ReadingProgress";
 import SyntaxHighlighter from "@/components/SyntaxHighlighter";
@@ -172,17 +173,20 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
 
-            {/* ── Share Section ── */}
+            {/* ── Engagement Section ── */}
             <div className="w-full pt-8 pb-4 border-t border-purple-500/10 flex flex-col sm:flex-row items-center justify-between gap-6">
               <div className="flex flex-col">
                 <span className="text-gray-200 font-syne font-bold text-lg mb-1">
                   Did you find this helpful?
                 </span>
                 <span className="text-gray-500 text-sm">
-                  Share it with your network or save the link for later.
+                  Leave a like, share it with your network, or save the link for later.
                 </span>
               </div>
-              <ShareButtons title={post.title} />
+              <div className="flex items-center gap-6">
+                <LikeButton slug={slug} />
+                <ShareButtons title={post.title} />
+              </div>
             </div>
           </div>
 
