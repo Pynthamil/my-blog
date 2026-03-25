@@ -5,42 +5,28 @@ import Giscus from "@giscus/react";
 export default function Comments({ slug }: { slug: string }) {
   return (
     <section id="comments" className="w-full mt-16">
-      <div className="mx-auto max-w-[760px]">
+      <div className="mx-auto max-w-[820px] relative">
+        {/* Subtle ambient glow fallback */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full h-[150%] bg-purple-600/[0.02] blur-[140px] rounded-full pointer-events-none -z-10" />
 
-        {/* Section Heading */}
-        <div className="flex items-center gap-3 mb-6">
-          <span className="text-gray-500 font-mono text-sm font-medium">//</span>
-          <h2 className="font-syne text-xl font-bold text-white tracking-tight">
-            comments
-          </h2>
-          <div className="flex-1 h-px bg-gradient-to-r from-purple-500/30 to-transparent" />
-        </div>
-
-        {/* Giscus Card */}
-        <div
-          className="p-[1.5px] rounded-2xl"
-          style={{
-            background: "linear-gradient(135deg, #A69EFF 0%, #C084FC 50%, #E8B4F4 100%)",
-          }}
-        >
-          <div className="rounded-[14px] bg-[#111115]/90 backdrop-blur-md px-5 py-6">
-            <Giscus
-              id={`comments-${slug}`}
-              repo="Pynthamil/my-blog"
-              repoId="R_kgDORueBdw"
-              category="General"
-              categoryId="DIC_kwDORueBd84C5KdE"
-              mapping="specific"
-              term={slug}
-              strict="0"
-              reactionsEnabled="1"
-              emitMetadata="0"
-              inputPosition="bottom"
-              theme="https://my-blog-tan-tau.vercel.app/giscus-theme.css"
-              lang="en"
-              loading="lazy"
-            />
-          </div>
+        {/* Giscus Container — Clean Layout */}
+        <div className="w-full pt-8">
+          <Giscus
+            id={`comments-${slug}`}
+            repo="Pynthamil/my-blog"
+            repoId="R_kgDORueBdw"
+            category="General"
+            categoryId="DIC_kwDORueBd84C5KdE"
+            mapping="specific"
+            term={slug}
+            strict="0"
+            reactionsEnabled="1"
+            emitMetadata="0"
+            inputPosition="bottom"
+            theme="https://my-blog-tan-tau.vercel.app/giscus-theme.css"
+            lang="en"
+            loading="lazy"
+          />
         </div>
 
       </div>

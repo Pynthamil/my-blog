@@ -245,41 +245,31 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               dangerouslySetInnerHTML={{ __html: sanitizedContent }}
             />
 
-            {/* ── Engagement Section ── */}
-            <div className="w-full pt-8 pb-4 border-t border-purple-500/10 flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="flex flex-col">
-                <span className="text-gray-200 font-syne font-bold text-lg mb-1">
-                  Did you find this helpful?
-                </span>
-                <span className="text-gray-500 text-sm">
-                  Leave a like, share it with your network, or save the link for later.
-                </span>
+            {/* ── Footer Interaction Area ── */}
+            <div className="w-full flex flex-col gap-12 mt-16 mb-20 px-4 md:px-0">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/5">
+                <div className="flex flex-col text-center md:text-left">
+                  <h4 className="text-gray-200 font-syne font-bold text-lg mb-1">
+                    Enjoyed this post?
+                  </h4>
+                  <p className="text-gray-500 text-sm">
+                    Leave a like or share it with your network.
+                  </p>
+                </div>
+                <div className="flex items-center gap-6">
+                  <LikeButton slug={slug} />
+                  <ShareButtons title={post.title} />
+                </div>
               </div>
-              <div className="flex items-center gap-6">
-                <LikeButton slug={slug} />
-                <ShareButtons title={post.title} />
-                <a
-                  href="#comments"
-                  className="text-sm font-medium text-gray-500 hover:text-purple-300 transition-colors"
-                >
-                  Comments
-                </a>
-              </div>
-            </div>
 
-            <SupportSection />
-
-            <div className="w-full flex justify-center mt-8 mb-4">
-              <a
-                href="#comments"
-                className="text-sm font-medium text-gray-500 hover:text-purple-300 transition-colors"
-              >
-                Jump to comments
-              </a>
+              {/* Support Section — Now just the text and button */}
+              <SupportSection />
             </div>
 
             {/* ── Comments Section ── */}
-            <Comments slug={slug} />
+            <div id="comments" className="w-full scroll-mt-24">
+              <Comments slug={slug} />
+            </div>
           </div>
 
           {/* ── Right Spacer (To balance TOC and center body) ── */}
@@ -295,10 +285,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <h2 className="font-syne text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent mb-8">
               Related Posts
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {relatedPosts.map((rp: PostCardProps, i: number) => (
-                <PostCard key={i} {...rp} />
-              ))}
+            <div className="glow-border-strong rounded-3xl bg-[#111115]/60 backdrop-blur-md p-6 md:p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {relatedPosts.map((rp: PostCardProps, i: number) => (
+                  <PostCard key={i} {...rp} variant="recent" />
+                ))}
+              </div>
             </div>
           </div>
         </section>

@@ -46,9 +46,8 @@ export default function PostCard({
         }}
       >
         <div
-          className={`rounded-[23px] overflow-hidden h-full flex flex-col shadow-lg ${
-            isRecent ? "bg-[#16161a]" : "bg-[#222222]"
-          }`}
+          className={`rounded-[23px] overflow-hidden h-full flex flex-col shadow-lg ${isRecent ? "bg-[#16161a]" : "bg-[#222222]"
+            }`}
         >
           {/* Image Area */}
           <div
@@ -160,7 +159,7 @@ export default function PostCard({
             {isRecent && (
               <>
                 {/* Title */}
-                <h3 className="font-syne text-[18px] md:text-[20px] font-extrabold leading-tight tracking-[-0.02em] text-white mb-2 line-clamp-2">
+                <h3 className="font-syne text-[18px] md:text-[20px] font-extrabold leading-tight tracking-[-0.02em] bg-gradient-to-r from-[#D8D7FE] to-[#A69EFF] bg-clip-text text-transparent mb-2 line-clamp-2 group-hover:from-white group-hover:to-[#D8D7FE] transition-all duration-300">
                   {title}
                 </h3>
 
