@@ -60,7 +60,7 @@ export default async function RecentPosts() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {posts.map((post: PostCardProps, i: number) => (
-                <PostCard key={i} {...post} priority={i === 0} />
+                <PostCard key={i} {...post} priority={i === 0} variant="recent" />
               ))}
             </div>
           )}
