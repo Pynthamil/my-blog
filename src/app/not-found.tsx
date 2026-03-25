@@ -19,7 +19,7 @@ export default function NotFound() {
         <h1 className="font-syne text-[8rem] md:text-[12rem] font-black leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white/50 to-transparent opacity-20 select-none">
           404
         </h1>
-        
+
         <div className="relative -mt-16 md:-mt-24">
           <h2 className="font-syne text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
             Lost in the logs?
@@ -57,19 +57,19 @@ export default function NotFound() {
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-white rounded-full"
-            initial={{ 
-              x: Math.random() * 100 + "%", 
+            initial={{
+              x: Math.random() * 100 + "%",
               y: Math.random() * 100 + "%",
               opacity: Math.random() * 0.5 + 0.2
             }}
-            animate={{ 
+            animate={{
               y: [null, (Math.random() - 0.5) * 50 + "px"],
               opacity: [0.2, 0.5, 0.2]
             }}
-            transition={{ 
-              duration: Math.random() * 3 + 2, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
+            transition={{
+              duration: Math.random() * 3 + 2,
+              repeat: Infinity,
+              ease: "easeInOut"
             }}
           />
         ))}

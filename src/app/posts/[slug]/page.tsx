@@ -8,6 +8,7 @@ import TableOfContents from "@/components/TableOfContents";
 import ReadingProgress from "@/components/ReadingProgress";
 import SyntaxHighlighter from "@/components/SyntaxHighlighter";
 import PostCard, { PostCardProps } from "@/components/PostCard";
+import SupportSection from "@/components/SupportSection";
 import { getPost, getPosts } from "../../../../lib/hashnode";
 import { notFound } from "next/navigation";
 
@@ -188,6 +189,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 <ShareButtons title={post.title} />
               </div>
             </div>
+
+            <SupportSection />
 
             {/* ── Comments Section ── */}
             <Comments />

@@ -8,21 +8,21 @@ export default function Loading() {
       <div className="relative">
         {/* Glow behind logo */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-purple-500/20 blur-[40px] rounded-full animate-pulse" />
-        
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="flex flex-col items-center"
         >
           <div className="font-syne flex flex-col items-center leading-none mb-6">
-            <motion.span 
+            <motion.span
               animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               className="text-fuchsia-500 font-black text-3xl italic tracking-tighter"
             >
               pyndu
             </motion.span>
-            <motion.span 
+            <motion.span
               animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
               className="text-fuchsia-500 font-black text-3xl italic tracking-tighter"
@@ -36,13 +36,13 @@ export default function Loading() {
               {[0, 1, 2].map((i) => (
                 <motion.div
                   key={i}
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.5, 1],
                     opacity: [0.3, 1, 0.3]
                   }}
-                  transition={{ 
-                    duration: 1, 
-                    repeat: Infinity, 
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
                     delay: i * 0.2,
                     ease: "easeInOut"
                   }}
