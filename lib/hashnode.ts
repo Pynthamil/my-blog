@@ -9,60 +9,100 @@ const client = new GraphQLClient("https://gql.hashnode.com", {
   },
 });
 
+const CACHE_TTL_MS = 60_000;
+
+function formatHashnodeDate(publishedAt: string) {
+  const date = new Date(publishedAt);
+  const day = date.getDate();
+  // Logic for ordinal suffix (st, nd, rd, th)
+  const suffix =
+    ["th", "st", "nd", "rd"][
+      day % 10 > 3 ? 0 : (day % 100) - (day % 10) !== 10 ? day % 10 : 0
+    ] || "th";
+  const month = date.toLocaleString("en-US", { month: "short" });
+  const year = date.getFullYear();
+  return `${day}${suffix} ${month} ${year}`;
+}
+
+let postsCacheValue: any[] | null = null;
+let postsCacheExpiresAt = 0;
+let postsInFlight: Promise<any[]> | null = null;
+
+const postCacheValue = new Map<string, { value: any; expiresAt: number }>();
+const postInFlight = new Map<string, Promise<any>>();
+
+let allPostsCacheValue: any[] | null = null;
+let allPostsCacheExpiresAt = 0;
+let allPostsInFlight: Promise<any[]> | null = null;
+
 export async function getPosts() {
-  const query = gql`
-    query {
-      publication(host: "pyndu-logs.hashnode.dev") {
-        posts(first: 6) {
-          edges {
-            node {
-              title
-              slug
-              brief
-              coverImage {
-                url
-              }
-              publishedAt
-              readTimeInMinutes
-              tags {
-                name
+  const now = Date.now();
+  if (postsCacheValue && postsCacheExpiresAt > now) return postsCacheValue;
+  if (postsInFlight) return postsInFlight;
+
+  const promise = (async () => {
+    const query = gql`
+      query {
+        publication(host: "pyndu-logs.hashnode.dev") {
+          posts(first: 6) {
+            edges {
+              node {
+                title
+                slug
+                brief
+                coverImage {
+                  url
+                }
+                publishedAt
+                readTimeInMinutes
+                tags {
+                  name
+                }
               }
             }
           }
         }
       }
-    }
-  `;
+    `;
 
-  const data: any = await client.request(query);
-  const edges = data?.publication?.posts?.edges || [];
+    const data: any = await client.request(query);
+    const edges = data?.publication?.posts?.edges || [];
 
-  return edges.map(({ node }: any) => {
-    const date = new Date(node.publishedAt);
-    const day = date.getDate();
-    // Logic for ordinal suffix (st, nd, rd, th)
-    const suffix = ["th", "st", "nd", "rd"][
-      day % 10 > 3 ? 0 : (day % 100) - (day % 10) !== 10 ? day % 10 : 0
-    ] || "th";
-    const month = date.toLocaleString('en-US', { month: 'short' });
-    const year = date.getFullYear();
-    const formattedDate = `${day}${suffix} ${month} ${year}`;
+    const result = edges.map(({ node }: any) => {
+      return {
+        title: node.title,
+        description: node.brief,
+        category: "Blog",
+        date: formatHashnodeDate(node.publishedAt),
+        categoryIcon: "folder" as const,
+        imageUrl: node.coverImage?.url || "/images/post-1.svg",
+        href: `/posts/${node.slug}`,
+        tags: node.tags?.map((t: any) => t.name) || [],
+        readingTime: `${node.readTimeInMinutes} min read`,
+        publishedAt: node.publishedAt
+      };
+    });
 
-    return {
-      title: node.title,
-      description: node.brief,
-      category: "Blog",
-      date: formattedDate,
-      categoryIcon: "folder" as const,
-      imageUrl: node.coverImage?.url || "/images/post-1.svg",
-      href: `/posts/${node.slug}`,
-      tags: node.tags?.map((t: any) => t.name) || [],
-      readingTime: `${node.readTimeInMinutes} min read`
-    };
-  });
+    postsCacheValue = result;
+    postsCacheExpiresAt = Date.now() + CACHE_TTL_MS;
+    return result;
+  })();
+
+  postsInFlight = promise;
+  try {
+    return await promise;
+  } finally {
+    postsInFlight = null;
+  }
 }
 
 export async function getPost(slug: string) {
+  const now = Date.now();
+  const cached = postCacheValue.get(slug);
+  if (cached && cached.expiresAt > now) return cached.value;
+  const inFlight = postInFlight.get(slug);
+  if (inFlight) return inFlight;
+
   const query = gql`
     query GetPost($host: String!, $slug: String!) {
       publication(host: $host) {
@@ -90,38 +130,125 @@ export async function getPost(slug: string) {
     }
   `;
 
+  const promise = (async () => {
+    try {
+      const data: any = await client.request(query, { host: "pyndu-logs.hashnode.dev", slug });
+
+      const post = data?.publication?.post;
+      if (!post) return null;
+
+      return {
+        title: post.title,
+        description: post.brief,
+        content: post.content?.html || "",
+        date: formatHashnodeDate(post.publishedAt),
+        publishedAt: post.publishedAt,
+        readingTime: `${post.readTimeInMinutes} min read`,
+        tags: post.tags?.map((t: any) => t.name) || [],
+        author: {
+          name: post.author?.name || "pyndu",
+          picture: post.author?.profilePicture || "/images/SmileyFace.svg"
+        },
+        imageUrl: post.coverImage?.url || "/images/post-1.svg",
+        imageBg: "bg-gradient-to-br from-purple-500/10 to-indigo-500/10"
+      };
+    } catch (error) {
+      console.error("Error fetching post from Hashnode:", error);
+      return null; /* Safely fallback to 404 instead of crashing Vercel */
+    }
+  })();
+
+  postInFlight.set(slug, promise);
   try {
-    const data: any = await client.request(query, { host: "pyndu-logs.hashnode.dev", slug });
+    const value = await promise;
+    postCacheValue.set(slug, { value, expiresAt: Date.now() + CACHE_TTL_MS });
+    return value;
+  } finally {
+    postInFlight.delete(slug);
+  }
+}
 
-    const post = data?.publication?.post;
-    if (!post) return null;
+export async function getAllPostsForSitemap() {
+  const now = Date.now();
+  if (allPostsCacheValue && allPostsCacheExpiresAt > now) return allPostsCacheValue;
+  if (allPostsInFlight) return allPostsInFlight;
 
-    const date = new Date(post.publishedAt);
-    const day = date.getDate();
-    const suffix = ["th", "st", "nd", "rd"][
-      day % 10 > 3 ? 0 : (day % 100) - (day % 10) !== 10 ? day % 10 : 0
-    ] || "th";
-    const month = date.toLocaleString('en-US', { month: 'short' });
-    const year = date.getFullYear();
-    const formattedDate = `${day}${suffix} ${month} ${year}`;
+  const promise = (async () => {
+    const pageSize = 50;
+    let after: string | null = null;
+    const all: any[] = [];
+    let safetyCounter = 0;
 
-    return {
-      title: post.title,
-      description: post.brief,
-      content: post.content?.html || "",
-      date: formattedDate,
-      publishedAt: post.publishedAt,
-      readingTime: `${post.readTimeInMinutes} min read`,
-      tags: post.tags?.map((t: any) => t.name) || [],
-      author: {
-        name: post.author?.name || "pyndu",
-        picture: post.author?.profilePicture || "/images/SmileyFace.svg"
-      },
-      imageUrl: post.coverImage?.url || "/images/post-1.svg",
-      imageBg: "bg-gradient-to-br from-purple-500/10 to-indigo-500/10"
-    };
-  } catch (error) {
-    console.error("Error fetching post from Hashnode:", error);
-    return null; /* Safely fallback to 404 instead of crashing Vercel */
+    const query = gql`
+      query GetPostsForSitemap($first: Int!, $after: String) {
+        publication(host: "pyndu-logs.hashnode.dev") {
+          posts(first: $first, after: $after) {
+            edges {
+              cursor
+              node {
+                title
+                slug
+                brief
+                coverImage {
+                  url
+                }
+                publishedAt
+                readTimeInMinutes
+                tags {
+                  name
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+          }
+        }
+      }
+    `;
+
+    while (true) {
+      safetyCounter += 1;
+      if (safetyCounter > 100) break;
+
+      const data: any = await client.request(query, {
+        first: pageSize,
+        after
+      });
+
+      const edges = data?.publication?.posts?.edges || [];
+      all.push(
+        ...edges.map(({ node }: any) => {
+          return {
+            title: node.title,
+            description: node.brief,
+            category: "Blog",
+            date: formatHashnodeDate(node.publishedAt),
+            categoryIcon: "folder" as const,
+            imageUrl: node.coverImage?.url || "/images/post-1.svg",
+            href: `/posts/${node.slug}`,
+            tags: node.tags?.map((t: any) => t.name) || [],
+            readingTime: `${node.readTimeInMinutes} min read`,
+            publishedAt: node.publishedAt
+          };
+        })
+      );
+
+      const pageInfo = data?.publication?.posts?.pageInfo;
+      if (!pageInfo?.hasNextPage || !pageInfo?.endCursor) break;
+      after = pageInfo.endCursor;
+    }
+
+    allPostsCacheValue = all;
+    allPostsCacheExpiresAt = Date.now() + CACHE_TTL_MS;
+    return all;
+  })();
+
+  allPostsInFlight = promise;
+  try {
+    return await promise;
+  } finally {
+    allPostsInFlight = null;
   }
 }

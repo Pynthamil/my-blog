@@ -11,6 +11,28 @@ import PostCard, { PostCardProps } from "@/components/PostCard";
 import SupportSection from "@/components/SupportSection";
 import { getPost, getPosts } from "../../../../lib/hashnode";
 import { notFound } from "next/navigation";
+import sanitizeHtml from "sanitize-html";
+
+const sanitizeOptions = {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "h2", "h3", "span", "div"]),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    a: [...(sanitizeHtml.defaults.allowedAttributes.a || []), "href", "name", "target", "rel", "class"],
+    img: ["src", "alt", "title", "width", "height", "loading", "class"],
+    h1: ["id", "class"],
+    h2: ["id", "class"],
+    h3: ["id", "class"],
+    pre: ["class"],
+    code: ["class"],
+    "*": ["class", "id"]
+  },
+  allowedSchemes: ["http", "https", "mailto", "tel"],
+  allowedSchemesByTag: {
+    img: ["http", "https"],
+    a: ["http", "https", "mailto", "tel"]
+  },
+  disallowedTagsMode: "discard"
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -20,6 +42,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: "Post Not Found" };
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app";
+  const toAbsoluteUrl = (url: string) => (url.startsWith("http") ? url : `${baseUrl}${url.startsWith("/") ? "" : "/"}${url}`);
+  const previewImageUrl = toAbsoluteUrl(post.imageUrl);
+
   return {
     title: `${post.title} | pyndu logs()`,
     description: post.description,
@@ -28,13 +54,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.description,
       type: "article",
       publishedTime: post.publishedAt,
-      url: `${process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app"}/posts/${slug}`,
+      url: `${baseUrl}/posts/${slug}`,
       siteName: "pyndu logs()",
+      images: [
+        {
+          url: previewImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title
+        }
+      ]
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      images: [previewImageUrl]
     },
   };
 }
@@ -44,20 +79,29 @@ function parseContentAndHeadings(html: string) {
   const headings: { id: string; text: string; level: number }[] = [];
 
   const parsedHtml = html.replace(headingRegex, (fullMatch, level, attrs, innerHtml) => {
-    const idMatch = attrs.match(/id="([^"]+)"/);
-    let id = idMatch ? idMatch[1] : null;
+    const attrsStr = typeof attrs === "string" ? attrs : "";
+    const idMatch = attrsStr.match(/id="([^"]+)"/);
+    const classMatch = attrsStr.match(/class="([^"]*)"/);
+    let id = idMatch ? idMatch[1] : "";
     const rawText = innerHtml.replace(/<[^>]*>/g, '').trim();
 
-    if (!id) {
-      id = rawText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      attrs = ` id="${id}"` + attrs;
-    }
+    // Normalize the id so it can safely be used in the DOM and for in-page TOC anchors.
+    const normalizeHeadingId = (value: string) =>
+      value
+        .toLowerCase()
+        .replace(/[^a-z0-9\-_:.]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
+    if (!id) id = rawText.toLowerCase();
+    id = normalizeHeadingId(id);
+
+    const classAttr = classMatch ? ` class="${classMatch[1].slice(0, 200)}"` : "";
 
     if (rawText) {
       headings.push({ id, text: rawText, level: parseInt(level) });
     }
 
-    return `<h${level}${attrs}>${innerHtml}</h${level}>`;
+    return `<h${level} id="${id}"${classAttr}>${innerHtml}</h${level}>`;
   });
 
   return { html: parsedHtml, headings };
@@ -67,6 +111,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = await getPost(slug);
   const { html: parsedContent, headings } = post ? parseContentAndHeadings(post.content) : { html: "", headings: [] };
+  const sanitizedContent = parsedContent ? sanitizeHtml(parsedContent, sanitizeOptions) : "";
 
   if (!post) {
     return notFound();
@@ -171,7 +216,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[110%] bg-[#0f0f11] opacity-45 blur-[100px] rounded-full pointer-events-none -z-10" />
             <div
               className="prose-blog w-full max-w-none text-gray-300 leading-relaxed mb-16"
-              dangerouslySetInnerHTML={{ __html: parsedContent }}
+              dangerouslySetInnerHTML={{ __html: sanitizedContent }}
             />
 
             {/* ── Engagement Section ── */}

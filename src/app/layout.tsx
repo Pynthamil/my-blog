@@ -34,6 +34,7 @@ export default function RootLayout({
         {/* Reuse existing SVG as the site's favicon until we generate pixel/ICO variants */}
         <link rel="icon" href="/images/TerminalIcon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/images/TerminalIcon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="theme-color" content="#0f0f11" />
       </head>
       <body className="min-h-screen flex flex-col">

@@ -29,8 +29,9 @@ function highlightMatch(text: string | undefined | React.ReactNode, query: strin
   
   return (
     <>
-      {parts.map((part, i) => 
-        regex.test(part) ? (
+      {parts.map((part, i) =>
+        // When you split with a capturing group, the matched chunks land on odd indices.
+        i % 2 === 1 ? (
           <span key={i} className="text-purple-300 font-bold bg-purple-500/10 rounded px-0.5">
             {part}
           </span>

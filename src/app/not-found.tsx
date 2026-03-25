@@ -3,6 +3,14 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+// Deterministic PRNG to avoid server/client HTML mismatches.
+function seededRandom(seed: number) {
+  let t = seed + 0x6d2b79f5;
+  t = Math.imul(t ^ (t >>> 15), t | 1);
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+}
+
 export default function NotFound() {
   return (
     <main className="flex-1 flex flex-col items-center justify-center min-h-[70vh] px-4 relative overflow-hidden">
@@ -58,16 +66,16 @@ export default function NotFound() {
             key={i}
             className="absolute w-1 h-1 bg-white rounded-full"
             initial={{
-              x: Math.random() * 100 + "%",
-              y: Math.random() * 100 + "%",
-              opacity: Math.random() * 0.5 + 0.2
+              x: `${seededRandom(404 + i * 7 + 1) * 100}%`,
+              y: `${seededRandom(404 + i * 7 + 2) * 100}%`,
+              opacity: seededRandom(404 + i * 7 + 3) * 0.5 + 0.2
             }}
             animate={{
-              y: [null, (Math.random() - 0.5) * 50 + "px"],
+              y: [null, `${(seededRandom(404 + i * 7 + 4) - 0.5) * 50}px`],
               opacity: [0.2, 0.5, 0.2]
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: seededRandom(404 + i * 7 + 5) * 3 + 2,
               repeat: Infinity,
               ease: "easeInOut"
             }}
