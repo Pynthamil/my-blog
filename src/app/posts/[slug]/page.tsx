@@ -14,7 +14,7 @@ import { notFound } from "next/navigation";
 import sanitizeHtml from "sanitize-html";
 
 const sanitizeOptions = {
-  allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "h2", "h3", "span", "div"]),
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "h2", "h3", "span", "div", "mark"]),
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
     a: [...(sanitizeHtml.defaults.allowedAttributes.a || []), "href", "name", "target", "rel", "class"],
