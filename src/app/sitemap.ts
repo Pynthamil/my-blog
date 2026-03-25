@@ -3,7 +3,7 @@ import { getPosts } from '../../lib/hashnode';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // If you buy a domain later, change this or set NEXT_PUBLIC_BASE_URL in your Vercel project settings!
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://my-blog-pynthamil.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://my-blog-tan-tau.vercel.app';
   
   // Fetch all live posts to dynamically build the map
   const posts = await getPosts();

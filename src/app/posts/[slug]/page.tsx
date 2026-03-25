@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.description,
       type: "article",
       publishedTime: post.publishedAt,
-      url: `/posts/${slug}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app"}/posts/${slug}`,
       siteName: "pyndu logs()",
       ...(post.imageUrl.startsWith("http")
         ? { images: [{ url: post.imageUrl, width: 1200, height: 630, alt: post.title }] }
