@@ -30,6 +30,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${syne.variable} antialiased`}>
+      <head>
+        {/* Reuse existing SVG as the site's favicon until we generate pixel/ICO variants */}
+        <link rel="icon" href="/images/TerminalIcon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/images/TerminalIcon.svg" />
+        <meta name="theme-color" content="#0f0f11" />
+      </head>
       <body className="min-h-screen flex flex-col">
         <Navbar />
         {children}
