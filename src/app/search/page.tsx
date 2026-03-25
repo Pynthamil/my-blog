@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import SearchClient from "./SearchClient";
 import RecentPosts from "@/components/RecentPosts";
 import { getPosts } from "../../../lib/hashnode";
+
+export const metadata: Metadata = {
+  title: "Search",
+  description: "Search logs, notes, and experiments on pyndu logs.",
+};
 
 export default async function SearchPage() {
   const posts = await getPosts();

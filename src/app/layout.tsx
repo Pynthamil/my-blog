@@ -19,8 +19,11 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "pyndu logs() — Developer Blog",
-  description: "building in public so future me can laugh at this code",
+  title: {
+    default: "pyndu logs | Developer Blog",
+    template: "%s | pyndu logs",
+  },
+  description: "Experiments, notes, and builds in code, design, and curiosity.",
 };
 
 export default function RootLayout({

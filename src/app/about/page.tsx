@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import SupportSection from "@/components/SupportSection";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "Learn more about pyndu logs and the developer behind the builds.",
+};
 
 export default function AboutPage() {
   return (

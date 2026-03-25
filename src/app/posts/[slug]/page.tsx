@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const previewImageUrl = toAbsoluteUrl(post.imageUrl);
 
   return {
-    title: `${post.title} | pyndu logs()`,
+    title: post.title,
     description: post.description,
     openGraph: {
       title: post.title,
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: "article",
       publishedTime: post.publishedAt,
       url: `${baseUrl}/posts/${slug}`,
-      siteName: "pyndu logs()",
+      siteName: "pyndu logs",
       images: [
         {
           url: previewImageUrl,
