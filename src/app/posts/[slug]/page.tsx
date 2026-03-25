@@ -29,17 +29,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: post.publishedAt,
       url: `${process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app"}/posts/${slug}`,
       siteName: "pyndu logs()",
-      ...(post.imageUrl.startsWith("http")
-        ? { images: [{ url: post.imageUrl, width: 1200, height: 630, alt: post.title }] }
-        : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      ...(post.imageUrl.startsWith("http")
-        ? { images: [post.imageUrl] }
-        : {}),
     },
   };
 }
