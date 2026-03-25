@@ -42,7 +42,7 @@ export default function HorizontalPostCard({
                 src={imageUrl}
                 alt={title}
                 fill
-                sizes="(max-width: 768px) 100vw, 380px"
+                sizes="(max-width: 768px) 100vw, 400px"
                 priority={priority}
                 className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />

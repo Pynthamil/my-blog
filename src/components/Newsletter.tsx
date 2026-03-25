@@ -88,6 +88,7 @@ export default function Newsletter() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="your@email.com"
+                      aria-label="Email Address"
                       disabled={status === "loading"}
                       className={`bg-[#0f0f11] border text-sm text-gray-300 rounded-lg px-4 py-2.5 w-full md:w-64 focus:outline-none transition-all placeholder:text-gray-600 disabled:opacity-50 ${
                         status === "error" ? "border-red-500/50 ring-1 ring-red-500/10" : "border-gray-800 focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/10"

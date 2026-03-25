@@ -14,14 +14,28 @@ export default function Hero() {
         </span>
         {/* Cute face image */}
         <div className="relative w-16 h-16 md:w-20 md:h-20 drop-shadow-2xl hover:scale-105 transition-transform duration-300">
-          <Image src="/images/SmileyFace.svg" alt="cute face" fill className="object-contain" priority />
+          <Image 
+            src="/images/SmileyFace.svg" 
+            alt="cute face illustration" 
+            fill 
+            className="object-contain" 
+            priority 
+            sizes="(max-width: 768px) 64px, 80px"
+          />
         </div>
         <span className="font-syne font-bold text-white">
           ) →
         </span>
         {/* Terminal icon */}
         <div className="relative w-14 h-14 md:w-16 md:h-16 drop-shadow-2xl hover:scale-105 transition-transform duration-300">
-          <Image src="/images/TerminalIcon.svg" alt="terminal icon" fill className="object-contain" priority />
+          <Image 
+            src="/images/TerminalIcon.svg" 
+            alt="terminal icon illustration" 
+            fill 
+            className="object-contain" 
+            priority 
+            sizes="(max-width: 768px) 56px, 64px"
+          />
         </div>
       </div>
 
