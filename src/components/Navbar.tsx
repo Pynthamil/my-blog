@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -14,14 +15,19 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center pt-6 px-4 pointer-events-none">
-      <div className="w-full max-w-[1100px] border border-white/10 rounded-[12px] px-6 py-3.5 flex items-center justify-between pointer-events-auto bg-black/40 backdrop-blur-[20px] shadow-[0_8px_32px_0_rgba(0,0,0,0.8),inset_0_0_0_1px_rgba(255,255,255,0.05)] ring-1 ring-purple-500/20">
+      <div className="w-full max-w-[1100px] border border-white/10 rounded-[12px] px-6 py-3 flex items-center justify-between pointer-events-auto bg-black/40 backdrop-blur-[20px] shadow-[0_8px_32px_0_rgba(0,0,0,0.8),inset_0_0_0_1px_rgba(255,255,255,0.05)] ring-1 ring-purple-500/10">
         {/* Logo */}
-        <Link href="/" className="font-syne flex flex-col leading-tight group">
-          <span className="text-fuchsia-500 font-extrabold text-[15px] italic tracking-tight group-hover:text-fuchsia-400 transition-colors">
-            pyndu
-          </span>
-          <span className="text-fuchsia-500 font-extrabold text-[15px] italic tracking-tight group-hover:text-fuchsia-400 transition-colors">
-            logs()
+        <Link href="/" className="group flex items-center gap-2.5 transition-all hover:scale-[1.02]">
+          <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 drop-shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+            <Image 
+              src="/images/TerminalIcon.svg" 
+              alt="pyndu logs icon" 
+              fill 
+              className="object-contain"
+            />
+          </div>
+          <span className="font-syne font-bold text-[18px] md:text-[20px] tracking-tight text-white group-hover:text-purple-300 transition-colors">
+            pyndulogs<span className="text-gray-400 group-hover:text-white transition-colors">()</span>
           </span>
         </Link>
 
