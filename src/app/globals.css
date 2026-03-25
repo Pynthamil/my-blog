@@ -26,6 +26,17 @@ body {
   overflow-x: hidden;
 }
 
+/* Account for the fixed navbar when navigating to in-page anchors */
+html {
+  scroll-padding-top: 96px;
+}
+
+.prose-blog h1,
+.prose-blog h2,
+.prose-blog h3 {
+  scroll-margin-top: 110px;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
