@@ -1,0 +1,97 @@
+/* =========================================
+   PYNDU LOGS — Custom Giscus Theme
+   ========================================= */
+
+.gsc-main, .gsc-comment, .gsc-comment-box,
+.gsc-reactions, .gsc-comment-box-main,
+.gsc-comment-box-bottom, .gsc-header {
+  background: transparent !important;
+  color: #d1d5db !important;
+  font-family: 'Space Grotesk', system-ui, sans-serif !important;
+}
+
+.gsc-left-header span, .gsc-comments-count, .gsc-reactions-count {
+  color: #a78bfa !important;
+  font-weight: 700 !important;
+}
+
+.gsc-comment-box-textarea {
+  background: #0f0f11 !important;
+  border: 1px solid rgba(167, 139, 250, 0.2) !important;
+  border-radius: 10px !important;
+  color: #e5e7eb !important;
+  font-size: 0.875rem !important;
+}
+.gsc-comment-box-textarea:focus {
+  border-color: rgba(167, 139, 250, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.08) !important;
+}
+
+.gsc-comment-box-tabs {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+.gsc-comment-box-tabs a { color: #9ca3af !important; font-size: 0.875rem !important; }
+.gsc-comment-box-tabs a.selected, .gsc-comment-box-tabs a:hover {
+  color: #fff !important;
+  background: rgba(167, 139, 250, 0.1) !important;
+  border-color: transparent !important;
+}
+
+.gsc-comment-box-bottom .btn,
+.gsc-comment-box-bottom button[type="submit"],
+.gsc-comment-box-bottom a.btn,
+.gsc-reply-box a.btn {
+  background: linear-gradient(135deg, #A69EFF, #C084FC) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 0.78rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 7px 18px !important;
+}
+
+.gsc-reactions-menu {
+  background: #111115 !important;
+  border: 1px solid rgba(167, 139, 250, 0.15) !important;
+  border-radius: 12px !important;
+}
+.gsc-social-reaction-summary-item {
+  background: rgba(167, 139, 250, 0.08) !important;
+  border: 1px solid rgba(167, 139, 250, 0.15) !important;
+  border-radius: 999px !important;
+  color: #d1d5db !important;
+}
+.gsc-social-reaction-summary-item:hover {
+  border-color: rgba(167, 139, 250, 0.4) !important;
+}
+
+.gsc-comment {
+  background: rgba(17, 17, 21, 0.6) !important;
+  border: 1px solid rgba(167, 139, 250, 0.1) !important;
+  border-radius: 12px !important;
+  margin-bottom: 12px !important;
+}
+.gsc-comment-content { color: #d1d5db !important; font-size: 0.9rem !important; line-height: 1.6 !important; }
+.gsc-comment a, .gsc-main a { color: #a78bfa !important; }
+.gsc-comment a:hover { color: #c4b5fd !important; }
+.gsc-comment-author-text time, .gsc-comment-author-text span { color: #6b7280 !important; font-size: 0.8rem !important; }
+
+.gsc-reply-box {
+  background: rgba(17, 17, 21, 0.4) !important;
+  border: 1px solid rgba(167, 139, 250, 0.08) !important;
+  border-radius: 10px !important;
+}
+
+.pagination-loader-container button {
+  background: transparent !important;
+  border: 1px solid rgba(167, 139, 250, 0.25) !important;
+  color: #a78bfa !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+.pagination-loader-container button:hover {
+  background: rgba(167, 139, 250, 0.1) !important;
+}
