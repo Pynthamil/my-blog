@@ -1,6 +1,7 @@
 import PostCard, { PostCardProps } from "./PostCard";
 import EmptyState from "./EmptyState";
 import { getPosts } from "../../lib/hashnode";
+import Link from "next/link";
 
 export default async function RecentPosts() {
   const posts = await getPosts();
@@ -18,8 +19,8 @@ export default async function RecentPosts() {
             but inside we place the new bright white cards */}
         <div className="glow-border-strong rounded-3xl bg-[#111115]/60 backdrop-blur-md p-6 md:p-8">
           {/* See all link */}
-          <div className="flex justify-end mb-6">
-            <a
+          <div className="flex justify-end mb-6 relative z-10">
+            <Link
               href="/posts"
               className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1 group"
             >
@@ -27,7 +28,7 @@ export default async function RecentPosts() {
               <span className="inline-block group-hover:translate-x-1 transition-transform">
                 ⟶
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Grid — constrained width to keep cards compact */}
