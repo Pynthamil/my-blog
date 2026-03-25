@@ -252,3 +252,99 @@ export async function getAllPostsForSitemap() {
     allPostsInFlight = null;
   }
 }
+
+type RSSPost = {
+  title: string;
+  description: string;
+  href: string;
+  publishedAt: string;
+  imageUrl: string;
+  tags: string[];
+};
+
+type HashnodeTag = { name: string };
+type HashnodeCoverImage = { url?: string | null } | null;
+
+type HashnodePostNode = {
+  title: string;
+  slug: string;
+  brief: string;
+  coverImage: HashnodeCoverImage;
+  publishedAt: string;
+  readTimeInMinutes: number;
+  tags: HashnodeTag[];
+};
+
+type HashnodePostsResponse = {
+  publication: {
+    posts: {
+      edges: Array<{ node: HashnodePostNode }>;
+    };
+  };
+};
+
+const rssPostsCacheByLimit = new Map<number, { value: RSSPost[]; expiresAt: number }>();
+const rssPostsInFlightByLimit = new Map<number, Promise<RSSPost[]>>();
+
+/**
+ * Fetch recent posts for `rss.xml`.
+ * Hashnode returns newest-first by default for `posts(first: N)`.
+ */
+export async function getRecentPostsForRSS(limit: number): Promise<RSSPost[]> {
+  const normalizedLimit = Math.max(1, Math.min(50, Math.floor(limit)));
+  const now = Date.now();
+
+  const cached = rssPostsCacheByLimit.get(normalizedLimit);
+  if (cached && cached.expiresAt > now) return cached.value;
+
+  const inFlight = rssPostsInFlightByLimit.get(normalizedLimit);
+  if (inFlight) return inFlight;
+
+  const promise = (async () => {
+    const query = gql`
+      query GetRecentPostsForRSS($first: Int!) {
+        publication(host: "pyndu-logs.hashnode.dev") {
+          posts(first: $first) {
+            edges {
+              node {
+                title
+                slug
+                brief
+                coverImage {
+                  url
+                }
+                publishedAt
+                readTimeInMinutes
+                tags {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    const data = await client.request<HashnodePostsResponse>(query, { first: normalizedLimit });
+    const edges = data?.publication?.posts?.edges ?? [];
+
+    const posts: RSSPost[] = edges.map(({ node }) => ({
+      title: node.title,
+      description: node.brief,
+      href: `/posts/${node.slug}`,
+      publishedAt: node.publishedAt,
+      imageUrl: node.coverImage?.url || "/images/post-1.svg",
+      tags: Array.isArray(node.tags) ? node.tags.map((t) => t.name) : [],
+    }));
+
+    rssPostsCacheByLimit.set(normalizedLimit, { value: posts, expiresAt: Date.now() + CACHE_TTL_MS });
+    return posts;
+  })();
+
+  rssPostsInFlightByLimit.set(normalizedLimit, promise);
+  try {
+    return await promise;
+  } finally {
+    rssPostsInFlightByLimit.delete(normalizedLimit);
+  }
+}
