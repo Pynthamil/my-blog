@@ -2,9 +2,9 @@
 
 import Giscus from "@giscus/react";
 
-export default function Comments() {
+export default function Comments({ slug }: { slug: string }) {
   return (
-    <section className="w-full mt-16">
+    <section id="comments" className="w-full mt-16">
       <div className="mx-auto max-w-[760px]">
 
         {/* Section Heading */}
@@ -25,12 +25,13 @@ export default function Comments() {
         >
           <div className="rounded-[14px] bg-[#111115]/90 backdrop-blur-md px-5 py-6">
             <Giscus
-              id="comments"
+              id={`comments-${slug}`}
               repo="Pynthamil/my-blog"
               repoId="R_kgDORueBdw"
               category="General"
               categoryId="DIC_kwDORueBd84C5KdE"
-              mapping="pathname"
+              mapping="specific"
+              term={slug}
               strict="0"
               reactionsEnabled="1"
               emitMetadata="0"

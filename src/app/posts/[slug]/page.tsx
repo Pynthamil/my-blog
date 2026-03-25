@@ -123,8 +123,34 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     .filter((p: any) => !p.href.endsWith(`/${slug}`))
     .slice(0, 2);
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app";
+  const toAbsoluteUrl = (url: string) =>
+    url.startsWith("http") ? url : `${baseUrl}${url.startsWith("/") ? "" : "/"}${url}`;
+  const postUrl = `${baseUrl}/posts/${slug}`;
+  const publishedISO = post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: publishedISO,
+    image: [toAbsoluteUrl(post.imageUrl)],
+    author: {
+      "@type": "Person",
+      name: post.author.name,
+    },
+    url: postUrl,
+    keywords: post.tags.join(", "),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": postUrl,
+    },
+  };
+
   return (
     <main className="flex-1 flex flex-col">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ReadingProgress />
       <SyntaxHighlighter />
 
@@ -232,13 +258,28 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               <div className="flex items-center gap-6">
                 <LikeButton slug={slug} />
                 <ShareButtons title={post.title} />
+                <a
+                  href="#comments"
+                  className="text-sm font-medium text-gray-500 hover:text-purple-300 transition-colors"
+                >
+                  Comments
+                </a>
               </div>
             </div>
 
             <SupportSection />
 
+            <div className="w-full flex justify-center mt-8 mb-4">
+              <a
+                href="#comments"
+                className="text-sm font-medium text-gray-500 hover:text-purple-300 transition-colors"
+              >
+                Jump to comments
+              </a>
+            </div>
+
             {/* ── Comments Section ── */}
-            <Comments />
+            <Comments slug={slug} />
           </div>
 
           {/* ── Right Spacer (To balance TOC and center body) ── */}

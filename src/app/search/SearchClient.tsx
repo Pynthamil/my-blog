@@ -19,14 +19,35 @@ export default function SearchClient({ posts, children }: { posts: any[], childr
   );
 }
 
-function highlightMatch(text: string | undefined | React.ReactNode, query: string): React.ReactNode {
-  if (typeof text !== 'string') return text;
+function highlightMatch(text: string | undefined, query: string): React.ReactNode {
   if (!text) return "";
-  if (!query) return text;
-  
-  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-  const parts = text.split(regex);
-  
+
+  const q = query.trim();
+  if (!q) return text;
+
+  const QUERY_FOR_REGEX_MAX = 80;
+  const MAX_SNIPPET = 180;
+  const CONTEXT = 70;
+
+  const lowerText = text.toLowerCase();
+  const lowerQuery = q.toLowerCase();
+  const idx = lowerText.indexOf(lowerQuery);
+  if (idx === -1) return text;
+
+  const start = Math.max(0, idx - CONTEXT);
+  const end = Math.min(text.length, start + MAX_SNIPPET);
+  const prefix = start > 0 ? "…" : "";
+  const suffix = end < text.length ? "…" : "";
+  const snippetCore = text.slice(start, end);
+  const snippet = `${prefix}${snippetCore}${suffix}`;
+
+  // Avoid building huge regexes for very long queries.
+  if (q.length > QUERY_FOR_REGEX_MAX) return snippet;
+
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(`(${escaped})`, "gi");
+  const parts = snippet.split(regex);
+
   return (
     <>
       {parts.map((part, i) =>
