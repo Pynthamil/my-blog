@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@giscus/react": "^3.1.0",
+    "@supabase/supabase-js": "^2.100.1",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/kv": "^3.0.0",
     "framer-motion": "^12.38.0",
     "graphql-request": "^7.4.0",
     "gsap": "^3.14.2",

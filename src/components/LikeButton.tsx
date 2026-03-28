@@ -59,28 +59,60 @@ export default function LikeButton({ slug, initialCount = 0 }: LikeButtonProps) 
   const [count, setCount] = useState(initialCount);
   const [isMounted, setIsMounted] = useState(false);
   const [showBurst, setShowBurst] = useState(false);
+  const [globalKVCount, setGlobalKVCount] = useState(0);
 
+  // Fetch true global count from KV on mount
   useEffect(() => {
     setIsMounted(true);
     const stored = localStorage.getItem(`hasLiked-${slug}`);
     if (stored === "true") {
       setLiked(true);
-      // If they liked it locally, we logically increment the initial count if it's not already reflected
-      // But for simplicity, we'll just respect the liked state.
     }
-  }, [slug]);
 
-  const handleLike = () => {
-    if (liked) {
-      setLiked(false);
-      setCount(prev => Math.max(0, prev - 1));
-      localStorage.removeItem(`hasLiked-${slug}`);
-    } else {
-      setLiked(true);
-      setCount(prev => prev + 1);
+    // Fetch KV baseline
+    fetch(`/api/likes/${slug}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.count !== undefined) {
+          setGlobalKVCount(data.count);
+          setCount(initialCount + data.count);
+        }
+      })
+      .catch(err => console.error("Failed to fetch KV likes:", err));
+  }, [slug, initialCount]);
+
+  const handleLike = async () => {
+    const newLiked = !liked;
+    setLiked(newLiked);
+    
+    // Optimistic update
+    const diff = newLiked ? 1 : -1;
+    setCount(prev => prev + diff);
+
+    if (newLiked) {
       setShowBurst(true);
       localStorage.setItem(`hasLiked-${slug}`, "true");
       setTimeout(() => setShowBurst(false), 1000);
+    } else {
+      localStorage.removeItem(`hasLiked-${slug}`);
+    }
+
+    // Sync with KV
+    try {
+      const response = await fetch(`/api/likes/${slug}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ increment: newLiked })
+      });
+      const data = await response.json();
+      if (data.count !== undefined) {
+        // Correct the count if necessary with server data
+        setGlobalKVCount(data.count);
+        setCount(initialCount + data.count);
+      }
+    } catch (err) {
+      console.error("Failed to sync KV like:", err);
+      // Optional: Rollback if necessary, but optimistic is usually fine for likes
     }
   };
 
