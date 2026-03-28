@@ -35,16 +35,16 @@ let allPostsCacheValue: any[] | null = null;
 let allPostsCacheExpiresAt = 0;
 let allPostsInFlight: Promise<any[]> | null = null;
 
-export async function getPosts() {
+export async function getPosts(first: number = 20) {
   const now = Date.now();
   if (postsCacheValue && postsCacheExpiresAt > now) return postsCacheValue;
   if (postsInFlight) return postsInFlight;
 
   const promise = (async () => {
     const query = gql`
-      query {
+      query GetPosts($first: Int!) {
         publication(host: "pyndu-logs.hashnode.dev") {
-          posts(first: 6) {
+          posts(first: $first) {
             edges {
               node {
                 title
@@ -65,7 +65,7 @@ export async function getPosts() {
       }
     `;
 
-    const data: any = await client.request(query);
+    const data: any = await client.request(query, { first });
     const edges = data?.publication?.posts?.edges || [];
 
     const result = edges.map(({ node }: any) => {
@@ -83,8 +83,13 @@ export async function getPosts() {
       };
     });
 
+    // Explicitly sort by publishedAt descending to ensure latest is always first
+    result.sort((a: any, b: any) => 
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+
     postsCacheValue = result;
-    postsCacheExpiresAt = Date.now() + CACHE_TTL_MS;
+    postsCacheExpiresAt = Date.now() + 10000; // 10 seconds cache to be snappy
     return result;
   })();
 
