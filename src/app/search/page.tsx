@@ -6,6 +6,9 @@ import { getPosts } from "../../../lib/hashnode";
 export const metadata: Metadata = {
   title: "Search",
   description: "Search logs, notes, and experiments on pyndu logs.",
+  alternates: {
+    canonical: "/search",
+  },
 };
 
 export default async function SearchPage() {

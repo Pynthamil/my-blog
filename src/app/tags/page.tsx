@@ -1,6 +1,15 @@
 import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
 import { getPosts } from "../../../lib/hashnode";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tags",
+  description: "Explore posts by category and topics. GitHub, Next.js, Notion, and more.",
+  alternates: {
+    canonical: "/tags",
+  },
+};
 
 export default async function TagsPage() {
   const posts = await getPosts();

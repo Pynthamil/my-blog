@@ -71,6 +71,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.description,
       images: [previewImageUrl]
     },
+    alternates: {
+      canonical: `${baseUrl}/posts/${slug}`,
+    },
   };
 }
 
@@ -117,12 +120,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     return notFound();
   }
 
-  // Fetch related posts (all posts excluding current, max 2)
-  const allPosts = await getPosts();
-  const relatedPosts = allPosts
-    .filter((p: any) => !p.href.endsWith(`/${slug}`))
-    .slice(0, 2);
-
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app";
   const toAbsoluteUrl = (url: string) =>
     url.startsWith("http") ? url : `${baseUrl}${url.startsWith("/") ? "" : "/"}${url}`;
@@ -134,11 +131,20 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
-    datePublished: publishedISO,
     image: [toAbsoluteUrl(post.imageUrl)],
+    datePublished: publishedISO,
     author: {
       "@type": "Person",
       name: post.author.name,
+      image: post.author.picture,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "pyndu logs",
+      logo: {
+        "@type": "ImageObject",
+        url: `${baseUrl}/images/TerminalIcon.svg`,
+      },
     },
     url: postUrl,
     keywords: post.tags.join(", "),
@@ -147,6 +153,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       "@id": postUrl,
     },
   };
+
+  // Fetch related posts (all posts excluding current, max 2)
+  const allPosts = await getPosts();
+  const relatedPosts = allPosts
+    .filter((p: any) => !p.href.endsWith(`/${slug}`))
+    .slice(0, 2);
 
   return (
     <main className="flex-1 flex flex-col">

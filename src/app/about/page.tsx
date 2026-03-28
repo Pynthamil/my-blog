@@ -4,6 +4,9 @@ import SupportSection from "@/components/SupportSection";
 export const metadata: Metadata = {
   title: "About",
   description: "Learn more about pyndu logs and the developer behind the builds.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

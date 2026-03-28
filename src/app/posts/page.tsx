@@ -1,5 +1,14 @@
 import HorizontalPostCard from "@/components/HorizontalPostCard";
 import { getPosts } from "../../../lib/hashnode";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "All Posts",
+  description: "Browse all articles, tutorials, and experiments. Covering Next.js, Notion, coding projects, and more.",
+  alternates: {
+    canonical: "/posts",
+  },
+};
 
 export default async function PostsPage() {
   const posts = await getPosts();
