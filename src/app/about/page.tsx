@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import SupportSection from "@/components/SupportSection";
+
 
 export const metadata: Metadata = {
   title: "About",
@@ -34,7 +34,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <SupportSection className="mt-8 border-t-0" />
+
       </div>
     </main>
   );

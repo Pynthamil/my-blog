@@ -8,7 +8,7 @@ import TableOfContents from "@/components/TableOfContents";
 import ReadingProgress from "@/components/ReadingProgress";
 import SyntaxHighlighter from "@/components/SyntaxHighlighter";
 import PostCard, { PostCardProps } from "@/components/PostCard";
-import SupportSection from "@/components/SupportSection";
+
 import { getPost, getPosts } from "../../../../lib/hashnode";
 import { notFound } from "next/navigation";
 import sanitizeHtml from "sanitize-html";
@@ -278,7 +278,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               </div>
 
               {/* Support Section — Now just the text and button */}
-              <SupportSection />
+
             </div>
 
             {/* ── Comments Section ── */}
