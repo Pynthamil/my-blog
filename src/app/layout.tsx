@@ -51,6 +51,9 @@ export const metadata: Metadata = {
     images: ["/images/TerminalIcon.svg"],
     creator: "@pyndu", // Update if you have a real handle
   },
+  verification: {
+    google: "w6I5wYzNdDzxHFErCteBFUec_3EWUBPxzxB9SW9WDOM",
+  },
   robots: {
     index: true,
     follow: true,
