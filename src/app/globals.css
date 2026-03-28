@@ -144,6 +144,20 @@ html {
   text-decoration: underline;
 }
 
+.prose-blog a.internal-link {
+  border-bottom: 1.5px solid rgba(139, 92, 246, 0.3);
+  padding-bottom: 1px;
+  transition: all 0.2s ease;
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.1);
+}
+
+.prose-blog a.internal-link:hover {
+  background: rgba(139, 92, 246, 0.08);
+  border-bottom-color: rgba(139, 92, 246, 0.6);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
+}
+
 .prose-blog ul,
 .prose-blog ol {
   padding-left: 1.5rem;

@@ -113,15 +113,84 @@ function parseContentAndHeadings(html: string) {
   return { html: parsedHtml, headings };
 }
 
+function getSimilarityScore(post1: any, post2: any) {
+  const tags1 = new Set(post1.tags || []);
+  const tags2 = new Set(post2.tags || []);
+  let intersection = 0;
+  for (const tag of tags1) {
+    if (tags2.has(tag)) intersection++;
+  }
+  return intersection;
+}
+
+function injectInternalLinks(html: string, allPosts: any[], currentSlug: string) {
+  let content = html;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app";
+  
+  // Sort posts by title length descending to prevent partial matches (e.g. "React" vs "React Testing")
+  const otherPosts = allPosts
+    .filter(p => !p.href.endsWith(`/${currentSlug}`))
+    .sort((a: any, b: any) => b.title.length - a.title.length);
+
+  // We'll use a placeholder technique to avoid linking inside already existing tags/blocks
+  const codeBlocks: string[] = [];
+  content = content.replace(/<(pre|code|a|h\d)[^>]*>[\s\S]*?<\/\1>/gi, (match) => {
+    codeBlocks.push(match);
+    return `___CODE_BLOCK_${codeBlocks.length - 1}___`;
+  });
+
+  let linksCount = 0;
+  const MAX_LINKS = 5;
+
+  for (const p of otherPosts) {
+    if (linksCount >= MAX_LINKS) break;
+    
+    // Create a regex for the title (case-insensitive)
+    const escapedTitle = p.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp(`\\b${escapedTitle}\\b`, "i");
+
+    if (regex.test(content)) {
+      content = content.replace(regex, (match) => {
+        linksCount++;
+        return `<a href="${p.href}" class="internal-link" title="Read more: ${p.title}">${match}</a>`;
+      });
+    }
+  }
+
+  // Restore code blocks
+  content = content.replace(/___CODE_BLOCK_(\d+)___/g, (_, id) => codeBlocks[parseInt(id)]);
+
+  return content;
+}
+
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getPost(slug);
-  const { html: parsedContent, headings } = post ? parseContentAndHeadings(post.content) : { html: "", headings: [] };
-  const sanitizedContent = parsedContent ? sanitizeHtml(parsedContent, sanitizeOptions) : "";
-
+  
   if (!post) {
     return notFound();
   }
+
+  // Fetch all posts to build the mesh
+  const allPosts = await getPosts();
+  
+  // 1. Calculate Related Posts based on similarity
+  const relatedPosts = allPosts
+    .filter((p: any) => !p.href.endsWith(`/${slug}`))
+    .map((p: any) => ({
+      ...p,
+      score: getSimilarityScore(post, p)
+    }))
+    .sort((a: any, b: any) => b.score - a.score || new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, 3);
+
+  // 2. Inject Internal Links (The Mesh)
+  const { html: parsedContent, headings } = post ? parseContentAndHeadings(post.content) : { html: "", headings: [] };
+  const meshedContent = injectInternalLinks(parsedContent, allPosts, slug);
+  const sanitizedContent = meshedContent ? sanitizeHtml(meshedContent, {
+    ...sanitizeOptions,
+    allowedTags: [...(sanitizeOptions.allowedTags || []), "a"] // Ensure <a> is allowed (it's already in defaults but just in case)
+  }) : "";
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app";
   const toAbsoluteUrl = (url: string) =>
@@ -157,11 +226,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     },
   };
 
-  // Fetch related posts (all posts excluding current, max 2)
-  const allPosts = await getPosts();
-  const relatedPosts = allPosts
-    .filter((p: any) => !p.href.endsWith(`/${slug}`))
-    .slice(0, 2);
+  // Fetching logic moved up for mesh integration
 
   return (
     <main className="flex-1 flex flex-col">
@@ -301,7 +366,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               Related Posts
             </h2>
             <div className="glow-border-strong rounded-3xl bg-[#111115]/60 backdrop-blur-md p-6 md:p-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedPosts.map((rp: PostCardProps, i: number) => (
                   <PostCard key={i} {...rp} variant="recent" />
                 ))}
