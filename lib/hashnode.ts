@@ -55,6 +55,7 @@ export async function getPosts(first: number = 20) {
                 }
                 publishedAt
                 readTimeInMinutes
+                reactionCount
                 tags {
                   name
                 }
@@ -79,7 +80,8 @@ export async function getPosts(first: number = 20) {
         href: `/posts/${node.slug}`,
         tags: node.tags?.map((t: any) => t.name) || [],
         readingTime: `${node.readTimeInMinutes} min read`,
-        publishedAt: node.publishedAt
+        publishedAt: node.publishedAt,
+        reactionCount: node.reactionCount || 0
       };
     });
 
@@ -123,6 +125,7 @@ export async function getPost(slug: string) {
           }
           publishedAt
           readTimeInMinutes
+          reactionCount
           tags {
             name
           }
@@ -149,6 +152,7 @@ export async function getPost(slug: string) {
         date: formatHashnodeDate(post.publishedAt),
         publishedAt: post.publishedAt,
         readingTime: `${post.readTimeInMinutes} min read`,
+        reactionCount: post.reactionCount || 0,
         tags: post.tags?.map((t: any) => t.name) || [],
         author: {
           name: post.author?.name || "pyndu",

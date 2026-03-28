@@ -257,7 +257,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                   </p>
                 </div>
                 <div className="flex items-center gap-6">
-                  <LikeButton slug={slug} />
+                  <LikeButton slug={slug} initialCount={post.reactionCount} />
                   <ShareButtons title={post.title} />
                 </div>
               </div>
