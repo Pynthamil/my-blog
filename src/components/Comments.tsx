@@ -27,7 +27,7 @@ export default function Comments({ slug }: { slug: string }) {
               mapping="specific"
               term={slug}
               strict="0"
-              reactionsEnabled="1"
+              reactionsEnabled="0"
               emitMetadata="0"
               inputPosition="bottom"
               theme="https://my-blog-tan-tau.vercel.app/giscus-theme.css"
