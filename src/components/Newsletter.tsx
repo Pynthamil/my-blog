@@ -8,6 +8,7 @@ export default function Newsletter() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("Thanks for joining the grind. Keep an eye on your inbox for new logs!");
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +25,9 @@ export default function Newsletter() {
 
     if (result.success) {
       setStatus("success");
+      if (result.message) {
+        setSuccessMessage(result.message);
+      }
       setEmail("");
     } else {
       setStatus("error");
@@ -50,7 +54,7 @@ export default function Newsletter() {
                   </svg>
                 </div>
                 <h2 className="font-syne text-2xl font-bold text-white mb-2 underline decoration-purple-500/30">You&apos;re in! 🎉</h2>
-                <p className="text-gray-400 max-w-sm">Thanks for joining the grind. Keep an eye on your inbox for new logs!</p>
+                <p className="text-gray-400 max-w-sm">{successMessage}</p>
                 <button 
                   onClick={() => setStatus("idle")}
                   className="mt-6 text-xs font-bold text-gray-500 hover:text-purple-400 transition-colors uppercase tracking-widest"
