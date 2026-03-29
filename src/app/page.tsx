@@ -1,7 +1,9 @@
 import Hero from "@/components/Hero";
 import RecentPosts from "@/components/RecentPosts";
 import Newsletter from "@/components/Newsletter";
+import NyanLoader from "@/components/NyanLoader";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "pyndu logs | Developer Blog & Build Showcase",
@@ -15,7 +17,13 @@ export default function Home() {
   return (
     <main className="flex-1 flex flex-col">
       <Hero />
-      <RecentPosts />
+      <Suspense fallback={
+        <div className="py-20 flex items-center justify-center">
+          <NyanLoader />
+        </div>
+      }>
+        <RecentPosts />
+      </Suspense>
       <Newsletter />
     </main>
   );

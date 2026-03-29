@@ -1,10 +1,31 @@
 import PostCard, { PostCardProps } from "./PostCard";
 import EmptyState from "./EmptyState";
 import { getPosts } from "../../lib/hashnode";
+import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 
 export default async function RecentPosts() {
   const posts = await getPosts();
+  const recentPosts = posts.slice(0, 4);
+
+  // Batch fetch views from Supabase for efficiency
+  const slugs = recentPosts.map((p: any) => p.href.split('/').pop()).filter(Boolean) as string[];
+  
+  let viewsMap: Record<string, number> = {};
+  if (slugs.length > 0) {
+    try {
+      const { data } = await supabase
+        .from("post_views")
+        .select("slug, count")
+        .in("slug", slugs);
+      
+      if (data) {
+        viewsMap = data.reduce((acc, curr) => ({ ...acc, [curr.slug]: curr.count }), {});
+      }
+    } catch (err) {
+      console.error("Failed to batch fetch views:", err);
+    }
+  }
 
   return (
     <section className="w-full flex justify-center px-4 py-12">
@@ -15,8 +36,6 @@ export default async function RecentPosts() {
         </h2>
 
         {/* Posts Container */}
-        {/* We keep the outer dark container with glowing border per the dark theme design,
-            but inside we place the new bright white cards */}
         <div className="glow-border-strong rounded-3xl bg-[#111115]/60 backdrop-blur-md p-6 md:p-8">
           {/* See all link */}
           <div className="flex justify-end mb-6 relative z-10">
@@ -32,7 +51,7 @@ export default async function RecentPosts() {
           </div>
 
           {/* Grid — constrained width to keep cards compact */}
-          {posts.length === 0 ? (
+          {recentPosts.length === 0 ? (
             <EmptyState
               title="no posts yet..."
               description="building in public means starting empty ✨"
@@ -60,9 +79,18 @@ export default async function RecentPosts() {
             />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {posts.slice(0, 4).map((post: PostCardProps, i: number) => (
-                <PostCard key={i} {...post} priority={i === 0} variant="recent" />
-              ))}
+              {recentPosts.map((post: any, i: number) => {
+                const slug = post.href.split('/').pop() || "";
+                return (
+                  <PostCard 
+                    key={i} 
+                    {...post} 
+                    priority={i === 0} 
+                    variant="recent" 
+                    views={viewsMap[slug] || 0}
+                  />
+                );
+              })}
             </div>
           )}
         </div>

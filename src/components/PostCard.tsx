@@ -17,6 +17,7 @@ export interface PostCardProps {
   tags?: string[];
   priority?: boolean;
   variant?: "default" | "recent";
+  views?: number;
 }
 
 export default function PostCard({
@@ -33,6 +34,7 @@ export default function PostCard({
   rawTitle,
   priority = false,
   variant = "default",
+  views,
 }: PostCardProps) {
   const isRecent = variant === "recent";
 
@@ -177,6 +179,18 @@ export default function PostCard({
                   <span className="bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/10 text-purple-400/80">
                     {readingTime || "3 min read"}
                   </span>
+                  {views !== undefined && (
+                    <>
+                      <span className="opacity-40">•</span>
+                      <div className="flex items-center gap-1.5 bg-sky-500/10 px-2.5 py-0.5 rounded-md border border-sky-500/20 text-sky-400 group-hover:bg-sky-500/20 group-hover:border-sky-500/30 transition-all duration-300 shadow-[0_0_10px_rgba(56,189,248,0.05)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_5px_rgba(56,189,248,0.5)]">
+                          <path d="M2.062 12.348a12.97 12.97 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 12.97 12.97 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <span className="font-syne font-bold text-[12px]">{views.toLocaleString()}</span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </>
             )}
