@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface ViewCountProps {
   slug: string;
+  hideCount?: boolean;
 }
 
 const RollingNumber = ({ value }: { value: number }) => {
@@ -26,7 +27,7 @@ const RollingNumber = ({ value }: { value: number }) => {
   );
 };
 
-export default function ViewCount({ slug }: ViewCountProps) {
+export default function ViewCount({ slug, hideCount = false }: ViewCountProps) {
   const [views, setViews] = useState<number | null>(null);
 
   useEffect(() => {
@@ -53,6 +54,8 @@ export default function ViewCount({ slug }: ViewCountProps) {
 
     fetchViews(!hasViewed);
   }, [slug]);
+
+  if (hideCount) return null;
 
   if (views === null) {
     return (
