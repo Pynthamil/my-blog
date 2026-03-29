@@ -12,7 +12,9 @@ export default function ImageZoom() {
       scrollOffset: 0,
     });
 
-    return () => zoom.detach();
+    return () => {
+      zoom.detach();
+    };
   }, []);
 
   return null;
