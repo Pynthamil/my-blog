@@ -8,6 +8,7 @@ import TableOfContents from "@/components/TableOfContents";
 import ReadingProgress from "@/components/ReadingProgress";
 import SyntaxHighlighter from "@/components/SyntaxHighlighter";
 import PostCard, { PostCardProps } from "@/components/PostCard";
+import ImageZoom from "@/components/ImageZoom";
 
 import { getPost, getPosts } from "../../../../lib/hashnode";
 import { notFound } from "next/navigation";
@@ -15,23 +16,26 @@ import sanitizeHtml from "sanitize-html";
 
 const sanitizeOptions = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-    "img", "h2", "h3", "span", "div", "mark", 
-    "table", "thead", "tbody", "tr", "th", "td"
+    "img", "h2", "h3", "span", "div", "mark",
+    "table", "thead", "tbody", "tr", "th", "td",
+    "figure", "figcaption", "iframe"
   ]),
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
     a: [...(sanitizeHtml.defaults.allowedAttributes.a || []), "href", "name", "target", "rel", "class"],
-    img: ["src", "alt", "title", "width", "height", "loading", "class"],
+    img: ["src", "alt", "title", "width", "height", "loading", "class", "srcset", "sizes", "data-src", "data-srcset"],
+    iframe: ["src", "width", "height", "frameborder", "allowfullscreen", "style", "class", "title", "loading"],
     h1: ["id", "class"],
     h2: ["id", "class"],
     h3: ["id", "class"],
     pre: ["class"],
     code: ["class"],
-    "*": ["class", "id"]
+    "*": ["class", "id", "style"]
   },
   allowedSchemes: ["http", "https", "mailto", "tel"],
   allowedSchemesByTag: {
     img: ["http", "https"],
+    iframe: ["http", "https"],
     a: ["http", "https", "mailto", "tel"]
   },
   disallowedTagsMode: "discard"
@@ -126,7 +130,7 @@ function getSimilarityScore(post1: any, post2: any) {
 function injectInternalLinks(html: string, allPosts: any[], currentSlug: string) {
   let content = html;
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app";
-  
+
   // Sort posts by title length descending to prevent partial matches (e.g. "React" vs "React Testing")
   const otherPosts = allPosts
     .filter(p => !p.href.endsWith(`/${currentSlug}`))
@@ -144,7 +148,7 @@ function injectInternalLinks(html: string, allPosts: any[], currentSlug: string)
 
   for (const p of otherPosts) {
     if (linksCount >= MAX_LINKS) break;
-    
+
     // Create a regex for the title (case-insensitive)
     const escapedTitle = p.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const regex = new RegExp(`\\b${escapedTitle}\\b`, "i");
@@ -163,17 +167,31 @@ function injectInternalLinks(html: string, allPosts: any[], currentSlug: string)
   return content;
 }
 
+function transformImages(html: string) {
+  const imgRegex = /<img([^>]+)>/gi;
+  return html.replace(imgRegex, (match, attrs) => {
+    const altMatch = attrs.match(/alt="([^"]*)"/i);
+    const titleMatch = attrs.match(/title="([^"]*)"/i);
+    const caption = (titleMatch ? titleMatch[1] : (altMatch ? altMatch[1] : "")).trim();
+
+    if (caption && !["image", "blog post cover", "cover", "undefined", "null"].includes(caption.toLowerCase())) {
+      return `<figure>${match}<figcaption>${caption}</figcaption></figure>`;
+    }
+    return `<figure>${match}</figure>`;
+  });
+}
+
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getPost(slug);
-  
+
   if (!post) {
     return notFound();
   }
 
   // Fetch all posts to build the mesh
   const allPosts = await getPosts();
-  
+
   // 1. Calculate Related Posts based on similarity
   const relatedPosts = allPosts
     .filter((p: any) => !p.href.endsWith(`/${slug}`))
@@ -187,7 +205,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   // 2. Inject Internal Links (The Mesh)
   const { html: parsedContent, headings } = post ? parseContentAndHeadings(post.content) : { html: "", headings: [] };
   const meshedContent = injectInternalLinks(parsedContent, allPosts, slug);
-  const sanitizedContent = meshedContent ? sanitizeHtml(meshedContent, {
+  const transformedContent = transformImages(meshedContent);
+  const sanitizedContent = transformedContent ? sanitizeHtml(transformedContent, {
     ...sanitizeOptions,
     allowedTags: [...(sanitizeOptions.allowedTags || []), "a"] // Ensure <a> is allowed (it's already in defaults but just in case)
   }) : "";
@@ -233,6 +252,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ReadingProgress />
       <SyntaxHighlighter />
+      <ImageZoom />
 
       {/* ── Article wrapper ── */}
       <article className="relative w-full flex flex-col items-center pt-[120px] pb-16 px-4">

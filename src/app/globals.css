@@ -99,6 +99,25 @@ html {
   color: #E5E7EB;
   line-height: 1.85;
   font-size: 1.0625rem;
+  background: rgba(17, 17, 21, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 3.5rem 4rem;
+  border-radius: 32px;
+  box-shadow: 0 4px 60px -12px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 768px) {
+  .prose-blog {
+    padding: 1rem 0;
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+  }
 }
 
 .prose-blog h1,
@@ -217,12 +236,67 @@ html {
   line-height: 1.65;
 }
 
+.prose-blog figure {
+  margin: 3.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
 .prose-blog img {
   max-width: 100%;
   height: auto;
   display: block;
+  border-radius: 20px;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: zoom-in;
+}
+
+.prose-blog img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px -8px rgba(0, 0, 0, 0.6);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.prose-blog figcaption {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #71717a;
+  text-align: center;
+  font-family: var(--font-sans);
+  letter-spacing: 0.02em;
+  max-width: 80%;
+  line-height: 1.6;
+}
+
+/* ── Notion-style Embeds & Iframes ── */
+.prose-blog iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
   border-radius: 16px;
-  margin: 1.5rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 3rem 0;
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.4);
+  background: #111115;
+}
+
+/* Medium Zoom Specifics */
+.medium-zoom-overlay {
+  z-index: 1000;
+  background: #0f0f11 !important;
+  backdrop-filter: blur(10px);
+}
+
+.medium-zoom-image--opened {
+  z-index: 1001;
+  border-radius: 12px !important;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8) !important;
 }
 
 .prose-blog hr {
@@ -236,30 +310,29 @@ html {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  margin: 3rem 0;
+  margin: 3.5rem 0;
   font-size: 0.875rem;
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  background: rgba(17, 17, 21, 0.4);
-  backdrop-filter: blur(8px);
-  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(17, 17, 21, 0.2);
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2), 0 0 20px rgba(139, 92, 246, 0.03);
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.3);
 }
 
 .prose-blog thead {
-  background: rgba(139, 92, 246, 0.06);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .prose-blog th {
-  color: #D8D7FE;
-  font-weight: 700;
+  color: #e4e4e7;
+  font-weight: 600;
   text-align: left;
-  padding: 1.25rem 1.5rem;
-  font-family: var(--font-syne), sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.7rem;
-  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+  padding: 1rem 1.25rem;
+  font-family: var(--font-sans), sans-serif;
+  text-transform: capitalize;
+  letter-spacing: normal;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .prose-blog td {
