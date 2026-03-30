@@ -31,17 +31,17 @@ export default async function RecentPosts() {
     <section className="w-full flex justify-center px-4 py-12">
       <div className="w-full max-w-[1100px]">
         {/* Section Header */}
-        <h2 className="font-syne text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent mb-8">
+        <h2 className="font-syne text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-[#7c3aed] via-[#a855f7] to-[#9333ea] bg-clip-text text-transparent mb-8">
           Recent Posts
         </h2>
 
         {/* Posts Container */}
-        <div className="glow-border-strong rounded-3xl bg-[#111115]/60 backdrop-blur-md p-6 md:p-8">
+        <div className="glow-border-strong rounded-3xl recent-posts-container backdrop-blur-md p-6 md:p-8">
           {/* See all link */}
           <div className="flex justify-end mb-6 relative z-10">
             <Link
               href="/posts"
-              className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1 group"
+              className="text-sm text-muted hover:text-foreground transition-colors flex items-center gap-1 group"
             >
               see all posts{" "}
               <span className="inline-block group-hover:translate-x-1 transition-transform">

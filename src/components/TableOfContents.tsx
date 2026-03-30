@@ -43,10 +43,10 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
 
   return (
     <nav className="hidden lg:block w-[240px] shrink-0 sticky top-32 max-h-[calc(100vh-10rem)] overflow-y-auto no-scrollbar pb-10">
-      <h3 className="text-sm font-syne font-bold text-gray-500 uppercase tracking-widest mb-6">
+      <h3 className="text-sm font-syne font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-6">
         On this page
       </h3>
-      <ul className="space-y-4 border-l border-purple-500/10">
+      <ul className="space-y-4 border-l border-[var(--border-glow)]">
         {headings.map((heading) => (
           <li
             key={heading.id}
@@ -56,8 +56,8 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
               href={`#${heading.id}`}
               className={`block pl-4 py-0.5 text-[14px] leading-snug border-l-2 transition-all duration-300 ${
                 activeId === heading.id
-                  ? "border-purple-400 text-purple-200 font-semibold drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]"
-                  : "border-transparent text-gray-400 hover:text-gray-200 hover:border-purple-500/30"
+                  ? "border-[var(--purple-600)] text-[var(--purple-600)] font-semibold drop-shadow-[0_0_8px_rgba(168,85,247,0.2)]"
+                  : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--purple-500)]/30"
               }`}
               onClick={(e) => {
                 e.preventDefault();

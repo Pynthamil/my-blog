@@ -9,7 +9,6 @@ import ReadingProgress from "@/components/ReadingProgress";
 import SyntaxHighlighter from "@/components/SyntaxHighlighter";
 import PostCard, { PostCardProps } from "@/components/PostCard";
 import ImageZoom from "@/components/ImageZoom";
-import ViewCount from "@/components/ViewCount";
 
 import { getPost, getPosts } from "../../../../lib/hashnode";
 import { notFound } from "next/navigation";
@@ -258,15 +257,15 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       {/* ── Article wrapper ── */}
       <article className="relative w-full flex flex-col items-center pt-[120px] pb-16 px-4">
         {/* Subtle ambient focus behind content */}
-        <div className="absolute top-[140px] left-1/2 -translate-x-1/2 w-full max-w-[700px] h-[500px] bg-[#0f0f11] opacity-40 blur-[100px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-[140px] left-1/2 -translate-x-1/2 w-full max-w-[700px] h-[500px] bg-[var(--ambient-glow)] opacity-40 blur-[100px] rounded-full pointer-events-none -z-10" />
 
         {/* Back link */}
         <div className="w-full max-w-[720px] mb-10">
           <Link
             href="/"
-            className="text-sm font-medium text-gray-500 hover:text-purple-400 transition-colors inline-flex items-center gap-2 group"
+            className="text-sm font-medium text-muted hover:text-purple-500 transition-colors inline-flex items-center gap-2 group"
           >
-            <div className="w-6 h-6 rounded-full bg-[#16161a] border border-purple-500/20 flex items-center justify-center group-hover:border-purple-500/50 transition-colors">
+            <div className="w-6 h-6 rounded-full bg-[var(--bg-secondary)] border border-purple-500/20 flex items-center justify-center group-hover:border-purple-500/50 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 12H5" />
                 <path d="m12 19-7-7 7-7" />
@@ -282,17 +281,15 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           {/* Author Profile Row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
             <div className="flex items-center gap-4">
-              <div className="relative w-12 h-12 rounded-full overflow-hidden border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)] bg-[#111115]">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden border border-purple-500/30 shadow-[var(--card-shadow)] bg-[var(--bg-secondary)]">
                 <Image src={post.author.picture} alt={post.author.name} fill className="object-cover" />
               </div>
               <div className="flex flex-col justify-center">
-                <span className="font-syne font-bold text-gray-200 tracking-wide">{post.author.name}</span>
-                <div className="flex items-center gap-2 text-[13px] text-gray-500">
+                <span className="font-syne font-bold text-foreground tracking-wide">{post.author.name}</span>
+                <div className="flex items-center gap-2 text-[13px] text-muted">
                   <span>{post.date}</span>
                   <span className="text-gray-700">•</span>
                   <span>{post.readingTime}</span>
-                  <span className="text-gray-700">•</span>
-                  <ViewCount slug={slug} />
                 </div>
               </div>
             </div>
@@ -302,7 +299,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               {post.tags.slice(0, 3).map((tag: string) => (
                 <span
                   key={tag}
-                  className="text-[11px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full border border-purple-500/20 bg-[#16161a] text-purple-300 shadow-inner"
+                  className="text-[11px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full border border-purple-500/20 bg-[var(--bg-secondary)] text-purple-400 shadow-inner"
                 >
                   {tag}
                 </span>
@@ -311,7 +308,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </div>
 
           {/* Title */}
-          <h1 className="font-syne text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-[-0.03em] bg-gradient-to-r from-[#D8D7FE] to-white bg-clip-text text-transparent">
+          <h1 className="font-syne text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-[-0.03em] bg-gradient-to-r from-[var(--hero-gradient-start)] via-[var(--hero-gradient-mid)] to-[var(--hero-gradient-end)] bg-clip-text text-transparent">
             {post.title}
           </h1>
         </header>
@@ -319,7 +316,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         {/* ── Cover Image ── */}
         <div className="w-full max-w-[720px] mb-12">
           <div
-            className={`relative w-full aspect-[16/9] ${post.imageBg} rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/10`}
+            className={`relative w-full aspect-[16/9] ${post.imageBg} rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/10 bg-white`}
           >
             <Image
               src={post.imageUrl}
@@ -329,6 +326,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               priority
             />
           </div>
+        </div>
+
+        {/* Cute face image */}
+        <div className="relative w-16 h-16 md:w-20 md:h-20 hover:scale-105 transition-transform duration-300">
         </div>
 
         {/* ── Content & TOC Layout ── */}
@@ -342,20 +343,20 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           {/* ── Article Body ── */}
           <div className="relative w-full max-w-[720px] shrink-0">
             {/* Soft ambient mask to dim the dot grid behind body text */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[110%] bg-[#0f0f11] opacity-45 blur-[100px] rounded-full pointer-events-none -z-10" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[110%] bg-[var(--ambient-glow)] opacity-45 blur-[100px] rounded-full pointer-events-none -z-10" />
             <div
-              className="prose-blog w-full max-w-none text-gray-300 leading-relaxed mb-16"
+              className="prose-blog w-full max-none text-foreground leading-relaxed mb-16"
               dangerouslySetInnerHTML={{ __html: sanitizedContent }}
             />
 
             {/* ── Footer Interaction Area ── */}
             <div className="w-full flex flex-col gap-12 mt-16 mb-20 px-4 md:px-0">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/5">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-[var(--border-subtle)]">
                 <div className="flex flex-col text-center md:text-left">
-                  <h4 className="text-gray-200 font-syne font-bold text-lg mb-1">
+                  <h4 className="text-foreground font-syne font-bold text-lg mb-1">
                     Enjoyed this post?
                   </h4>
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-muted text-sm">
                     Leave a like or share it with your network.
                   </p>
                 </div>
@@ -385,10 +386,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       {relatedPosts.length > 0 && (
         <section className="w-full flex justify-center px-4 pt-4 pb-16">
           <div className="w-full max-w-[1100px]">
-            <h2 className="font-syne text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent mb-8">
+            <h2 className="font-syne text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-[#7c3aed] via-[#a855f7] to-[#9333ea] bg-clip-text text-transparent mb-8">
               Related Posts
             </h2>
-            <div className="glow-border-strong rounded-3xl bg-[#111115]/60 backdrop-blur-md p-6 md:p-8">
+            <div className="glow-border-strong rounded-3xl bg-[var(--section-bg)] backdrop-blur-md p-6 md:p-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedPosts.map((rp: PostCardProps, i: number) => (
                   <PostCard key={i} {...rp} variant="recent" />

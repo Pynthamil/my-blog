@@ -47,9 +47,9 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="relative w-full max-w-[600px] mx-auto mb-10 mt-6 relative z-10">
+    <div className="relative w-full max-w-[600px] mx-auto mb-10 mt-6 z-10">
       <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-400">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--purple-500)]">
           <circle cx="11" cy="11" r="8" />
           <path d="m21 21-4.3-4.3" />
         </svg>
@@ -60,7 +60,7 @@ export default function SearchBar() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="w-full bg-[#111115]/80 backdrop-blur-md border border-[#302b3d] text-gray-200 rounded-2xl pl-12 pr-4 py-4 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all font-syne shadow-[0_4px_25px_rgba(168,85,247,0.07)]"
+        className="w-full bg-[var(--bg-secondary)] backdrop-blur-md border border-[var(--border-glow)] text-[var(--text-primary)] rounded-2xl pl-12 pr-4 py-4 focus:outline-none focus:border-[var(--purple-500)] focus:ring-2 focus:ring-[var(--purple-500)]/20 transition-all font-syne shadow-[0_4px_25px_rgba(168,85,247,0.05)] placeholder-[var(--text-muted)]"
       />
     </div>
   );

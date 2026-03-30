@@ -8,14 +8,16 @@ import EmptyState from "@/components/EmptyState";
 
 export default function SearchClient({ posts, children }: { posts: any[], children: React.ReactNode }) {
   return (
-    <section className="w-full flex-col flex items-center px-4 w-full">
-      <Suspense fallback={<div className="h-20 w-full animate-pulse bg-[#111115]/60 rounded-2xl max-w-[600px] mx-auto mb-10 mt-6"></div>}>
-        <SearchBar />
-      </Suspense>
-      <Suspense fallback={<div className="text-gray-400">Loading search...</div>}>
-        <SearchContent posts={posts} children={children} />
-      </Suspense>
-    </section>
+    <div suppressHydrationWarning>
+      <section className="w-full flex-col flex items-center px-4 w-full">
+        <Suspense fallback={<div className="h-20 w-full animate-pulse bg-purple-200 rounded-2xl max-w-[600px] mx-auto mb-10 mt-6"></div>}>
+          <SearchBar />
+        </Suspense>
+        <Suspense fallback={<div className="text-gray-600">Loading search...</div>}>
+          <SearchContent posts={posts} children={children} />
+        </Suspense>
+      </section>
+    </div>
   );
 }
 
@@ -95,8 +97,8 @@ function SearchContent({ posts, children }: { posts: any[], children: React.Reac
   return (
     <div className="w-full max-w-[1100px] flex flex-col items-center">
       {filteredPosts.length > 0 ? (
-        <div className="w-full rounded-3xl glow-border-strong bg-[#111115]/60 backdrop-blur-md p-6 md:p-8">
-           <h2 className="font-syne text-2xl font-bold bg-gradient-to-r from-violet-300 to-white bg-clip-text text-transparent mb-8">Search Results</h2>
+        <div className="w-full rounded-3xl glow-border-strong bg-[var(--section-bg)] backdrop-blur-md p-6 md:p-8 border border-[var(--border-glow)]">
+           <h2 className="font-syne text-2xl font-bold bg-gradient-to-r from-[var(--hero-gradient-start)] via-[var(--hero-gradient-mid)] to-[var(--hero-gradient-end)] bg-clip-text text-transparent mb-8">Search Results</h2>
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
              {filteredPosts.map((post, i) => (
                <PostCard key={i} {...post} />
@@ -104,7 +106,7 @@ function SearchContent({ posts, children }: { posts: any[], children: React.Reac
            </div>
         </div>
       ) : (
-        <div className="w-full rounded-3xl glow-border-strong bg-[#111115]/60 backdrop-blur-md p-6 md:p-8">
+        <div className="w-full rounded-3xl glow-border-strong bg-[var(--section-bg)] backdrop-blur-md p-6 md:p-8 border border-[var(--border-glow)]">
           <EmptyState 
             title="nothing found..."
             description="try another keyword or tag"

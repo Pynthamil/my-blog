@@ -81,7 +81,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${syne.variable} antialiased`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${syne.variable} antialiased`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -93,6 +93,24 @@ export default function RootLayout({
         <link rel="alternate" type="application/rss+xml" href="/rss.xml" title="pyndu logs RSS" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="theme-color" content="#0f0f11" />
+        <script
+          id="theme-initializer"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var savedTheme = localStorage.getItem('theme');
+                  var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+                  if (!savedTheme && supportDarkMode) savedTheme = 'dark';
+                  if (!savedTheme && !supportDarkMode) savedTheme = 'light';
+                  if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
       <body className="min-h-screen flex flex-col">
         <Navbar />

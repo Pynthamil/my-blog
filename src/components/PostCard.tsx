@@ -48,8 +48,7 @@ export default function PostCard({
         }}
       >
         <div
-          className={`rounded-[23px] overflow-hidden h-full flex flex-col shadow-lg ${isRecent ? "bg-[#16161a]" : "bg-[#222222]"
-            }`}
+          className="rounded-[23px] overflow-hidden h-full flex flex-col shadow-[var(--card-shadow)] bg-[var(--bg-secondary)]"
         >
           {/* Image Area */}
           <div
@@ -76,8 +75,8 @@ export default function PostCard({
                 {/* Metadata Badges */}
                 <div className="flex flex-wrap items-center gap-3 mb-5">
                   {/* Category Badge */}
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#222222]">
-                    <div className="shadow-sm bg-[#0F1117] border border-[#ECECEC] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--bg-secondary)]">
+                    <div className="shadow-sm bg-[var(--bg-primary)] border border-[var(--border-glow)] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
                       {categoryIcon === "folder" ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -94,19 +93,19 @@ export default function PostCard({
                           <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-1.22-1.8A2 2 0 0 0 7.53 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
                         </svg>
                       ) : (
-                        <span className="text-[13px] font-bold text-[#FFFCE1] font-serif italic pr-0.5">
+                        <span className="text-[13px] font-bold text-[var(--text-primary)] font-serif italic pr-0.5">
                           AI
                         </span>
                       )}
                     </div>
-                    <span className="text-sm font-semibold text-[#FFFCE1] tracking-tight">
+                    <span className="text-sm font-semibold text-[var(--text-primary)] tracking-tight">
                       {category}
                     </span>
                   </div>
 
                   {/* Date Badge */}
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#222222] shadow-sm">
-                    <div className="shadow-sm bg-[#0F1117] border border-[#ECECEC] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--bg-secondary)] shadow-sm">
+                    <div className="shadow-sm bg-[var(--bg-primary)] border border-[var(--border-glow)] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -128,7 +127,7 @@ export default function PostCard({
                         <rect x="16" y="14" width="2" height="2" fill="currentColor" stroke="none" />
                       </svg>
                     </div>
-                    <span className="text-sm font-semibold text-[#FFFCE1] tracking-tight">
+                    <span className="text-sm font-semibold text-[var(--text-primary)] tracking-tight">
                       {date}
                     </span>
                   </div>
@@ -137,9 +136,9 @@ export default function PostCard({
                   {tags && tags.length > 0 && tags.slice(0, 2).map((tag) => (
                     <div
                       key={tag}
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#222222] shadow-sm border border-purple-500/10"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--bg-secondary)] shadow-sm border border-[var(--purple-500)]/10"
                     >
-                      <span className="text-xs font-semibold text-purple-200 tracking-wider uppercase">
+                      <span className="text-xs font-semibold text-[var(--purple-500)] tracking-wider uppercase">
                         {tag}
                       </span>
                     </div>
@@ -147,12 +146,12 @@ export default function PostCard({
                 </div>
 
                 {/* Title */}
-                <h3 className="font-syne text-[26px] md:text-[28px] font-extrabold mb-3 leading-[1.1] tracking-[-0.03em] bg-gradient-to-br from-pink-200 via-purple-400 to-purple-700 bg-clip-text text-transparent group-hover:from-pink-400 group-hover:via-purple-700 group-hover:to-purple-900 transition-all">
+                <h3 className="font-syne text-[26px] md:text-[28px] font-extrabold mb-3 leading-[1.1] tracking-[-0.03em] bg-gradient-to-br from-[#7c3aed] via-[#a855f7] to-[#9333ea] bg-clip-text text-transparent group-hover:from-[#a855f7] group-hover:via-[#9333ea] group-hover:to-[#7c3aed] transition-all duration-300">
                   {title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-[#52525b] text-[15px] leading-relaxed mt-auto tracking-[-0.01em] line-clamp-2">
+                <p className="text-[var(--text-secondary)] text-[15px] leading-relaxed mt-auto tracking-[-0.01em] line-clamp-2">
                   {description}
                 </p>
               </>
@@ -161,18 +160,18 @@ export default function PostCard({
             {isRecent && (
               <>
                 {/* Title */}
-                <h3 className="font-syne text-[18px] md:text-[20px] font-extrabold leading-tight tracking-[-0.02em] bg-gradient-to-r from-[#D8D7FE] to-[#A69EFF] bg-clip-text text-transparent mb-2 line-clamp-2 group-hover:from-white group-hover:to-[#D8D7FE] transition-all duration-300">
+                <h3 className="font-syne text-[18px] md:text-[20px] font-extrabold leading-tight tracking-[-0.02em] bg-gradient-to-r from-[#7c3aed] via-[#a855f7] to-[#9333ea] bg-clip-text text-transparent mb-2 line-clamp-2 group-hover:from-[#a855f7] group-hover:via-[#9333ea] group-hover:to-[#7c3aed] transition-all duration-300">
                   {title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-400 text-[13px] leading-relaxed line-clamp-3">
+                <p className="text-[var(--text-secondary)] text-[13px] leading-relaxed line-clamp-3">
                   {description}
                 </p>
 
                 {/* Meta */}
-                <div className="mt-auto pt-3 flex items-center gap-2 text-[12px] font-medium text-gray-500/80">
-                  <span className="bg-white/5 px-2 py-0.5 rounded-md border border-white/5">
+                <div className="mt-auto pt-3 flex items-center gap-2 text-[12px] font-medium text-[var(--text-secondary)]/80">
+                  <span className="bg-foreground/5 px-2 py-0.5 rounded-md border border-foreground/5">
                     {date}
                   </span>
                   <span className="opacity-40">•</span>

@@ -22,7 +22,7 @@ export default function ShareButtons({ title }: { title: string }) {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xs font-syne font-bold text-gray-500 uppercase tracking-widest mr-2">
+      <span className="text-xs font-syne font-bold text-muted uppercase tracking-widest mr-2">
         Share
       </span>
       
@@ -31,7 +31,7 @@ export default function ShareButtons({ title }: { title: string }) {
         href={`https://twitter.com/intent/tweet?text=${strTitle}&url=${strUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="w-10 h-10 rounded-full bg-[#1a1a24] border border-purple-500/20 hover:border-purple-500/50 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]"
+        className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] border border-purple-500/20 hover:border-purple-500/50 flex items-center justify-center text-muted hover:text-foreground transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]"
         aria-label="Share on X (Twitter)"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
@@ -44,7 +44,7 @@ export default function ShareButtons({ title }: { title: string }) {
         href={`https://www.linkedin.com/sharing/share-offsite/?url=${strUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="w-10 h-10 rounded-full bg-[#1a1a24] border border-purple-500/20 hover:border-purple-500/50 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]"
+        className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] border border-purple-500/20 hover:border-purple-500/50 flex items-center justify-center text-muted hover:text-foreground transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]"
         aria-label="Share on LinkedIn"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
@@ -55,7 +55,7 @@ export default function ShareButtons({ title }: { title: string }) {
       {/* Copy Link */}
       <button 
         onClick={handleCopy}
-        className="w-10 h-10 rounded-full bg-[#1a1a24] border border-purple-500/20 hover:border-purple-500/50 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]"
+        className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] border border-purple-500/20 hover:border-purple-500/50 flex items-center justify-center text-muted hover:text-foreground transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]"
         aria-label="Copy link"
       >
         {copied ? (

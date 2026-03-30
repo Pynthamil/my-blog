@@ -38,7 +38,7 @@ export default function Newsletter() {
   return (
     <section className="w-full flex justify-center px-4 py-12">
       <div className="w-full max-w-[1100px]">
-        <div className="glow-border-strong rounded-3xl bg-[#111115]/60 backdrop-blur-md px-6 md:px-10 py-8 md:py-10">
+        <div className="glow-border-strong rounded-3xl bg-[var(--section-bg)] backdrop-blur-md px-6 md:px-10 py-8 md:py-10">
           <AnimatePresence mode="wait">
             {status === "success" ? (
               <motion.div
@@ -53,8 +53,8 @@ export default function Newsletter() {
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
-                <h2 className="font-syne text-2xl font-bold text-white mb-2 underline decoration-purple-500/30">You&apos;re in! 🎉</h2>
-                <p className="text-gray-400 max-w-sm">{successMessage}</p>
+                <h2 className="font-syne text-2xl font-bold text-foreground mb-2 underline decoration-purple-500/30">You&apos;re in! 🎉</h2>
+                <p className="text-muted max-w-sm">{successMessage}</p>
                 <button 
                   onClick={() => setStatus("idle")}
                   className="mt-6 text-xs font-bold text-gray-500 hover:text-purple-400 transition-colors uppercase tracking-widest"
@@ -72,11 +72,11 @@ export default function Newsletter() {
               >
                 {/* Text */}
                 <div className="flex-shrink-0">
-                  <h2 className="font-syne text-2xl md:text-3xl font-extrabold text-white mb-1.5">
+                  <h2 className="font-syne text-2xl md:text-3xl font-extrabold text-foreground mb-1.5">
                     Stay in the loop.
                   </h2>
-                  <p className="text-sm text-gray-400 font-medium">
-                    {"//"}<span className="text-gray-500 ml-1">New post every week. Let&apos;s grind together!!!</span>
+                  <p className="text-sm text-muted font-medium">
+                    {"//"}<span className="text-muted ml-1 opacity-60">New post every week. Let&apos;s grind together!!!</span>
                   </p>
                 </div>
 
@@ -94,8 +94,8 @@ export default function Newsletter() {
                       placeholder="your@email.com"
                       aria-label="Email Address"
                       disabled={status === "loading"}
-                      className={`bg-[#0f0f11] border text-sm text-gray-300 rounded-lg px-4 py-2.5 w-full md:w-64 focus:outline-none transition-all placeholder:text-gray-600 disabled:opacity-50 ${
-                        status === "error" ? "border-red-500/50 ring-1 ring-red-500/10" : "border-gray-800 focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/10"
+                      className={`bg-[var(--bg-primary)] border text-sm text-foreground rounded-lg px-4 py-2.5 w-full md:w-64 focus:outline-none transition-all placeholder:text-muted/60 disabled:opacity-50 ${
+                        status === "error" ? "border-red-500/50 ring-1 ring-red-500/10" : "border-[var(--border-subtle)] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/10"
                       }`}
                     />
                     <button 

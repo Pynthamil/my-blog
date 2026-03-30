@@ -120,7 +120,7 @@ export default function LikeButton({ slug, initialCount = 0 }: LikeButtonProps) 
   if (!isMounted) {
     return (
       <div className="flex items-center gap-4 opacity-0">
-        <div className="w-10 h-10 rounded-full bg-[#1a1a24] border border-purple-500/10" />
+        <div className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] border border-purple-500/10" />
       </div>
     );
   }
@@ -128,10 +128,10 @@ export default function LikeButton({ slug, initialCount = 0 }: LikeButtonProps) 
   return (
     <div className="flex items-center gap-4 group">
       <div className="flex flex-col items-end mr-1">
-        <span className="text-[10px] font-syne font-black text-gray-500 uppercase tracking-[0.2em] mb-0.5">
+        <span className="text-xs font-syne font-bold text-text-muted uppercase tracking-widest">
           {liked ? "Liked" : "Like"}
         </span>
-        <div className="text-sm font-syne font-bold text-gray-300">
+        <div className="text-sm font-syne font-bold text-text-primary">
           <RollingNumber value={count} />
         </div>
       </div>
@@ -143,7 +143,7 @@ export default function LikeButton({ slug, initialCount = 0 }: LikeButtonProps) 
           className={`relative w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 active:scale-90 ${
             liked 
               ? "bg-pink-500/10 border-pink-500/40 text-pink-500 shadow-[0_0_25px_rgba(236,72,153,0.25)]" 
-              : "bg-white/[0.03] border-white/10 text-gray-500 hover:text-white hover:border-white/20 hover:bg-white/[0.05]"
+              : "bg-[var(--bg-secondary)] border-[var(--border-subtle)] text-muted hover:text-foreground hover:border-purple-500/20 hover:bg-[var(--bg-hover)]"
           } border overflow-hidden`}
           aria-label={liked ? "Unlike post" : "Like post"}
         >

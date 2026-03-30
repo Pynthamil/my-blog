@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -20,7 +21,7 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center px-4 pointer-events-none"
       style={{ paddingTop: "calc(1.5rem + env(safe-area-inset-top))" }}
     >
-      <div className="relative w-full max-w-[1100px] border border-white/10 rounded-[12px] px-4 sm:px-6 py-3 flex items-center justify-between gap-3 pointer-events-auto bg-black/40 backdrop-blur-[20px] shadow-[0_8px_32px_0_rgba(0,0,0,0.8),inset_0_0_0_1px_rgba(255,255,255,0.05)] ring-1 ring-purple-500/10">
+      <div className="relative w-full max-w-[1100px] border border-[var(--navbar-border)] rounded-[12px] px-4 sm:px-6 py-3 flex items-center justify-between gap-3 pointer-events-auto bg-[var(--navbar-bg)] backdrop-blur-[20px] shadow-[var(--card-shadow)] ring-1 ring-purple-500/5">
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2.5 transition-all hover:scale-[1.02]">
           <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 drop-shadow-[0_0_8px_rgba(168,85,247,0.3)]">
@@ -31,8 +32,8 @@ export default function Navbar() {
               className="object-contain"
             />
           </div>
-          <span className="font-syne font-bold text-[18px] md:text-[20px] tracking-tight text-white group-hover:text-purple-300 transition-colors">
-            pyndulogs<span className="text-gray-400 group-hover:text-white transition-colors">()</span>
+          <span className="font-syne font-bold text-[18px] md:text-[20px] tracking-tight text-[var(--text-primary)] group-hover:text-purple-500 transition-colors">
+            pyndulogs<span className="text-[var(--text-secondary)] group-hover:text-foreground transition-colors">()</span>
           </span>
         </Link>
 
@@ -48,8 +49,8 @@ export default function Navbar() {
                   href={link.href}
                   className={`relative text-[13px] sm:text-sm transition-all py-1 ${
                     isActive
-                      ? "text-white font-semibold drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-                      : "text-gray-400 hover:text-white"
+                      ? "text-[var(--text-primary)] font-semibold drop-shadow-[0_0_8px_rgba(var(--color-purple-500),0.4)]"
+                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 >
                   {link.name}
@@ -67,7 +68,7 @@ export default function Navbar() {
             className={`transition-all inline-block hover:scale-110 active:scale-95 ${
               pathname === "/search"
                 ? "text-fuchsia-400 drop-shadow-[0_0_10px_rgba(192,38,211,0.5)]"
-                : "text-gray-400 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
             aria-label="Search"
           >
@@ -87,12 +88,15 @@ export default function Navbar() {
             </svg>
           </Link>
 
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
           {/* GitHub Icon */}
           <a
             href="https://github.com/Pynthamil"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-200 transition-all hover:scale-105 active:scale-95"
+            className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-all hover:scale-110 active:scale-95 border border-[var(--navbar-border)] shadow-sm"
             aria-label="GitHub"
           >
             <svg
@@ -109,7 +113,7 @@ export default function Navbar() {
           {/* Mobile menu toggle */}
           <button
             type="button"
-            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/15 transition-colors active:scale-95"
+            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-colors active:scale-95 border border-[var(--navbar-border)]"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((v) => !v)}
@@ -131,7 +135,7 @@ export default function Navbar() {
 
         {/* Mobile dropdown */}
         {isMenuOpen && (
-          <div className="absolute left-0 right-0 top-full mt-3 md:hidden z-10 rounded-[12px] border border-white/10 bg-black/60 backdrop-blur-[20px] shadow-[0_8px_32px_0_rgba(0,0,0,0.8),inset_0_0_0_1px_rgba(255,255,255,0.05)] p-2">
+          <div className="absolute left-0 right-0 top-full mt-3 md:hidden z-10 rounded-[12px] border border-[var(--navbar-border)] bg-[var(--navbar-bg)] backdrop-blur-[20px] shadow-[var(--card-shadow)] p-2">
             <div className="flex flex-col">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
@@ -142,8 +146,8 @@ export default function Navbar() {
                     onClick={() => setIsMenuOpen(false)}
                     className={`px-4 py-3 rounded-[10px] text-[14px] font-medium transition-all ${
                       isActive
-                        ? "text-white bg-white/10 border border-purple-400/20"
-                        : "text-gray-400 hover:text-white hover:bg-white/5 hover:border hover:border-white/10"
+                        ? "text-[var(--text-primary)] bg-purple-500/10 border border-purple-500/20"
+                        : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)]"
                     }`}
                   >
                     {link.name}
