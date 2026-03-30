@@ -9,6 +9,7 @@ import ReadingProgress from "@/components/ReadingProgress";
 import SyntaxHighlighter from "@/components/SyntaxHighlighter";
 import PostCard, { PostCardProps } from "@/components/PostCard";
 import ImageZoom from "@/components/ImageZoom";
+import ViewCount from "@/components/ViewCount";
 
 import { getPost, getPosts } from "../../../../lib/hashnode";
 import { notFound } from "next/navigation";
@@ -290,6 +291,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                   <span>{post.date}</span>
                   <span className="text-gray-700">•</span>
                   <span>{post.readingTime}</span>
+                  <span className="text-gray-700">•</span>
+                  <ViewCount slug={slug} hideCount={true} />
                 </div>
               </div>
             </div>
