@@ -27,7 +27,7 @@ export default function AboutClient() {
   };
 
   return (
-    <div suppressHydrationWarning className="min-h-screen relative overflow-hidden bg-[var(--bg-primary)]">
+    <div suppressHydrationWarning className="min-h-screen relative overflow-hidden">
       {/* Background Ambient Glows */}
       <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-600/10 blur-[120px] rounded-full pointer-events-none -z-10 animate-pulse" />
       <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-indigo-600/10 blur-[150px] rounded-full pointer-events-none -z-10" />
