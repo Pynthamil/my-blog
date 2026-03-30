@@ -5,7 +5,7 @@ export default function Loading() {
   return (
     <div suppressHydrationWarning>
       <main className="flex-1 flex flex-col items-center justify-center min-h-screen bg-[var(--bg-primary)]">
-        <NyanLoader />
+        <NyanLoader fullScreen={true} />
       </main>
     </div>
   );

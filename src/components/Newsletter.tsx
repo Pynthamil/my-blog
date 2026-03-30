@@ -65,10 +65,7 @@ export default function Newsletter() {
             ) : (
               <motion.div
                 key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+                className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 w-full"
               >
                 {/* Text */}
                 <div className="flex-shrink-0">

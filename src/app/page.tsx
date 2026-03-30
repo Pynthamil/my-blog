@@ -18,7 +18,7 @@ export default function Home() {
     <main className="flex-1 flex flex-col">
       <Hero />
       <Suspense fallback={
-        <div className="py-20 flex items-center justify-center">
+        <div className="py-20 flex items-center justify-center min-h-[400px]">
           <NyanLoader />
         </div>
       }>
