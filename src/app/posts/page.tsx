@@ -1,6 +1,7 @@
 import HorizontalPostCard from "@/components/HorizontalPostCard";
 import { getPosts } from "../../../lib/hashnode";
 import { supabase } from "@/lib/supabase";
+import AnimatedGradientText from "@/components/AnimatedGradientText";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -36,9 +37,12 @@ export default async function PostsPage() {
   return (
     <main className="min-h-screen pt-32 pb-16 flex flex-col items-center">
       <div className="w-full max-w-[1100px] px-4">
-        <h1 className="font-syne text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#7c3aed] via-[#a855f7] to-[#9333ea] bg-clip-text text-transparent mb-4">
+        <AnimatedGradientText
+          as="h1"
+          className="font-syne text-4xl md:text-5xl font-extrabold mb-4"
+        >
           All Posts
-        </h1>
+        </AnimatedGradientText>
         <p className="text-muted mb-10 pl-1 font-medium tracking-wide">
           <span className="text-purple-500/80 mr-2">{"//"}</span> everything written so far.
         </p>

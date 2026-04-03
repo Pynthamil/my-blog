@@ -21,10 +21,10 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center px-4 pointer-events-none"
       style={{ paddingTop: "calc(1.5rem + env(safe-area-inset-top))" }}
     >
-      <div className="relative w-full max-w-[1100px] border border-[var(--navbar-border)] rounded-[12px] px-4 sm:px-6 py-3 flex items-center justify-between gap-3 pointer-events-auto bg-[var(--navbar-bg)] backdrop-blur-[20px] shadow-[var(--card-shadow)] ring-1 ring-purple-500/5">
+      <div className="relative w-full max-w-[1100px] border border-[var(--navbar-border)] rounded-[12px] px-4 sm:px-6 py-3 flex items-center justify-between gap-3 pointer-events-auto bg-[var(--navbar-bg)] backdrop-blur-[20px] shadow-[var(--card-shadow)] ring-1 ring-[#A78BFA]/5">
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2.5 transition-all hover:scale-[1.02]">
-          <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 drop-shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+          <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 drop-shadow-[0_0_8px_rgba(167,139,250,0.3)]">
             <Image 
               src="/images/TerminalIcon.svg" 
               alt="pyndu logs icon" 
@@ -32,7 +32,7 @@ export default function Navbar() {
               className="object-contain"
             />
           </div>
-          <span className="font-syne font-bold text-[18px] md:text-[20px] tracking-tight text-[var(--text-primary)] group-hover:text-purple-500 transition-colors">
+          <span className="font-syne font-bold text-[18px] md:text-[20px] tracking-tight text-[var(--text-primary)] group-hover:text-[#A78BFA] transition-colors">
             pyndulogs<span className="text-[var(--text-secondary)] group-hover:text-foreground transition-colors">()</span>
           </span>
         </Link>
@@ -49,13 +49,13 @@ export default function Navbar() {
                   href={link.href}
                   className={`relative text-[13px] sm:text-sm transition-all py-1 ${
                     isActive
-                      ? "text-[var(--text-primary)] font-semibold drop-shadow-[0_0_8px_rgba(var(--color-purple-500),0.4)]"
+                      ? "text-[var(--text-primary)] font-semibold drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]"
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 >
                   {link.name}
                   {isActive && (
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-fuchsia-500 to-purple-500 rounded-full shadow-[0_0_10px_rgba(168,85,247,0.5)]" />
+                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-[#C4B5FD] to-[#A78BFA] rounded-full shadow-[0_0_10px_rgba(167,139,250,0.5)]" />
                   )}
                 </Link>
               );
@@ -67,7 +67,7 @@ export default function Navbar() {
             href="/search"
             className={`transition-all inline-block hover:scale-110 active:scale-95 ${
               pathname === "/search"
-                ? "text-fuchsia-400 drop-shadow-[0_0_10px_rgba(192,38,211,0.5)]"
+                ? "text-[#A78BFA] drop-shadow-[0_0_10px_rgba(167,139,250,0.5)]"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
             aria-label="Search"
@@ -146,7 +146,7 @@ export default function Navbar() {
                     onClick={() => setIsMenuOpen(false)}
                     className={`px-4 py-3 rounded-[10px] text-[14px] font-medium transition-all ${
                       isActive
-                        ? "text-[var(--text-primary)] bg-purple-500/10 border border-purple-500/20"
+                        ? "text-[var(--text-primary)] bg-[#A78BFA]/10 border border-[#A78BFA]/20"
                         : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)]"
                     }`}
                   >

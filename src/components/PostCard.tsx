@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
+import AnimatedGradientText from "./AnimatedGradientText";
 
 export interface PostCardProps {
   title: React.ReactNode;
@@ -44,7 +45,7 @@ export default function PostCard({
       <div
         className="p-[4px] rounded-[24px] h-full transition-all duration-300 group-hover:-translate-y-1"
         style={{
-          background: "linear-gradient(135deg, #A69EFF, #E8B4F4)",
+          background: "linear-gradient(135deg, #C4B5FD, #E9D5FF)",
         }}
       >
         <div
@@ -146,9 +147,12 @@ export default function PostCard({
                 </div>
 
                 {/* Title */}
-                <h3 className="font-syne text-[26px] md:text-[28px] font-extrabold mb-3 leading-[1.1] tracking-[-0.03em] bg-gradient-to-br from-[#7c3aed] via-[#a855f7] to-[#9333ea] bg-clip-text text-transparent group-hover:from-[#a855f7] group-hover:via-[#9333ea] group-hover:to-[#7c3aed] transition-all duration-300">
+                <AnimatedGradientText
+                  as="h3"
+                  className="font-syne text-[26px] md:text-[28px] font-extrabold mb-3 leading-[1.1] tracking-[-0.03em]"
+                >
                   {title}
-                </h3>
+                </AnimatedGradientText>
 
                 {/* Description */}
                 <p className="text-[var(--text-secondary)] text-[15px] leading-relaxed mt-auto tracking-[-0.01em] line-clamp-2">
@@ -160,9 +164,12 @@ export default function PostCard({
             {isRecent && (
               <>
                 {/* Title */}
-                <h3 className="font-syne text-[18px] md:text-[20px] font-extrabold leading-tight tracking-[-0.02em] bg-gradient-to-r from-[#7c3aed] via-[#a855f7] to-[#9333ea] bg-clip-text text-transparent mb-2 line-clamp-2 group-hover:from-[#a855f7] group-hover:via-[#9333ea] group-hover:to-[#7c3aed] transition-all duration-300">
+                <AnimatedGradientText
+                  as="h3"
+                  className="font-syne text-[18px] md:text-[20px] font-extrabold leading-tight tracking-[-0.02em] mb-2 line-clamp-2"
+                >
                   {title}
-                </h3>
+                </AnimatedGradientText>
 
                 {/* Description */}
                 <p className="text-[var(--text-secondary)] text-[13px] leading-relaxed line-clamp-3">

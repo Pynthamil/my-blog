@@ -4,7 +4,7 @@ export default function PostCardSkeleton() {
   return (
     <div className="block group">
       {/* Gradient border wrapper skeleton */}
-      <div className="p-[4px] rounded-[24px] h-full" style={{ background: "linear-gradient(135deg, rgba(166, 158, 255, 0.15), rgba(232, 180, 244, 0.15))" }}>
+      <div className="p-[4px] rounded-[24px] h-full" style={{ background: "linear-gradient(135deg, rgba(167, 139, 250, 0.1), rgba(233, 213, 255, 0.1))" }}>
         <div className="rounded-[23px] overflow-hidden h-full flex flex-col shadow-lg bg-[#222222]/80 backdrop-blur-sm animate-pulse">
           {/* Image Area Skeleton */}
           <div className="relative w-full aspect-[4/3] bg-[#2a2a32] overflow-hidden relative">

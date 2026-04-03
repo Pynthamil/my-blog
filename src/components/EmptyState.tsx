@@ -20,11 +20,11 @@ export default function EmptyState({
   return (
     <div className={`flex flex-col items-center justify-center py-16 px-4 text-center w-full ${className}`}>
       {icon && (
-        <div className="w-16 h-16 rounded-2xl bg-[var(--bg-secondary)] flex items-center justify-center mb-6 border border-[var(--purple-500)]/20 text-[var(--purple-500)] shadow-[0_0_15px_rgba(168,85,247,0.15)] glow-border-strong">
+        <div className="w-16 h-16 rounded-2xl bg-[var(--bg-secondary)] flex items-center justify-center mb-6 border border-[#A78BFA]/20 text-[#A78BFA] shadow-[0_0_15px_rgba(167,139,250,0.15)] glow-border-strong">
           {icon}
         </div>
       )}
-      <h3 className="font-syne text-[22px] md:text-2xl font-bold bg-gradient-to-r from-[var(--purple-400)] to-[var(--text-primary)] bg-clip-text text-transparent mb-3 lowercase tracking-tight">
+      <h3 className="font-syne text-[22px] md:text-2xl font-bold bg-gradient-to-r from-[#A78BFA] to-[var(--text-primary)] bg-clip-text text-transparent mb-3 lowercase tracking-tight">
         {title}
       </h3>
       {description && (

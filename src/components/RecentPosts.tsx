@@ -3,6 +3,7 @@ import EmptyState from "./EmptyState";
 import { getPosts } from "../../lib/hashnode";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
+import AnimatedGradientText from "./AnimatedGradientText";
 
 export default async function RecentPosts() {
   const posts = await getPosts();
@@ -31,9 +32,12 @@ export default async function RecentPosts() {
     <section className="w-full flex justify-center px-4 py-12">
       <div className="w-full max-w-[1100px]">
         {/* Section Header */}
-        <h2 className="font-syne text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-[#7c3aed] via-[#a855f7] to-[#9333ea] bg-clip-text text-transparent mb-8">
+        <AnimatedGradientText
+          as="h2"
+          className="font-syne text-3xl md:text-4xl font-extrabold mb-8"
+        >
           Recent Posts
-        </h2>
+        </AnimatedGradientText>
 
         {/* Posts Container */}
         <div className="glow-border-strong rounded-3xl recent-posts-container backdrop-blur-md p-6 md:p-8">

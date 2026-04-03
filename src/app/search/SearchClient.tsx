@@ -5,6 +5,7 @@ import { useMemo, Suspense } from "react";
 import PostCard from "@/components/PostCard";
 import SearchBar from "@/components/SearchBar";
 import EmptyState from "@/components/EmptyState";
+import AnimatedGradientText from "@/components/AnimatedGradientText";
 
 export default function SearchClient({ posts, children }: { posts: any[], children: React.ReactNode }) {
   return (
@@ -55,7 +56,7 @@ function highlightMatch(text: string | undefined, query: string): React.ReactNod
       {parts.map((part, i) =>
         // When you split with a capturing group, the matched chunks land on odd indices.
         i % 2 === 1 ? (
-          <span key={i} className="text-purple-300 font-bold bg-purple-500/10 rounded px-0.5">
+          <span key={i} className="text-[#A78BFA] font-bold bg-[#A78BFA]/10 rounded px-0.5">
             {part}
           </span>
         ) : (
@@ -98,7 +99,12 @@ function SearchContent({ posts, children }: { posts: any[], children: React.Reac
     <div className="w-full max-w-[1100px] flex flex-col items-center">
       {filteredPosts.length > 0 ? (
         <div className="w-full rounded-3xl glow-border-strong bg-[var(--section-bg)] backdrop-blur-md p-6 md:p-8 border border-[var(--border-glow)]">
-           <h2 className="font-syne text-2xl font-bold bg-gradient-to-r from-[var(--hero-gradient-start)] via-[var(--hero-gradient-mid)] to-[var(--hero-gradient-end)] bg-clip-text text-transparent mb-8">Search Results</h2>
+            <AnimatedGradientText
+              as="h2"
+              className="font-syne text-2xl font-bold mb-8"
+            >
+              Search Results
+            </AnimatedGradientText>
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
              {filteredPosts.map((post, i) => (
                <PostCard key={i} {...post} />

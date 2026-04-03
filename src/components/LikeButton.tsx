@@ -142,7 +142,7 @@ export default function LikeButton({ slug, initialCount = 0 }: LikeButtonProps) 
           onClick={handleLike}
           className={`relative w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 active:scale-90 ${
             liked 
-              ? "bg-pink-500/10 border-pink-500/40 text-pink-500 shadow-[0_0_25px_rgba(236,72,153,0.25)]" 
+              ? "bg-purple-500/10 border-purple-500/40 text-purple-500 shadow-[0_0_25px_rgba(167,139,250,0.25)]" 
               : "bg-[var(--bg-secondary)] border-[var(--border-subtle)] text-muted hover:text-foreground hover:border-purple-500/20 hover:bg-[var(--bg-hover)]"
           } border overflow-hidden`}
           aria-label={liked ? "Unlike post" : "Like post"}
@@ -151,7 +151,7 @@ export default function LikeButton({ slug, initialCount = 0 }: LikeButtonProps) 
           {liked && (
             <motion.div 
               layoutId="glow"
-              className="absolute inset-0 bg-gradient-to-br from-pink-500/20 to-purple-500/20 blur-xl"
+              className="absolute inset-0 bg-gradient-to-br from-pink-500/20 to-[#A78BFA]/20 blur-xl"
             />
           )}
 

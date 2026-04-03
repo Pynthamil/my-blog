@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import AnimatedGradientText from "./AnimatedGradientText";
 
 export default function Hero() {
   return (
@@ -41,13 +42,14 @@ export default function Hero() {
       </div>
 
       {/* Title */}
-      <h1
-        className="font-syne text-4xl md:text-6xl lg:text-7xl font-extrabold text-center leading-tight mb-4 bg-gradient-to-r from-[var(--hero-gradient-start)] via-[var(--hero-gradient-mid)] to-[var(--hero-gradient-end)] bg-clip-text text-transparent"
+      <AnimatedGradientText
+        as="h1"
+        className="font-syne text-4xl md:text-6xl lg:text-7xl font-extrabold text-center leading-tight mb-4"
       >
         Learn from my
         <br />
         experience.
-      </h1>
+      </AnimatedGradientText>
 
       {/* Subtitle */}
       <p className="text-muted text-base md:text-lg text-center mt-4 max-w-lg">

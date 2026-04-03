@@ -16,19 +16,33 @@
   --dot-color: rgba(255, 255, 255, 0.05);
   --bg-hover: rgba(255, 255, 255, 0.05);
   --selection-bg: rgba(139, 92, 246, 0.45);
-  --hero-gradient-start: #7c3aed;
-  --hero-gradient-mid: #a855f7;
-  --hero-gradient-end: #9333ea;
+  --hero-gradient-start: #EDE9FE;
+  --hero-gradient-mid: #A78BFA;
+  --hero-gradient-end: #E9D5FF;
+  
+  --grad-step-1: #EDE9FE;
+  --grad-step-2: #DDD6FE;
+  --grad-step-3: #C4B5FD;
+  --grad-step-4: #A78BFA;
+  --grad-step-5: #B8A9FF;
+  --grad-step-6: #E9D5FF;
+  
+  --lavender-100: #EDE9FE;
+  --lavender-200: #DDD6FE;
+  --lavender-300: #C4B5FD;
+  --lavender-400: #A78BFA;
+  --lavender-500: #B8A9FF;
+  --lavender-600: #E9D5FF;
   
   /* Shadows */
   --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
   
-  /* Accent Purples */
-  --purple-400: #a78bfa;
-  --purple-500: #8b5cf6;
-  --purple-600: #7c3aed;
-  --purple-700: #6d28d9;
-  --purple-900: #2e1065;
+  /* Accent Lavenders */
+  --purple-400: #C4B5FD;
+  --purple-500: #A78BFA;
+  --purple-600: #B8A9FF;
+  --purple-700: #A78BFA;
+  --purple-900: #1a1a24;
 }
 
 [data-theme="light"] {
@@ -47,9 +61,16 @@
   --dot-color: rgba(0, 0, 0, 0.04);
   --bg-hover: rgba(0, 0, 0, 0.05);
   --selection-bg: rgba(139, 92, 246, 0.2);
-  --hero-gradient-start: #7c3aed;
-  --hero-gradient-mid: #a855f7;
-  --hero-gradient-end: #9333ea;
+  --hero-gradient-start: #7C3AED;
+  --hero-gradient-mid: #A78BFA;
+  --hero-gradient-end: #C4B5FD;
+
+  --grad-step-1: #6D28D9;
+  --grad-step-2: #7C3AED;
+  --grad-step-3: #8B5CF6;
+  --grad-step-4: #A78BFA;
+  --grad-step-5: #C4B5FD;
+  --grad-step-6: #A78BFA;
 
   /* Shadows */
   --card-shadow: 0 8px 30px rgba(139, 92, 246, 0.06);
@@ -143,8 +164,26 @@ html {
 
 
 .glow-border-strong {
-  border: 1px solid rgba(139, 92, 246, 0.5);
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.12), inset 0 0 20px rgba(139, 92, 246, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  box-shadow: 0 0 20px rgba(167, 139, 250, 0.1), inset 0 0 20px rgba(167, 139, 250, 0.05);
+}
+
+.gradient-text-base {
+  background: linear-gradient(
+    90deg,
+    var(--grad-step-1),
+    var(--grad-step-2),
+    var(--grad-step-3),
+    var(--grad-step-4),
+    var(--grad-step-5),
+    var(--grad-step-6),
+    var(--grad-step-1)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 
@@ -169,7 +208,7 @@ html {
 
 /* Footer gradient */
 .footer-gradient {
-  background: linear-gradient(90deg, #7c3aed, #8b5cf6, #a78bfa, #8b5cf6, #7c3aed);
+  background: linear-gradient(90deg, #A78BFA, #B8A9FF, #E9D5FF, #B8A9FF, #A78BFA);
   background-size: 200% 100%;
 }
 

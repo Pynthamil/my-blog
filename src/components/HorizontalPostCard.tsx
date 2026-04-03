@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
+import AnimatedGradientText from "./AnimatedGradientText";
 
 export interface HorizontalPostCardProps {
   title: string;
@@ -30,7 +31,7 @@ export default function HorizontalPostCard({
     <a href={href} className="block group w-full">
       {/* Container wrapper */}
       <div
-        className="rounded-[24px] p-[4px] transition-all duration-300 group-hover:-translate-y-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 shadow-[var(--card-shadow)]"
+        className="rounded-[24px] p-[4px] transition-all duration-300 group-hover:-translate-y-1 bg-gradient-to-r from-[#C4B5FD]/20 to-[#E9D5FF]/20 shadow-[var(--card-shadow)]"
       >
         <div className="rounded-[20px] overflow-hidden flex flex-col md:flex-row bg-[var(--bg-secondary)]">
           
@@ -52,9 +53,12 @@ export default function HorizontalPostCard({
           <div className="px-6 py-4 md:py-5 md:pr-8 flex flex-col justify-between flex-1 min-w-0">
             <div>
               {/* Title */}
-              <h3 className="font-syne text-[20px] md:text-[22px] font-black mb-1.5 leading-tight tracking-[-0.03em] bg-gradient-to-r from-[#7c3aed] via-[#a855f7] to-[#9333ea] bg-clip-text text-transparent group-hover:from-[#a855f7] group-hover:via-[#9333ea] group-hover:to-[#7c3aed] transition-all">
+              <AnimatedGradientText
+                as="h3"
+                className="font-syne text-[20px] md:text-[22px] font-black mb-1.5 leading-tight tracking-[-0.03em]"
+              >
                 {title}
-              </h3>
+              </AnimatedGradientText>
 
               {/* Description */}
               <p className="text-muted text-[13px] md:text-[14px] leading-relaxed line-clamp-2 mb-3 font-medium opacity-80">
