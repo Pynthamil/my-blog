@@ -4,7 +4,9 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
+import { PHProvider } from "./providers";
+import PostHogPageviewWrapper from "./PostHogPageView";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -93,6 +95,7 @@ export default function RootLayout({
         <link rel="alternate" type="application/rss+xml" href="/rss.xml" title="pyndu logs RSS" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="theme-color" content="#0f0f11" />
+        <PostHogPageviewWrapper />
         <script
           id="theme-initializer"
           dangerouslySetInnerHTML={{
@@ -112,13 +115,14 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen flex flex-col">
-        <Navbar />
-        {children}
-        <Analytics />
-        <ScrollToTop />
-        <Footer />
-      </body>
+      <PHProvider>
+        <body className="min-h-screen flex flex-col">
+          <Navbar />
+          {children}
+          <ScrollToTop />
+          <Footer />
+        </body>
+      </PHProvider>
     </html>
   );
 }
