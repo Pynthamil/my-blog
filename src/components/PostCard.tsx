@@ -43,10 +43,7 @@ export default function PostCard({
     <a href={href} className="block group">
       {/* Gradient border wrapper */}
       <div
-        className="p-[4px] rounded-[24px] h-full transition-all duration-300 group-hover:-translate-y-1"
-        style={{
-          background: "linear-gradient(135deg, #C4B5FD, #E9D5FF)",
-        }}
+        className="p-[2.5px] rounded-[24px] h-full transition-all duration-300 group-hover:-translate-y-1 gradient-border"
       >
         <div
           className="rounded-[23px] overflow-hidden h-full flex flex-col shadow-[var(--card-shadow)] bg-[var(--bg-secondary)]"
