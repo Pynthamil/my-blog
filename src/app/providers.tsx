@@ -10,10 +10,15 @@ if (typeof window !== 'undefined') {
 
   if (posthogKey && posthogHost) {
     posthog.init(posthogKey, {
-      api_host: posthogHost,
-      person_profiles: 'identified_only', // or 'always' if you want to track everyone uniquely
-      capture_pageview: false, // We'll handle this manually for App Router
+      api_host: '/ingest',
+      ui_host: 'https://us.i.posthog.com',
+      person_profiles: 'always', 
+      capture_pageview: false, 
       capture_pageleave: true,
+      session_recording: {
+        maskAllInputs: true,
+        maskTextSelector: '.sensitive',
+      },
     });
   }
 }

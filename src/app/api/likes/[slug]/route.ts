@@ -1,4 +1,6 @@
 import { supabase } from "@/lib/supabase";
+import { likesRatelimit } from "@/lib/ratelimit";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -32,26 +34,25 @@ export async function POST(
     const { slug } = await params;
     const { increment } = await request.json();
 
-    // 1. Get current count
-    const { data } = await supabase
-      .from("post_likes")
-      .select("count")
-      .eq("slug", slug)
-      .single();
+    // 0. Rate limiting by IP
+    const headersList = await headers();
+    const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
+    const { success } = await likesRatelimit.limit(`${ip}_${slug}`);
 
-    const currentCount = data?.count || 0;
-    const newCount = increment ? currentCount + 1 : Math.max(0, currentCount - 1);
+    if (!success) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
 
-    // 2. Upsert the new count
-    const { data: updatedData, error } = await supabase
-      .from("post_likes")
-      .upsert({ slug, count: newCount }, { onConflict: "slug" })
-      .select()
-      .single();
+    // 1. Atomic update via Supabase RPC
+    const { data: updatedCount, error } = await supabase
+      .rpc("update_post_likes", { 
+        post_slug: slug,
+        is_increment: increment 
+      });
 
     if (error) throw error;
 
-    return NextResponse.json({ count: updatedData.count });
+    return NextResponse.json({ count: updatedCount });
   } catch (error) {
     console.error("Error updating likes in Supabase:", error);
     return NextResponse.json({ error: "Failed to update likes" }, { status: 500 });

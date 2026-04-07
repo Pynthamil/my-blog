@@ -2,6 +2,14 @@
 
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
+import { newsletterRatelimit } from "@/lib/ratelimit";
+import { headers } from "next/headers";
+
+import { z } from "zod";
+
+const newsletterSchema = z.object({
+  email: z.string().email("Please enter a valid email address."),
+});
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -9,10 +17,23 @@ const resend = new Resend(process.env.RESEND_API_KEY);
  * Server Action to handle newsletter subscriptions via Supabase and Resend.
  */
 export async function subscribeToNewsletter(formData: FormData) {
-  const email = (formData.get("email") as string)?.toLowerCase().trim();
+  const emailInput = (formData.get("email") as string)?.toLowerCase().trim();
 
-  if (!email || !email.includes("@")) {
-    return { error: "Please enter a valid email address." };
+  // Validate email with Zod
+  const validation = newsletterSchema.safeParse({ email: emailInput });
+  if (!validation.success) {
+    return { error: validation.error.issues[0].message };
+  }
+
+  const { email } = validation.data;
+
+  // 0. Rate limiting by IP
+  const headersList = await headers();
+  const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
+  const { success } = await newsletterRatelimit.limit(ip);
+
+  if (!success) {
+    return { error: "Too many requests. Please try again later." };
   }
 
   try {

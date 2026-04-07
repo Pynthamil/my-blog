@@ -1,4 +1,6 @@
 import { supabase } from "@/lib/supabase";
+import { viewsRatelimit } from "@/lib/ratelimit";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -31,26 +33,22 @@ export async function POST(
   try {
     const { slug } = await params;
 
-    // 1. Get current count
-    const { data } = await supabase
-      .from("post_views")
-      .select("count")
-      .eq("slug", slug)
-      .single();
+    // 0. Rate limiting by IP
+    const headersList = await headers();
+    const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
+    const { success } = await viewsRatelimit.limit(`${ip}_${slug}`);
 
-    const currentCount = data?.count || 0;
-    const newCount = currentCount + 1;
+    if (!success) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
 
-    // 2. Upsert the new count
-    const { data: updatedData, error } = await supabase
-      .from("post_views")
-      .upsert({ slug, count: newCount }, { onConflict: "slug" })
-      .select()
-      .single();
+    // 1. Atomic increment via Supabase RPC
+    const { data: updatedCount, error } = await supabase
+      .rpc("increment_post_views", { post_slug: slug });
 
     if (error) throw error;
 
-    return NextResponse.json({ count: updatedData.count });
+    return NextResponse.json({ count: updatedCount });
   } catch (error) {
     console.error("Error updating views in Supabase:", error);
     return NextResponse.json({ error: "Failed to update views" }, { status: 500 });
