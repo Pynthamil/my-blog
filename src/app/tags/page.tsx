@@ -1,4 +1,4 @@
-import AnimatedGradientText from "@/components/AnimatedGradientText";
+import GradientText from "@/components/GradientText";
 import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
 import { getPosts } from "../../../lib/hashnode";
@@ -32,12 +32,12 @@ export default async function TagsPage() {
   return (
     <main className="min-h-screen pt-32 pb-16 flex flex-col items-center">
       <div className="w-full max-w-[900px] px-4 text-center">
-        <AnimatedGradientText
+        <GradientText
           as="h1"
           className="font-syne text-4xl md:text-5xl font-extrabold mb-4"
         >
           Tags
-        </AnimatedGradientText>
+        </GradientText>
         <p className="text-muted mb-10 text-center">
             {"//"} explore what I've been writing about.
           </p>

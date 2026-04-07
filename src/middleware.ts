@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { apiRatelimit } from "./lib/ratelimit";
+import { apiRatelimit } from "./lib/supabase-ratelimit";
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
         );
       }
     } catch (e) {
-      // Fallback if Upstash/Redis is down
+      // Fallback if Supabase is down
       console.error("Middleware Ratelimit Error:", e);
     }
   }

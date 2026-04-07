@@ -2,7 +2,7 @@
 
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
-import { newsletterRatelimit } from "@/lib/ratelimit";
+import { newsletterRatelimit } from "@/lib/supabase-ratelimit";
 import { headers } from "next/headers";
 
 import { z } from "zod";
@@ -27,7 +27,7 @@ export async function subscribeToNewsletter(formData: FormData) {
 
   const { email } = validation.data;
 
-  // 0. Rate limiting by IP
+  // 0. Rate limiting via Supabase
   const headersList = await headers();
   const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
   const { success } = await newsletterRatelimit.limit(ip);

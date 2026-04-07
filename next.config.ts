@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://us.i.posthog.com https://giscus.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' blob: data: https://cdn.hashnode.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://pbs.twimg.com https://us.i.posthog.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://us.i.posthog.com https://hvihsxfmlcenhoqfkgrr.supabase.co https://giscus.app; frame-src 'self' https://giscus.app; object-src 'none';",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://us.i.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' blob: data: https://cdn.hashnode.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://pbs.twimg.com https://us.i.posthog.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://us.i.posthog.com https://hvihsxfmlcenhoqfkgrr.supabase.co; frame-src 'self'; object-src 'none';",
           },
         ],
       },

@@ -8,7 +8,11 @@ interface GradientTextProps {
   as?: React.ElementType;
 }
 
-export default function AnimatedGradientText({
+/**
+ * A simple component for gradient text. 
+ * The animation has been removed to keep it static as requested.
+ */
+export default function GradientText({
   children,
   className = "",
   as: Component = "span",

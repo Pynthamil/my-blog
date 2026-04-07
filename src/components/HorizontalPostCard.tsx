@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import AnimatedGradientText from "./AnimatedGradientText";
+import GradientText from "./GradientText";
 
 export interface HorizontalPostCardProps {
   title: string;
@@ -53,12 +53,12 @@ export default function HorizontalPostCard({
           <div className="px-6 py-4 md:py-5 md:pr-8 flex flex-col justify-between flex-1 min-w-0">
             <div>
               {/* Title */}
-              <AnimatedGradientText
+              <GradientText
                 as="h3"
                 className="font-syne text-[20px] md:text-[22px] font-black mb-1.5 leading-tight tracking-[-0.03em]"
               >
                 {title}
-              </AnimatedGradientText>
+              </GradientText>
 
               {/* Description */}
               <p className="text-muted text-[13px] md:text-[14px] leading-relaxed line-clamp-2 mb-3 font-medium opacity-80">

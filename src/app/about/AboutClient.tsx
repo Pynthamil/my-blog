@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import AnimatedGradientText from "@/components/AnimatedGradientText";
+import GradientText from "@/components/GradientText";
 import Image from "next/image";
 
 export default function AboutClient() {
@@ -42,12 +42,12 @@ export default function AboutClient() {
         >
           {/* Header Section */}
           <motion.div variants={itemVariants} className="mb-12">
-            <AnimatedGradientText
+            <GradientText
               as="h1"
               className="font-syne text-5xl md:text-7xl font-black leading-[1.1] tracking-tight"
             >
               About the<br />Logs.
-            </AnimatedGradientText>
+            </GradientText>
             <p className="text-muted mt-6 text-lg md:text-xl font-medium max-w-xl leading-relaxed">
               {"//"} documenting the journey of building software, exploring tech, and chasing edge cases.
             </p>

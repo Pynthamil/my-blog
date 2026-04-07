@@ -5,7 +5,7 @@ import { useMemo, Suspense } from "react";
 import PostCard from "@/components/PostCard";
 import SearchBar from "@/components/SearchBar";
 import EmptyState from "@/components/EmptyState";
-import AnimatedGradientText from "@/components/AnimatedGradientText";
+import GradientText from "@/components/GradientText";
 
 export default function SearchClient({ posts, children }: { posts: any[], children: React.ReactNode }) {
   return (
@@ -99,12 +99,12 @@ function SearchContent({ posts, children }: { posts: any[], children: React.Reac
     <div className="w-full max-w-[1100px] flex flex-col items-center">
       {filteredPosts.length > 0 ? (
         <div className="w-full rounded-3xl glow-border-strong bg-[var(--section-bg)] backdrop-blur-md p-6 md:p-8 border border-[var(--border-glow)]">
-            <AnimatedGradientText
+            <GradientText
               as="h2"
               className="font-syne text-2xl font-bold mb-8"
             >
               Search Results
-            </AnimatedGradientText>
+            </GradientText>
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
              {filteredPosts.map((post, i) => (
                <PostCard key={i} {...post} />

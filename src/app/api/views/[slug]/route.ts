@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { viewsRatelimit } from "@/lib/ratelimit";
+import { viewsRatelimit } from "@/lib/supabase-ratelimit";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -33,7 +33,7 @@ export async function POST(
   try {
     const { slug } = await params;
 
-    // 0. Rate limiting by IP
+    // 0. Rate limiting via Supabase
     const headersList = await headers();
     const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
     const { success } = await viewsRatelimit.limit(`${ip}_${slug}`);

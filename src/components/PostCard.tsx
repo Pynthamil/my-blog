@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import AnimatedGradientText from "./AnimatedGradientText";
+import GradientText from "./GradientText";
 
 export interface PostCardProps {
   title: React.ReactNode;
@@ -144,12 +144,12 @@ export default function PostCard({
                 </div>
 
                 {/* Title */}
-                <AnimatedGradientText
+                <GradientText
                   as="h3"
                   className="font-syne text-[26px] md:text-[28px] font-extrabold mb-3 leading-[1.1] tracking-[-0.03em]"
                 >
                   {title}
-                </AnimatedGradientText>
+                </GradientText>
 
                 {/* Description */}
                 <p className="text-[var(--text-secondary)] text-[15px] leading-relaxed mt-auto tracking-[-0.01em] line-clamp-2">
@@ -161,12 +161,12 @@ export default function PostCard({
             {isRecent && (
               <>
                 {/* Title */}
-                <AnimatedGradientText
+                <GradientText
                   as="h3"
                   className="font-syne text-[18px] md:text-[20px] font-extrabold leading-tight tracking-[-0.02em] mb-2 line-clamp-2"
                 >
                   {title}
-                </AnimatedGradientText>
+                </GradientText>
 
                 {/* Description */}
                 <p className="text-[var(--text-secondary)] text-[13px] leading-relaxed line-clamp-3">

@@ -35,6 +35,17 @@ export const newsletterRatelimit = new Ratelimit({
 });
 
 /**
+ * Global rate-limiter instance for comments.
+ * Limit: 5 requests per hour per IP.
+ */
+export const commentsRatelimit = new Ratelimit({
+  redis: kv,
+  limiter: Ratelimit.slidingWindow(5, "1 h"),
+  analytics: true,
+  prefix: "rl_comments",
+});
+
+/**
  * Baseline rate-limiter for all other API routes.
  * Limit: 50 requests per 10 seconds per IP (Burst protection).
  */

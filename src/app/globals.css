@@ -176,11 +176,8 @@ html {
     var(--grad-step-3),
     var(--grad-step-4),
     var(--grad-step-5),
-    var(--grad-step-6),
-    var(--grad-step-1)
+    var(--grad-step-6)
   );
-  background-size: 200% auto;
-  animation: gradient-move 4s linear infinite;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -201,11 +198,8 @@ html {
     var(--grad-step-3),
     var(--grad-step-4),
     var(--grad-step-5),
-    var(--grad-step-6),
-    var(--grad-step-1)
+    var(--grad-step-6)
   );
-  background-size: 200% auto;
-  animation: gradient-move 4s linear infinite;
 }
 
 

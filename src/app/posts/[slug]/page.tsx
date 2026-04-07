@@ -10,7 +10,7 @@ import SyntaxHighlighter from "@/components/SyntaxHighlighter";
 import PostCard, { PostCardProps } from "@/components/PostCard";
 import ImageZoom from "@/components/ImageZoom";
 import ViewCount from "@/components/ViewCount";
-import AnimatedGradientText from "@/components/AnimatedGradientText";
+import GradientText from "@/components/GradientText";
 
 import { getPost, getPosts } from "../../../../lib/hashnode";
 import { notFound } from "next/navigation";
@@ -312,12 +312,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </div>
 
           {/* Title */}
-          <AnimatedGradientText
+          <GradientText
             as="h1"
             className="font-syne text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-[-0.03em]"
           >
             {post.title}
-          </AnimatedGradientText>
+          </GradientText>
         </header>
 
         {/* ── Cover Image ── */}
@@ -393,12 +393,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       {relatedPosts.length > 0 && (
         <section className="w-full flex justify-center px-4 pt-4 pb-16">
           <div className="w-full max-w-[1100px]">
-            <AnimatedGradientText
+            <GradientText
               as="h2"
               className="font-syne text-2xl md:text-3xl font-extrabold mb-8"
             >
               Related Posts
-            </AnimatedGradientText>
+            </GradientText>
             <div className="glow-border-strong rounded-3xl bg-[var(--section-bg)] backdrop-blur-md p-6 md:p-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedPosts.map((rp: PostCardProps, i: number) => (
