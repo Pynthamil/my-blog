@@ -97,8 +97,9 @@ export default function AboutClient() {
               </h3>
               <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                 Everything here is powered by <span className="text-foreground font-semibold">Next.js</span>, 
-                <span className="text-foreground font-semibold">Tailwind CSS</span>, and 
-                <span className="text-foreground font-semibold">Hashnode&apos;s Headless CMS</span>. 
+                <span className="text-foreground font-semibold">Tailwind CSS</span>, 
+                <span className="text-foreground font-semibold">Supabase</span> (for views, likes, & comments), 
+                and <span className="text-foreground font-semibold">Hashnode</span> for posts. 
                 Hosted on Vercel for that sweet instant-deploy high.
               </p>
             </motion.div>
