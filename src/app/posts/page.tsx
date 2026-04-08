@@ -13,25 +13,32 @@ export const metadata: Metadata = {
 };
 
 export default async function PostsPage() {
-  const posts = await getPosts();
-
-  // Batch fetch views from Supabase for efficiency
-  const slugs = posts.map((p: any) => p.href.split('/').pop()).filter(Boolean) as string[];
-  
+  let posts: any[] = [];
   let viewsMap: Record<string, number> = {};
-  if (slugs.length > 0) {
-    try {
-      const { data } = await supabase
-        .from("post_views")
-        .select("slug, count")
-        .in("slug", slugs);
-      
-      if (data) {
-        viewsMap = data.reduce((acc, curr) => ({ ...acc, [curr.slug]: curr.count }), {});
+
+  try {
+    posts = await getPosts();
+
+    // Batch fetch views from Supabase for efficiency
+    const slugs = posts.map((p: any) => p.href.split('/').pop()).filter(Boolean) as string[];
+    
+    if (slugs.length > 0) {
+      try {
+        const { data } = await supabase
+          .from("post_views")
+          .select("slug, count")
+          .in("slug", slugs);
+        
+        if (data) {
+          viewsMap = data.reduce((acc, curr) => ({ ...acc, [curr.slug]: curr.count }), {});
+        }
+      } catch (err) {
+        console.error("Failed to batch fetch views:", err);
       }
-    } catch (err) {
-      console.error("Failed to batch fetch views:", err);
     }
+  } catch (err) {
+    console.error("Failed to fetch posts:", err);
+    // posts remains []
   }
 
   return (

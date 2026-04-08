@@ -135,7 +135,19 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  cursor: url('/images/cursor-default.png'), auto;
 }
+
+/* Custom Cursor for interactive elements */
+a, 
+button, 
+[role="button"], 
+input[type="submit"], 
+input[type="button"], 
+.pointer {
+  cursor: url('/images/cursor-pointer.png'), pointer !important;
+}
+
 
 /* Account for the fixed navbar when navigating to in-page anchors */
 html {

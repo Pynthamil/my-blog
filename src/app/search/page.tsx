@@ -12,7 +12,12 @@ export const metadata: Metadata = {
 };
 
 export default async function SearchPage() {
-  const posts = await getPosts();
+  let posts: any[] = [];
+  try {
+    posts = await getPosts();
+  } catch (err) {
+    console.error("Failed to fetch posts for search:", err);
+  }
   
   return (
     <main className="min-h-screen pt-32 pb-16 flex flex-col items-center">
