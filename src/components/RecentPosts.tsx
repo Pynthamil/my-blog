@@ -10,11 +10,12 @@ export default async function RecentPosts() {
   let viewsMap: Record<string, number> = {};
 
   try {
-    posts = await getPosts();
-    const recentPosts = posts.slice(0, 4);
+    const data = await getPosts();
+    posts = data.posts;
+    const recentPostsList = posts.slice(0, 4);
 
     // Batch fetch views from Supabase for efficiency
-    const slugs = recentPosts.map((p: any) => p.href.split('/').pop()).filter(Boolean) as string[];
+    const slugs = recentPostsList.map((p: any) => p.href.split('/').pop()).filter(Boolean) as string[];
     
     if (slugs.length > 0) {
       try {

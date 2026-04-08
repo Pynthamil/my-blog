@@ -24,9 +24,8 @@ function formatHashnodeDate(publishedAt: string) {
   return `${day}${suffix} ${month} ${year}`;
 }
 
-let postsCacheValue: any[] | null = null;
-let postsCacheExpiresAt = 0;
-let postsInFlight: Promise<any[]> | null = null;
+const postsCache = new Map<string, { value: { posts: any[], pageInfo: any }, expiresAt: number }>();
+const postsInFlightMap = new Map<string, Promise<{ posts: any[], pageInfo: any }>>();
 
 const postCacheValue = new Map<string, { value: any; expiresAt: number }>();
 const postInFlight = new Map<string, Promise<any>>();
@@ -35,16 +34,21 @@ let allPostsCacheValue: any[] | null = null;
 let allPostsCacheExpiresAt = 0;
 let allPostsInFlight: Promise<any[]> | null = null;
 
-export async function getPosts(first: number = 20) {
+export async function getPosts(first: number = 20, after: string | null = null) {
+  const cacheKey = `${first}-${after || "null"}`;
   const now = Date.now();
-  if (postsCacheValue && postsCacheExpiresAt > now) return postsCacheValue;
-  if (postsInFlight) return postsInFlight;
+  
+  const cached = postsCache.get(cacheKey);
+  if (cached && cached.expiresAt > now) return cached.value;
+  
+  const inFlight = postsInFlightMap.get(cacheKey);
+  if (inFlight) return inFlight;
 
   const promise = (async () => {
     const query = gql`
-      query GetPosts($first: Int!) {
+      query GetPosts($first: Int!, $after: String) {
         publication(host: "pyndu-logs.hashnode.dev") {
-          posts(first: $first) {
+          posts(first: $first, after: $after) {
             edges {
               node {
                 title
@@ -60,16 +64,22 @@ export async function getPosts(first: number = 20) {
                   name
                 }
               }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
             }
           }
         }
       }
     `;
 
-    const data: any = await client.request(query, { first });
+    const data: any = await client.request(query, { first, after });
     const edges = data?.publication?.posts?.edges || [];
+    const pageInfo = data?.publication?.posts?.pageInfo || { hasNextPage: false, endCursor: null };
 
-    const result = edges.map(({ node }: any) => {
+    const resultPosts = edges.map(({ node }: any) => {
       return {
         title: node.title,
         description: node.brief,
@@ -85,21 +95,21 @@ export async function getPosts(first: number = 20) {
       };
     });
 
-    // Explicitly sort by publishedAt descending to ensure latest is always first
-    result.sort((a: any, b: any) => 
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
-
-    postsCacheValue = result;
-    postsCacheExpiresAt = Date.now() + 10000; // 10 seconds cache to be snappy
-    return result;
+    // Hashnode returns internal chronological order, but we explicitly sort
+    // to ensure the descending order (newest first) is preserved if needed.
+    // Note: for cursors to work correctly, we usually stick to Hashnode's return order.
+    // Hashnode's default for `posts` is newest-first.
+    
+    const value = { posts: resultPosts, pageInfo };
+    postsCache.set(cacheKey, { value, expiresAt: Date.now() + 10000 });
+    return value;
   })();
 
-  postsInFlight = promise;
+  postsInFlightMap.set(cacheKey, promise);
   try {
     return await promise;
   } finally {
-    postsInFlight = null;
+    postsInFlightMap.delete(cacheKey);
   }
 }
 

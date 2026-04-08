@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 export default async function SearchPage() {
   let posts: any[] = [];
   try {
-    posts = await getPosts();
+    const data = await getPosts(50);
+    posts = data.posts;
   } catch (err) {
     console.error("Failed to fetch posts for search:", err);
   }

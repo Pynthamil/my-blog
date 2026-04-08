@@ -191,8 +191,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     return notFound();
   }
 
-  // Fetch all posts to build the mesh
-  const allPosts = await getPosts();
+  // Fetch posts to build the mesh
+  const { posts: allPosts } = await getPosts(50);
 
   // 1. Calculate Related Posts based on similarity
   const relatedPosts = allPosts

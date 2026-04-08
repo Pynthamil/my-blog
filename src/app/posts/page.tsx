@@ -4,6 +4,8 @@ import { supabase } from "@/lib/supabase";
 import GradientText from "@/components/GradientText";
 import { Metadata } from "next";
 
+import Pagination from "@/components/Pagination";
+
 export const metadata: Metadata = {
   title: "All Posts",
   description: "Browse all articles, tutorials, and experiments. Covering Next.js, Notion, coding projects, and more.",
@@ -12,25 +14,33 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function PostsPage() {
+export default async function PostsPage({ 
+  searchParams 
+}: { 
+  searchParams: Promise<{ after?: string }> 
+}) {
+  const { after } = await searchParams;
   let posts: any[] = [];
+  let pageInfo = { hasNextPage: false, endCursor: null };
   let viewsMap: Record<string, number> = {};
 
   try {
-    posts = await getPosts();
+    const data = await getPosts(10, after || null);
+    posts = data.posts;
+    pageInfo = data.pageInfo;
 
     // Batch fetch views from Supabase for efficiency
     const slugs = posts.map((p: any) => p.href.split('/').pop()).filter(Boolean) as string[];
     
     if (slugs.length > 0) {
       try {
-        const { data } = await supabase
+        const { data: viewsData } = await supabase
           .from("post_views")
           .select("slug, count")
           .in("slug", slugs);
         
-        if (data) {
-          viewsMap = data.reduce((acc, curr) => ({ ...acc, [curr.slug]: curr.count }), {});
+        if (viewsData) {
+          viewsMap = viewsData.reduce((acc, curr) => ({ ...acc, [curr.slug]: curr.count }), {});
         }
       } catch (err) {
         console.error("Failed to batch fetch views:", err);
@@ -67,6 +77,7 @@ export default async function PostsPage() {
             );
           })}
         </div>
+        <Pagination hasNextPage={pageInfo.hasNextPage} endCursor={pageInfo.endCursor} />
       </div>
     </main>
   );
