@@ -1,25 +1,23 @@
 "use server";
 
 import { Resend } from "resend";
-import { supabase } from "@/lib/supabase";
-import { newsletterRatelimit } from "@/lib/supabase-ratelimit";
-import { headers } from "next/headers";
-
 import { z } from "zod";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+const AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID;
 
 const newsletterSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
 });
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 /**
- * Server Action to handle newsletter subscriptions via Supabase and Resend.
+ * Server Action to handle newsletter subscriptions via Resend Audiences.
+ * This approach is more developer-friendly and integrates directly with Resend contacts.
  */
 export async function subscribeToNewsletter(formData: FormData) {
   const emailInput = (formData.get("email") as string)?.toLowerCase().trim();
 
-  // Validate email with Zod
+  // 1. Validate email with Zod
   const validation = newsletterSchema.safeParse({ email: emailInput });
   if (!validation.success) {
     return { error: validation.error.issues[0].message };
@@ -27,64 +25,36 @@ export async function subscribeToNewsletter(formData: FormData) {
 
   const { email } = validation.data;
 
-  // 0. Rate limiting via Supabase
-  const headersList = await headers();
-  const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
-  const { success } = await newsletterRatelimit.limit(ip);
-
-  if (!success) {
-    return { error: "Too many requests. Please try again later." };
+  if (!process.env.RESEND_API_KEY || !AUDIENCE_ID) {
+    console.error("[Newsletter] Missing RESEND_API_KEY or RESEND_AUDIENCE_ID.");
+    return { error: "Newsletter service is not configured yet." };
   }
 
   try {
-    // 1. Check if the subscriber already exists in Supabase
-    const { data: existing, error: fetchError } = await supabase
-      .from("subscribers")
-      .select("id")
-      .eq("email", email)
-      .single();
+    // 2. Create contact in Resend Audience
+    const { error } = await resend.contacts.create({
+      email: email,
+      audienceId: AUDIENCE_ID,
+      unsubscribed: false, // This means they are subscribed
+    });
 
-    if (existing) {
-      return { success: true, message: "You're already on the list! 🎉" };
-    }
-
-    // 2. Insert into Supabase
-    const { error: insertError } = await supabase
-      .from("subscribers")
-      .insert({ email });
-
-    if (insertError) {
-      if (insertError.code === "23505") { // Unique violation
+    if (error) {
+      // Check if the user is already subscribed (Resend returns specific error messages)
+      const isDuplicate = error.message.toLowerCase().includes("already exists") || 
+                          error.message.toLowerCase().includes("duplicate");
+      
+      if (isDuplicate) {
         return { success: true, message: "You're already on the list! 🎉" };
       }
-      throw insertError;
-    }
-
-    // 3. Optional: Notify or Welcome via Resend
-    if (process.env.RESEND_API_KEY) {
-      try {
-        await resend.emails.send({
-          from: "pyndu logs <onboarding@resend.dev>", // Replace with verified domain if available
-          to: email,
-          subject: "You're in! Welcome to pyndu logs 🚀",
-          html: `<div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-            <h1 style="color: #7c3aed;">Welcome to the grind! 🎉</h1>
-            <p>Thanks for subscribing to <strong>pyndu logs</strong>. I'm excited to have you on board.</p>
-            <p>You'll get occasional updates when I post new logs about coding, design experiments, and building in public.</p>
-            <hr style="margin: 20px 0; border: none; border-top: 1px solid #e2e8f0;" />
-            <p style="font-size: 12px; color: #64748b;">If you didn't sign up for this, you can safely ignore this email.</p>
-          </div>`,
-        });
-      } catch (resendError) {
-        // We don't fail the whole action if Resend fails, as long as Supabase works
-        console.error("[Newsletter] Resend failed but Supabase succeeded:", resendError);
-      }
+      
+      throw error;
     }
 
     console.log(`[Newsletter] New Subscriber: ${email}`);
-    return { success: true };
+    return { success: true, message: "You're in ✨" };
+
   } catch (error: any) {
-    console.error("Newsletter submission error:", error);
+    console.error("Resend Audience submission error:", error);
     return { error: "Something went wrong. Please try again later." };
   }
 }
