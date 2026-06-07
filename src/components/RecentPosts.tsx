@@ -1,6 +1,6 @@
 import PostCard, { PostCardProps } from "./PostCard";
 import EmptyState from "./EmptyState";
-import { getPosts } from "../../lib/hashnode";
+import { getPosts } from "../../lib/mdx";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import GradientText from "./GradientText";

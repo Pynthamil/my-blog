@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import SearchClient from "./SearchClient";
 import RecentPosts from "@/components/RecentPosts";
-import { getPosts } from "../../../lib/hashnode";
+import { getPosts } from "../../../lib/mdx";
 
 export const metadata: Metadata = {
   title: "Search",

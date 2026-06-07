@@ -12,36 +12,34 @@ import ImageZoom from "@/components/ImageZoom";
 import ViewCount from "@/components/ViewCount";
 import GradientText from "@/components/GradientText";
 
-import { getPost, getPosts } from "../../../../lib/hashnode";
+import { getPost, getPosts } from "../../../../lib/mdx";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypeSlug from "rehype-slug";
 import { notFound } from "next/navigation";
-import sanitizeHtml from "sanitize-html";
 
-const sanitizeOptions = {
-  allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-    "img", "h2", "h3", "span", "div", "mark",
-    "table", "thead", "tbody", "tr", "th", "td",
-    "figure", "figcaption", "iframe"
-  ]),
-  allowedAttributes: {
-    ...sanitizeHtml.defaults.allowedAttributes,
-    a: [...(sanitizeHtml.defaults.allowedAttributes.a || []), "href", "name", "target", "rel", "class"],
-    img: ["src", "alt", "title", "width", "height", "loading", "class", "srcset", "sizes", "data-src", "data-srcset"],
-    iframe: ["src", "width", "height", "frameborder", "allowfullscreen", "style", "class", "title", "loading"],
-    h1: ["id", "class"],
-    h2: ["id", "class"],
-    h3: ["id", "class"],
-    pre: ["class"],
-    code: ["class"],
-    "*": ["class", "id", "style"]
-  },
-  allowedSchemes: ["http", "https", "mailto", "tel"],
-  allowedSchemesByTag: {
-    img: ["http", "https"],
-    iframe: ["http", "https"],
-    a: ["http", "https", "mailto", "tel"]
-  },
-  disallowedTagsMode: "discard"
+function extractHeadings(markdown: string) {
+  const headingRegex = /^(#{2,3})\s+(.*)$/gm;
+  const headings: { id: string; text: string; level: number }[] = [];
+  let match;
+  while ((match = headingRegex.exec(markdown)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    const id = text.toLowerCase().replace(/[^a-z0-9\-_:.]+/g, "-").replace(/(^-|-$)/g, "");
+    headings.push({ id, text, level });
+  }
+  return headings;
+}
+
+const components = {
+  img: (props: any) => {
+    const caption = props.title || props.alt || "";
+    if (caption && !["image", "blog post cover", "cover", "undefined", "null"].includes(caption.toLowerCase())) {
+      return <figure><img {...props} /><figcaption>{caption}</figcaption></figure>;
+    }
+    return <figure><img {...props} /></figure>;
+  }
 };
+
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -86,39 +84,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-function parseContentAndHeadings(html: string) {
-  const headingRegex = /<h([23])([^>]*)>(.*?)<\/h\1>/gi;
-  const headings: { id: string; text: string; level: number }[] = [];
-
-  const parsedHtml = html.replace(headingRegex, (fullMatch, level, attrs, innerHtml) => {
-    const attrsStr = typeof attrs === "string" ? attrs : "";
-    const idMatch = attrsStr.match(/id="([^"]+)"/);
-    const classMatch = attrsStr.match(/class="([^"]*)"/);
-    let id = idMatch ? idMatch[1] : "";
-    const rawText = innerHtml.replace(/<[^>]*>/g, '').trim();
-
-    // Normalize the id so it can safely be used in the DOM and for in-page TOC anchors.
-    const normalizeHeadingId = (value: string) =>
-      value
-        .toLowerCase()
-        .replace(/[^a-z0-9\-_:.]+/g, "-")
-        .replace(/(^-|-$)/g, "");
-
-    if (!id) id = rawText.toLowerCase();
-    id = normalizeHeadingId(id);
-
-    const classAttr = classMatch ? ` class="${classMatch[1].slice(0, 200)}"` : "";
-
-    if (rawText) {
-      headings.push({ id, text: rawText, level: parseInt(level) });
-    }
-
-    return `<h${level} id="${id}"${classAttr}>${innerHtml}</h${level}>`;
-  });
-
-  return { html: parsedHtml, headings };
-}
-
 function getSimilarityScore(post1: any, post2: any) {
   const tags1 = new Set(post1.tags || []);
   const tags2 = new Set(post2.tags || []);
@@ -127,60 +92,6 @@ function getSimilarityScore(post1: any, post2: any) {
     if (tags2.has(tag)) intersection++;
   }
   return intersection;
-}
-
-function injectInternalLinks(html: string, allPosts: any[], currentSlug: string) {
-  let content = html;
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app";
-
-  // Sort posts by title length descending to prevent partial matches (e.g. "React" vs "React Testing")
-  const otherPosts = allPosts
-    .filter(p => !p.href.endsWith(`/${currentSlug}`))
-    .sort((a: any, b: any) => b.title.length - a.title.length);
-
-  // We'll use a placeholder technique to avoid linking inside already existing tags/blocks
-  const codeBlocks: string[] = [];
-  content = content.replace(/<(pre|code|a|h\d)[^>]*>[\s\S]*?<\/\1>/gi, (match) => {
-    codeBlocks.push(match);
-    return `___CODE_BLOCK_${codeBlocks.length - 1}___`;
-  });
-
-  let linksCount = 0;
-  const MAX_LINKS = 5;
-
-  for (const p of otherPosts) {
-    if (linksCount >= MAX_LINKS) break;
-
-    // Create a regex for the title (case-insensitive)
-    const escapedTitle = p.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const regex = new RegExp(`\\b${escapedTitle}\\b`, "i");
-
-    if (regex.test(content)) {
-      content = content.replace(regex, (match) => {
-        linksCount++;
-        return `<a href="${p.href}" class="internal-link" title="Read more: ${p.title}">${match}</a>`;
-      });
-    }
-  }
-
-  // Restore code blocks
-  content = content.replace(/___CODE_BLOCK_(\d+)___/g, (_, id) => codeBlocks[parseInt(id)]);
-
-  return content;
-}
-
-function transformImages(html: string) {
-  const imgRegex = /<img([^>]+)>/gi;
-  return html.replace(imgRegex, (match, attrs) => {
-    const altMatch = attrs.match(/alt="([^"]*)"/i);
-    const titleMatch = attrs.match(/title="([^"]*)"/i);
-    const caption = (titleMatch ? titleMatch[1] : (altMatch ? altMatch[1] : "")).trim();
-
-    if (caption && !["image", "blog post cover", "cover", "undefined", "null"].includes(caption.toLowerCase())) {
-      return `<figure>${match}<figcaption>${caption}</figcaption></figure>`;
-    }
-    return `<figure>${match}</figure>`;
-  });
 }
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
@@ -204,14 +115,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     .sort((a: any, b: any) => b.score - a.score || new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     .slice(0, 3);
 
-  // 2. Inject Internal Links (The Mesh)
-  const { html: parsedContent, headings } = post ? parseContentAndHeadings(post.content) : { html: "", headings: [] };
-  const meshedContent = injectInternalLinks(parsedContent, allPosts, slug);
-  const transformedContent = transformImages(meshedContent);
-  const sanitizedContent = transformedContent ? sanitizeHtml(transformedContent, {
-    ...sanitizeOptions,
-    allowedTags: [...(sanitizeOptions.allowedTags || []), "a"] // Ensure <a> is allowed (it's already in defaults but just in case)
-  }) : "";
+  // Extract TOC Headings from Markdown
+  const headings = extractHeadings(post.content);
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app";
   const toAbsoluteUrl = (url: string) =>
@@ -351,10 +256,17 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <div className="relative w-full max-w-[720px] shrink-0">
             {/* Soft ambient mask to dim the dot grid behind body text */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[110%] bg-[var(--ambient-glow)] opacity-45 blur-[100px] rounded-full pointer-events-none -z-10" />
-            <div
-              className="prose-blog w-full max-none text-foreground leading-relaxed mb-16"
-              dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-            />
+            <div className="prose-blog w-full max-none text-foreground leading-relaxed mb-16">
+              <MDXRemote 
+                source={post.content} 
+                components={components} 
+                options={{
+                  mdxOptions: {
+                    rehypePlugins: [rehypeSlug],
+                  }
+                }}
+              />
+            </div>
 
             {/* ── Footer Interaction Area ── */}
             <div className="w-full flex flex-col gap-12 mt-16 mb-20 px-4 md:px-0">

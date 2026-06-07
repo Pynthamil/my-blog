@@ -1,4 +1,4 @@
-import { getRecentPostsForRSS } from "../../../lib/hashnode";
+import { getRecentPostsForRSS } from "../../../lib/mdx";
 
 export const revalidate = 300; // seconds (5 minutes)
 

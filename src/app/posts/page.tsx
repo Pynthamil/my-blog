@@ -1,5 +1,5 @@
 import HorizontalPostCard from "@/components/HorizontalPostCard";
-import { getPosts } from "../../../lib/hashnode";
+import { getPosts } from "../../../lib/mdx";
 import { supabase } from "@/lib/supabase";
 import GradientText from "@/components/GradientText";
 import { Metadata } from "next";
@@ -21,7 +21,7 @@ export default async function PostsPage({
 }) {
   const { after } = await searchParams;
   let posts: any[] = [];
-  let pageInfo = { hasNextPage: false, endCursor: null };
+  let pageInfo: { hasNextPage: boolean; endCursor: string | null } = { hasNextPage: false, endCursor: null };
   let viewsMap: Record<string, number> = {};
 
   try {

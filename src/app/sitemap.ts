@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getAllPostsForSitemap } from '../../lib/hashnode';
+import { getAllPostsForSitemap } from '../../lib/mdx';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://my-blog-tan-tau.vercel.app';

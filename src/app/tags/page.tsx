@@ -1,7 +1,7 @@
 import GradientText from "@/components/GradientText";
 import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
-import { getPosts } from "../../../lib/hashnode";
+import { getPosts } from "../../../lib/mdx";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function TagsPage() {
-  const posts = await getPosts();
+  const { posts } = await getPosts();
 
   // Automatically parse all available tags from the Headless CMS payload
   const tagCounts: Record<string, number> = {};
