@@ -22,16 +22,13 @@ const categories = [
     href: "/categories/design",
     bgClass: "bg-[#f97316]",
     illustration: (
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-        {/* Big orange circle */}
-        <div className="w-48 h-48 bg-[#ea580c] rounded-full translate-y-12 relative flex justify-center">
-           {/* Smiley */}
-           <svg className="absolute top-10 w-24 h-12 text-black/80" viewBox="0 0 100 50" fill="none">
-              <path d="M 20 20 Q 30 30 40 20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
-              <path d="M 60 20 Q 70 30 80 20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
-              <path d="M 10 35 Q 50 60 90 35" stroke="currentColor" strokeWidth="5" strokeLinecap="round" fill="none" />
-           </svg>
-        </div>
+      <div className="absolute inset-0">
+        <Image 
+          src="/images/design.svg"
+          alt="Design Illustration"
+          fill
+          className="object-cover"
+        />
       </div>
     )
   },
