@@ -57,8 +57,8 @@ export default function PostCard({
           <div
             className={
               isRecent || isFeatured
-                ? `relative aspect-[16/9] w-full ${imageBg} overflow-hidden rounded-2xl border border-white/10`
-                : `relative w-full aspect-[16/9] ${imageBg} overflow-hidden`
+                ? `relative aspect-[4/3] w-full ${imageBg} overflow-hidden rounded-2xl border border-white/10`
+                : `relative w-full aspect-[4/3] ${imageBg} overflow-hidden`
             }
           >
             <Image

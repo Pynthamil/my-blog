@@ -43,7 +43,7 @@ export default function PaginatedPosts({ posts, viewsMap }: { posts: any[], view
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 w-full mb-12">
         {currentPosts.map((post: any, i: number) => {
           const slug = post.href.split('/').pop() || "";
           return (
