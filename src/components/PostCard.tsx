@@ -43,7 +43,7 @@ export default function PostCard({
     <a href={href} className="block group">
       {/* Card wrapper */}
       <div
-        className="rounded-[24px] h-full transition-all duration-300 group-hover:-translate-y-1 border border-[var(--navbar-border)]"
+        className="rounded-[24px] h-full transition-all duration-300 group-hover:-translate-y-1"
       >
         <div
           className="rounded-[23px] overflow-hidden h-full flex flex-col shadow-[var(--card-shadow)] bg-[var(--bg-secondary)]"

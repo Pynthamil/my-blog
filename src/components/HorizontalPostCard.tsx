@@ -31,13 +31,13 @@ export default function HorizontalPostCard({
     <a href={href} className="block group w-full">
       {/* Container wrapper */}
       <div
-        className="rounded-[24px] transition-all duration-300 group-hover:-translate-y-1 shadow-[var(--card-shadow)] border border-[var(--navbar-border)]"
+        className="rounded-[24px] transition-all duration-300 group-hover:-translate-y-1 shadow-[var(--card-shadow)]"
       >
         <div className="rounded-[20px] overflow-hidden flex flex-col md:flex-row bg-[var(--bg-secondary)]">
           
           {/* Image Area (Left on Desktop) */}
           <div className="p-3 md:p-3.5 md:w-[380px] shrink-0">
-            <div className={`relative w-full aspect-[2.4/1] md:h-full ${imageBg} rounded-[12px] overflow-hidden border-4 border-[var(--border-subtle)]`}>
+            <div className={`relative w-full aspect-[2.4/1] md:h-full ${imageBg} rounded-[12px] overflow-hidden`}>
               <Image
                 src={imageUrl}
                 alt={title}
