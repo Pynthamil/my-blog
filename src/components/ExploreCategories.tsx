@@ -70,7 +70,7 @@ export default function ExploreCategories() {
       <div className="w-full max-w-[1200px]">
         {/* Section Header */}
         <h2 className="font-syne text-[26px] md:text-[32px] font-extrabold mb-8 tracking-tight text-[var(--text-primary)]">
-          Explore articles by category
+          Explore blogs by category
         </h2>
 
         {/* 4-Column Grid */}

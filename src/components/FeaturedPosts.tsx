@@ -39,7 +39,7 @@ export default async function FeaturedPosts() {
       <div className="w-full max-w-[1200px]">
         {/* Section Header */}
         <h2 className="font-syne text-[32px] md:text-[42px] font-black mb-8 md:mb-12 tracking-tight gradient-text-base drop-shadow-[0_0_15px_rgba(132,148,255,0.3)] inline-block">
-          Featured Projects
+          Featured Blog
         </h2>
 
         {/* Single Massive Featured Post */}

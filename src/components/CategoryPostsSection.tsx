@@ -16,7 +16,7 @@ export default function CategoryPostsSection({ category, posts, viewsMap }: Cate
         {/* Section Header */}
         <div className="flex items-end justify-between mb-8 md:mb-10">
           <h2 className="font-syne text-[26px] md:text-[32px] font-extrabold tracking-tight text-[var(--text-primary)]">
-            Latest {category} articles
+            Latest {category} blogs
           </h2>
           <Link
             href={`/categories/${category.toLowerCase()}`}

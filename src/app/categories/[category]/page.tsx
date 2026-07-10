@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   const decodedCategory = decodeURIComponent(category);
   return {
     title: `${decodedCategory.charAt(0).toUpperCase() + decodedCategory.slice(1)} Posts`,
-    description: `Browse all articles and tutorials in the ${decodedCategory} category.`,
+    description: `Browse all blogs and tutorials in the ${decodedCategory} category.`,
   };
 }
 

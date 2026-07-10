@@ -8,7 +8,7 @@ import Pagination from "@/components/Pagination";
 
 export const metadata: Metadata = {
   title: "All Posts",
-  description: "Browse all articles, tutorials, and experiments. Covering Next.js, Notion, coding projects, and more.",
+  description: "Browse all blogs, tutorials, and experiments. Covering Next.js, Notion, coding projects, and more.",
   alternates: {
     canonical: "/posts",
   },
