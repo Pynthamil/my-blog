@@ -1,12 +1,11 @@
-<svg width="82" height="82" viewBox="0 0 82 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="81.2227" height="81.2227" rx="40.6113" fill="url(#paint0_linear_62_60922)"/>
-<circle cx="22.3364" cy="37.2271" r="3.38428" fill="black"/>
-<circle cx="58.8862" cy="37.2271" r="3.38428" fill="black"/>
-<path d="M54.1482 41.681C54.1482 47.1576 48.2128 51.834 41.4143 51.834C34.6159 51.834 28.4277 47.157 28.4277 41.6805C28.4277 36.2039 34.4895 38.2969 41.288 38.2969C48.0865 38.2969 54.1482 36.2044 54.1482 41.681Z" fill="black"/>
-<defs>
-<linearGradient id="paint0_linear_62_60922" x1="40.6113" y1="0" x2="40.6113" y2="81.2227" gradientUnits="userSpaceOnUse">
-<stop stop-color="#F6CCEA"/>
-<stop offset="1" stop-color="#FEE6FF"/>
-</linearGradient>
-</defs>
+<svg width="472" height="472" viewBox="0 0 472 472" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="236" cy="236" r="236" fill="#FFC3FC"/>
+<circle cx="207.071" cy="237.522" r="207.071" fill="#FFDBFD"/>
+<circle cx="98.9642" cy="251.226" r="28.929" fill="#CD9ECA"/>
+<circle cx="98.9642" cy="251.226" r="28.929" fill="#CD9ECA"/>
+<circle cx="98.9642" cy="251.226" r="28.929" fill="#CD9ECA"/>
+<circle cx="363.902" cy="251.226" r="28.929" fill="#CD9ECA"/>
+<circle cx="363.902" cy="251.226" r="28.929" fill="#CD9ECA"/>
+<circle cx="363.902" cy="251.226" r="28.929" fill="#CD9ECA"/>
+<path d="M181 280L197.847 285.969C219.455 293.626 243.037 293.625 264.645 285.969L281.49 280" stroke="#CD9ECA" stroke-width="21.3161" stroke-linecap="round"/>
 </svg>

@@ -17,7 +17,7 @@ export interface PostCardProps {
   href?: string;
   tags?: string[];
   priority?: boolean;
-  variant?: "default" | "recent";
+  variant?: "default" | "recent" | "featured";
   views?: number;
 }
 
@@ -38,6 +38,7 @@ export default function PostCard({
   views,
 }: PostCardProps) {
   const isRecent = variant === "recent";
+  const isFeatured = variant === "featured";
 
   return (
     <a href={href} className="block group">
@@ -47,7 +48,7 @@ export default function PostCard({
       >
         <div
           className={
-            isRecent
+            isRecent || isFeatured
               ? "h-full flex flex-col"
               : "rounded-[23px] overflow-hidden h-full flex flex-col shadow-[var(--card-shadow)] bg-[var(--bg-secondary)]"
           }
@@ -55,7 +56,7 @@ export default function PostCard({
           {/* Image Area */}
           <div
             className={
-              isRecent
+              isRecent || isFeatured
                 ? `relative aspect-[16/9] w-full ${imageBg} overflow-hidden rounded-2xl border border-white/10`
                 : `relative w-full aspect-[16/9] ${imageBg} overflow-hidden`
             }
@@ -71,8 +72,8 @@ export default function PostCard({
           </div>
 
           {/* Content */}
-          <div className={isRecent ? "pt-5 flex flex-col flex-1" : "p-6 md:p-8 flex flex-col flex-1 bg-shadow-200"}>
-            {!isRecent && (
+          <div className={isRecent || isFeatured ? "pt-5 flex flex-col flex-1" : "p-6 md:p-8 flex flex-col flex-1 bg-shadow-200"}>
+            {!isRecent && !isFeatured && (
               <>
                 {/* Metadata Badges */}
                 <div className="flex flex-wrap items-center gap-3 mb-5">
@@ -171,6 +172,34 @@ export default function PostCard({
                 >
                   {title}
                 </GradientText>
+              </>
+            )}
+
+            {isFeatured && (
+              <>
+                {/* Tags (just the first one for minimalism) */}
+                {tags && tags.length > 0 && (
+                  <div className="flex gap-2 mb-3">
+                    <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">
+                      {tags[0]}
+                    </span>
+                    <span className="text-xs text-gray-600">•</span>
+                    <span className="text-xs font-medium text-[var(--text-secondary)]">
+                      {readingTime}
+                    </span>
+                  </div>
+                )}
+                {/* Title */}
+                <GradientText
+                  as="h3"
+                  className="font-syne text-[22px] md:text-[26px] font-extrabold leading-tight tracking-tight mb-3 line-clamp-2"
+                >
+                  {title}
+                </GradientText>
+                {/* Description */}
+                <p className="text-[var(--text-secondary)] text-[14px] md:text-[15px] leading-relaxed line-clamp-2">
+                  {description}
+                </p>
               </>
             )}
           </div>

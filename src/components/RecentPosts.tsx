@@ -1,9 +1,8 @@
-import PostCard, { PostCardProps } from "./PostCard";
 import EmptyState from "./EmptyState";
 import { getPosts } from "../../lib/mdx";
 import { supabase } from "@/lib/supabase";
+import CategoryPostsSection from "./CategoryPostsSection";
 import Link from "next/link";
-import GradientText from "./GradientText";
 
 export default async function RecentPosts() {
   let posts: any[] = [];
@@ -12,10 +11,9 @@ export default async function RecentPosts() {
   try {
     const data = await getPosts();
     posts = data.posts;
-    const recentPostsList = posts.slice(0, 3);
 
     // Batch fetch views from Supabase for efficiency
-    const slugs = recentPostsList.map((p: any) => p.href.split('/').pop()).filter(Boolean) as string[];
+    const slugs = posts.map((p: any) => p.href.split('/').pop()).filter(Boolean) as string[];
     
     if (slugs.length > 0) {
       try {
@@ -44,28 +42,11 @@ export default async function RecentPosts() {
       <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
       
       <div className="w-full max-w-[1200px] relative z-10">
-        {/* Section Header */}
-        <h2 className="font-syne text-3xl md:text-5xl font-extrabold mb-10 text-[#8494FF] tracking-wide drop-shadow-[0_0_12px_rgba(132,148,255,0.2)]">
-          Recent Posts
-        </h2>
-
         {/* Posts Container */}
         <div>
-          {/* See all link */}
-          <div className="flex justify-end mb-6 relative z-10 hidden">
-            <Link
-              href="/posts"
-              className="text-sm text-muted hover:text-foreground transition-colors flex items-center gap-1 group"
-            >
-              see all posts{" "}
-              <span className="inline-block group-hover:translate-x-1 transition-transform">
-                ⟶
-              </span>
-            </Link>
-          </div>
 
-          {/* Grid — constrained width to keep cards compact */}
-          {recentPosts.length === 0 ? (
+          {/* Categorized Rows */}
+          {posts.length === 0 ? (
             <EmptyState
               title="no posts yet..."
               description="building in public means starting empty ✨"
@@ -92,16 +73,17 @@ export default async function RecentPosts() {
               }
             />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-              {recentPosts.map((post: any, i: number) => {
-                const slug = post.href.split('/').pop() || "";
+            <div className="flex flex-col gap-12 w-full pt-4">
+              {["Development", "Design", "Insights", "Other"].map((category) => {
+                const categoryPosts = posts.filter(post => post.tags?.includes(category));
+                if (categoryPosts.length === 0) return null;
+                
                 return (
-                  <PostCard 
-                    key={i} 
-                    {...post} 
-                    priority={i === 0} 
-                    variant="recent" 
-                    views={viewsMap[slug] || 0}
+                  <CategoryPostsSection 
+                    key={category} 
+                    category={category} 
+                    posts={categoryPosts} 
+                    viewsMap={viewsMap} 
                   />
                 );
               })}

@@ -16,6 +16,7 @@ export type PostMeta = {
   readingTime: string;
   publishedAt: string;
   reactionCount: number;
+  featured?: boolean;
 };
 
 export type FullPost = PostMeta & {
@@ -60,6 +61,7 @@ function getRawPosts(): FullPost[] {
           picture: data.author?.picture || "/images/SmileyFace.svg",
         },
         imageBg: data.imageBg || "bg-gradient-to-br from-purple-500/10 to-indigo-500/10",
+        featured: data.featured === true,
       };
     })
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());

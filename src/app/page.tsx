@@ -1,4 +1,6 @@
 import Hero from "@/components/Hero";
+import FeaturedPosts from "@/components/FeaturedPosts";
+import ExploreCategories from "@/components/ExploreCategories";
 import RecentPosts from "@/components/RecentPosts";
 import Newsletter from "@/components/Newsletter";
 import NyanLoader from "@/components/NyanLoader";
@@ -22,6 +24,8 @@ export default function Home() {
           <NyanLoader />
         </div>
       }>
+        <FeaturedPosts />
+        <ExploreCategories />
         <RecentPosts />
       </Suspense>
       <Newsletter />

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Outfit, Playfair_Display } from "next/font/google";
+import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,16 +8,10 @@ import Script from "next/script";
 import { PHProvider } from "./providers";
 import PostHogPageviewWrapper from "./PostHogPageView";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const outfit = Outfit({
-  variable: "--font-syne",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 const playfair = Playfair_Display({
@@ -91,7 +85,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${outfit.variable} ${playfair.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${dmSans.variable} ${playfair.variable} antialiased`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

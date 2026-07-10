@@ -209,7 +209,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                   <span className="text-gray-700">•</span>
                   <span>{post.readingTime}</span>
                   <span className="text-gray-700">•</span>
-                  <ViewCount slug={slug} hideCount={true} />
+                  <ViewCount slug={slug} />
                 </div>
               </div>
             </div>
