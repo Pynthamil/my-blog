@@ -1,0 +1,237 @@
+---
+title: "The Art of Committing"
+subtitle: "version control, but make it make sense"
+description: "A simple and calm guide to using Git and version control."
+date: "2026-07-10"
+tags: ["Git", "Version Control", "GitHub", "Tutorial"]
+readingTime: "4 min read"
+imageUrl: "/banners/Git-tut.svg"
+---
+
+> version control, but make it make sense
+
+At first, Git might seem very scary and daunting.
+
+You see words like *commit*, *branch*, *merge*, *rebase*… and suddenly you're scared to even touch the keyboard.
+
+But once it clicks, everything falls into place like the pieces of a puzzle you've been spending your time trying to solve.
+
+Version control isn’t just about saving code — it’s about telling the story of how your ideas evolve.
+
+And honestly? There’s something oddly satisfying about committing your work and watching your progress stack up.
+
+Tiny commits. Big growth.
+
+* * *
+
+## What even is a commit?
+
+A **commit** is basically a saved checkpoint of your project.
+
+Think of it like:
+
+*   a save button for your code
+    
+*   a time machine for your project
+    
+*   proof that you did something productive today
+    
+
+Each commit captures:
+
+*   what changed
+    
+*   when it changed
+    
+*   why it changed (if your commit message is good)
+    
+
+Instead of one giant messy save, Git encourages small meaningful updates.
+
+Because progress looks better in chapters than in chaos.
+
+* * *
+
+## Basic Commands (tiny cheat sheet)
+
+```plaintext
+git init
+git add .
+git commit -m "message"
+git push origin main
+```
+
+Simple, but powerful.
+
+* * *
+
+## Step 1 — Initialize the repository
+
+First, I start by initializing the project repository that I’m working on, on my local device.
+
+This converts a normal project folder into a Git repository so changes can be tracked.
+
+Project Repository → Git Repository
+
+```plaintext
+git init
+```
+
+* * *
+
+## Step 2 — Stage the files
+
+Next, I stage the files whose changes I want Git to track.
+
+Think of staging like selecting which updates you want included in the next checkpoint.
+
+Changed/New Files → staged files for tracking new changes → changes now tracked
+
+```plaintext
+git add .
+```
+
+or specific files
+
+```plaintext
+git add index.js
+```
+
+* * *
+
+## Step 3 — Write meaningful commit messages
+
+Now I write a clean, clear, and concise commit message to make a note of what changes I made.
+
+Good commit messages help both present-you and future-you understand what happened.
+
+Examples:
+
+```plaintext
+feat: add profile picture upload
+fix: correct typo in navbar
+chore: update dependencies
+```
+
+Quick guide:
+
+*   **feat** → adding a new feature or functionality
+    
+*   **fix** → correcting something that was broken
+    
+*   **chore** → changes that don’t affect the app behaviour directly (configs, dependencies, build tasks)
+    
+
+```plaintext
+git commit -m "feat: add search bar"
+```
+
+* * *
+
+## Step 4 — Push changes to GitHub
+
+After writing a good commit message, I push the changes to the main branch.
+
+This uploads the local changes to the remote repository (GitHub).
+
+```plaintext
+git push origin main
+```
+
+Now the changes are backed up and visible online.
+
+* * *
+
+## Creating a repository on GitHub
+
+If you don’t already have a repo:
+
+GitHub → click the **+** icon → New repository
+
+Choose:
+
+*   repository name
+    
+*   visibility (public or private)
+    
+*   optional description
+    
+
+Then connect your local project to this repo.
+
+* * *
+
+## Working in collaborative environments (pull requests)
+
+If you’re contributing to a repository where you don’t have direct permission to modify the main branch, you create a pull request.
+
+A pull request allows maintainers to review your changes before merging them into the main branch.
+
+This helps keep projects stable and organized.
+
+* * *
+
+## Always sync before starting work
+
+Before I start working in my local repository, I always make sure to sync and pull changes first.
+
+Sometimes (almost all the time) when I forget this step, I run into merge conflicts.
+
+And then I wish myself good luck…
+
+because I will definitely be needing it and probably 10 years of life span 🤡
+
+```plaintext
+git pull origin main
+```
+
+* * *
+
+## Quick summary workflow
+
+```plaintext
+git init
+git add .
+git commit -m "I'm so done"
+git push origin main
+```
+
+Repeat until the project magically works.
+
+* * *
+
+## Helpful learning resources
+
+### Articles / Blogs
+
+*   Complete Tutorial of Git and GitHub for Basic to Advanced — Sachinsoni
+    
+*   I don’t Git it — Rick Martinez
+    
+*   Git Full Tutorial — How to Use Git in a Real Project — Saikiran Kalidindi
+    
+
+### YouTube Tutorials
+
+*   Git and GitHub Crash Course — freeCodeCamp
+    
+*   Git and GitHub for beginners — Amigoscode
+    
+*   Git and GitHub course — Javascript Mastery
+    
+
+* * *
+
+## Bonus: customizing your GitHub README
+
+If you want your GitHub profile to look aesthetic, interactive, and actually fun to explore, I wrote about how I customized mine:
+
+[https://my-blog-tan-tau.vercel.app/posts/this-readme-did-not-need-this-much-effort](https://my-blog-tan-tau.vercel.app/posts/this-readme-did-not-need-this-much-effort)
+
+Fair warning: you may spend way too long tweaking badges and layouts.
+
+But honestly… worth it.
+
+* * *
+
+Tiny commits today = confident developer tomorrow 🚀

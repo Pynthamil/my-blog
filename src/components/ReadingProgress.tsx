@@ -26,11 +26,9 @@ export default function ReadingProgress() {
   return (
     <div className="fixed top-0 left-0 w-full h-[3px] z-[100] bg-transparent pointer-events-none">
       <div 
-        className="h-full bg-gradient-to-r from-[#8B5CF6] via-[#A78BFA] to-white shadow-[0_0_12px_rgba(167,139,250,0.9)] transition-all duration-100 ease-out flex justify-end items-center"
+        className="h-full bg-[#8B5CF6] shadow-[0_0_15px_rgba(139,92,246,0.9)] transition-all duration-100 ease-out flex justify-end items-center"
         style={{ width: `${width}%` }}
       >
-        {/* Glowing comet head at the front of the progress bar */}
-        <div className="h-[3px] w-12 bg-white blur-[2px] opacity-100 rounded-full mix-blend-screen" />
       </div>
     </div>
   );
