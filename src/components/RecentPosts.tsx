@@ -12,7 +12,7 @@ export default async function RecentPosts() {
   try {
     const data = await getPosts();
     posts = data.posts;
-    const recentPostsList = posts.slice(0, 4);
+    const recentPostsList = posts.slice(0, 3);
 
     // Batch fetch views from Supabase for efficiency
     const slugs = recentPostsList.map((p: any) => p.href.split('/').pop()).filter(Boolean) as string[];
@@ -36,23 +36,23 @@ export default async function RecentPosts() {
     // posts remains []
   }
 
-  const recentPosts = posts.slice(0, 4);
+  const recentPosts = posts.slice(0, 3);
 
   return (
-    <section className="w-full flex justify-center px-4 py-12">
-      <div className="w-full max-w-[1100px]">
+    <section className="w-full flex justify-center px-4 py-16 relative overflow-hidden bg-[var(--bg-primary)]">
+      {/* Dot grid background */}
+      <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+      
+      <div className="w-full max-w-[1200px] relative z-10">
         {/* Section Header */}
-        <GradientText
-          as="h2"
-          className="font-syne text-3xl md:text-4xl font-extrabold mb-8"
-        >
+        <h2 className="font-syne text-3xl md:text-5xl font-extrabold mb-10 text-[#8494FF] tracking-wide drop-shadow-[0_0_12px_rgba(132,148,255,0.2)]">
           Recent Posts
-        </GradientText>
+        </h2>
 
         {/* Posts Container */}
         <div>
           {/* See all link */}
-          <div className="flex justify-end mb-6 relative z-10">
+          <div className="flex justify-end mb-6 relative z-10 hidden">
             <Link
               href="/posts"
               className="text-sm text-muted hover:text-foreground transition-colors flex items-center gap-1 group"
@@ -92,7 +92,7 @@ export default async function RecentPosts() {
               }
             />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {recentPosts.map((post: any, i: number) => {
                 const slug = post.href.split('/').pop() || "";
                 return (

@@ -160,21 +160,8 @@ export default function PostCard({
 
             {isRecent && (
               <>
-                {/* Title */}
-                <GradientText
-                  as="h3"
-                  className="font-syne text-[18px] md:text-[20px] font-extrabold leading-tight tracking-[-0.02em] mb-2 line-clamp-2"
-                >
-                  {title}
-                </GradientText>
-
-                {/* Description */}
-                <p className="text-[var(--text-secondary)] text-[13px] leading-relaxed line-clamp-3">
-                  {description}
-                </p>
-
                 {/* Meta */}
-                <div className="mt-auto pt-3 flex items-center gap-2 text-[12px] font-medium text-[var(--text-secondary)]/80">
+                <div className="mb-3 flex items-center gap-2 text-[12px] font-medium text-[var(--text-secondary)]/80">
                   <span className="bg-foreground/5 px-2 py-0.5 rounded-md border border-foreground/5">
                     {date}
                   </span>
@@ -195,6 +182,19 @@ export default function PostCard({
                     </>
                   )}
                 </div>
+
+                {/* Title */}
+                <GradientText
+                  as="h3"
+                  className="font-syne text-[18px] md:text-[20px] font-extrabold leading-tight tracking-[-0.02em] mb-2 line-clamp-2"
+                >
+                  {title}
+                </GradientText>
+
+                {/* Description */}
+                <p className="text-[var(--text-secondary)] text-[13px] leading-relaxed line-clamp-3 mt-auto">
+                  {description}
+                </p>
               </>
             )}
           </div>
