@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const categories = [
   {
@@ -6,18 +7,13 @@ const categories = [
     href: "/categories/development",
     bgClass: "bg-[#38bdf8]",
     illustration: (
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-        {/* Geometric representation of a 'Browser Window' or similar */}
-        <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center relative translate-y-4 -translate-x-4">
-           {/* Eyes */}
-           <div className="absolute top-6 left-5 w-3 h-1.5 border-b-2 border-black rounded-full" />
-           <div className="absolute top-6 right-8 w-3 h-1.5 border-b-2 border-black rounded-full" />
-           {/* Pink bubble */}
-           <div className="absolute top-8 -right-4 w-10 h-10 bg-pink-300 rounded-full opacity-90" />
-        </div>
-        {/* Floating shapes */}
-        <div className="absolute top-4 right-4 w-12 h-12 bg-yellow-400 rotate-45 transform skew-x-12" />
-        <div className="absolute bottom-4 right-8 w-16 h-16 bg-blue-600 rounded-full" />
+      <div className="absolute inset-0">
+        <Image 
+          src="/images/dev.svg"
+          alt="Development Illustration"
+          fill
+          className="object-cover"
+        />
       </div>
     )
   },
@@ -44,20 +40,13 @@ const categories = [
     href: "/categories/insights",
     bgClass: "bg-[#38bdf8]",
     illustration: (
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-        {/* Yellow Balloon */}
-        <div className="w-32 h-32 bg-[#fbbf24] rounded-full relative -translate-y-4">
-           {/* Balloon string */}
-           <div className="absolute -bottom-16 left-1/2 w-1 h-16 bg-white rounded-full -translate-x-1/2" />
-           {/* Reflection */}
-           <div className="absolute top-4 left-4 w-8 h-3 bg-white/60 rounded-full rotate-[-30deg]" />
-           {/* Smiley */}
-           <svg className="absolute top-12 left-1/2 -translate-x-1/2 w-12 h-6 text-[#b45309]" viewBox="0 0 100 50" fill="none">
-              <path d="M 20 20 Q 30 25 40 20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
-              <path d="M 60 20 Q 70 25 80 20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
-              <path d="M 30 35 Q 50 45 70 35" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
-           </svg>
-        </div>
+      <div className="absolute inset-0">
+        <Image 
+          src="/images/insights.svg"
+          alt="Insights Illustration"
+          fill
+          className="object-cover"
+        />
       </div>
     )
   },
@@ -66,16 +55,13 @@ const categories = [
     href: "/categories/other",
     bgClass: "bg-[#4c1d95]",
     illustration: (
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-        {/* Dark purple setting with a small sleepy sphere */}
-        <div className="w-20 h-20 bg-[#c4b5fd] rounded-full relative translate-y-8 translate-x-4 shadow-[-20px_-10px_0px_#2e1065_inset]">
-           {/* Sleepy face */}
-           <svg className="absolute top-6 left-4 w-10 h-6 text-[#4c1d95]" viewBox="0 0 100 50" fill="none">
-              <path d="M 20 25 Q 30 15 40 25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
-              <path d="M 60 25 Q 70 15 80 25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
-              <path d="M 35 35 Q 50 40 65 35" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
-           </svg>
-        </div>
+      <div className="absolute inset-0">
+        <Image 
+          src="/images/others.svg"
+          alt="Other Illustration"
+          fill
+          className="object-cover"
+        />
       </div>
     )
   }

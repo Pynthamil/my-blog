@@ -33,9 +33,7 @@ export default function Hero() {
 
   return (
     <section className="relative flex flex-col items-center justify-center pt-[150px] md:pt-[180px] pb-24 px-4 overflow-hidden">
-      {/* Immersive Background Glows */}
-      <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[90vw] max-w-[900px] h-[500px] bg-gradient-to-br from-[#8494FF]/20 via-[#FFC3FC]/10 to-transparent blur-[120px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60vw] max-w-[600px] h-[300px] bg-[#6367FF]/10 blur-[100px] rounded-full pointer-events-none -z-10" />
+      {/* Immersive Background Glows removed by request */}
       
       <motion.div 
         variants={containerVariants}
