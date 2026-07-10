@@ -50,7 +50,7 @@ export default async function RecentPosts() {
         </GradientText>
 
         {/* Posts Container */}
-        <div className="glow-border-strong rounded-3xl recent-posts-container backdrop-blur-md p-6 md:p-8">
+        <div>
           {/* See all link */}
           <div className="flex justify-end mb-6 relative z-10">
             <Link

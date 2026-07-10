@@ -232,8 +232,7 @@ html {
 
 /* Footer gradient */
 .footer-gradient {
-  background: linear-gradient(90deg, #8494FF, #FFC3FC, #FFDBFD, #FFC3FC, #8494FF);
-  background-size: 200% 100%;
+  background: var(--purple-500);
 }
 
 /* Subscribe button gradient */
