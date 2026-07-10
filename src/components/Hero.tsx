@@ -76,7 +76,7 @@ export default function Hero() {
         {/* Title */}
         <motion.div variants={itemVariants} className="relative mb-6 md:mb-8 text-center w-full max-w-[1000px]">
           <h1
-            className="font-syne text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[7.5rem] font-black leading-[1.05] tracking-tight text-[#8494FF] drop-shadow-[0_0_15px_rgba(132,148,255,0.3)]"
+            className="font-syne text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[7.5rem] font-black leading-[1.05] tracking-tight text-[#8494FF]"
           >
             Learn from my <br className="hidden sm:block" />
             experience.

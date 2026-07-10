@@ -42,9 +42,9 @@ export default async function FeaturedPosts() {
           Featured Projects
         </h2>
 
-        {/* 2-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {posts.map((post: any, i: number) => {
+        {/* Single Massive Featured Post */}
+        <div className="w-full">
+          {[posts[0]].map((post: any, i: number) => {
             const slug = post.href.split('/').pop() || "";
             return (
               <PostCard 
