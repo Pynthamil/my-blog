@@ -1,0 +1,192 @@
+---
+title: "git commit go"
+subtitle: "exploring curiously, one commit at a time"
+description: "A quick guide on how to interact with GitHub programmatically using their REST API."
+date: "2026-07-11"
+tags: ["Development", "GitHub", "API"]
+readingTime: "3 min read"
+imageUrl: "/banners/Git-tut.svg"
+---
+
+At some point, just committing code isn’t enough.
+
+You start wondering:
+
+> can I interact with GitHub programmatically?
+
+That’s where the **GitHub REST API** comes in.
+
+It lets you:
+
+*   create repositories automatically
+*   fetch repository data
+*   automate workflows
+*   build tools that interact with GitHub
+*   understand what’s happening behind the UI
+
+Let’s walk through the basics.
+
+* * *
+
+## What is the GitHub REST API?
+
+The GitHub REST API allows developers to communicate with GitHub using HTTP requests.
+
+Instead of clicking buttons on GitHub’s website, you can send requests like:
+
+*   **GET** → retrieve data
+*   **POST** → create data
+*   **PATCH** → update data
+*   **DELETE** → remove data
+
+Think of it as a bridge between your application and GitHub.
+
+* * *
+
+## Step 1 — Choose an endpoint
+
+GitHub provides many API endpoints depending on what you want to do.
+
+Example endpoint for repositories:
+
+```plaintext
+https://api.github.com/user/repos
+```
+
+This endpoint allows you to retrieve repositories connected to your account.
+
+Each endpoint defines:
+
+*   request method
+*   parameters
+*   response structure
+
+Documentation:
+
+```plaintext
+https://docs.github.com/en/rest/repos/repos
+```
+
+* * *
+
+## Step 2 — Generate a Personal Access Token (PAT)
+
+GitHub requires authentication for most API requests.
+
+We generate a Personal Access Token.
+
+Steps:
+
+1.  Go to GitHub Settings
+2.  Scroll to Developer Settings
+3.  Select Personal Access Tokens
+4.  Generate new token
+
+Choose:
+
+*   token name
+*   expiration duration
+*   required permissions
+
+Copy the token immediately.
+
+GitHub will not show it again.
+
+Treat it like a password.
+
+* * *
+
+## Step 3 — Send request using Postman
+
+Postman helps test API requests easily.
+
+Example GET request:
+
+```plaintext
+https://api.github.com/user/repos
+```
+
+Add Authorization header:
+
+```plaintext
+Authorization: Bearer YOUR_PERSONAL_ACCESS_TOKEN
+```
+
+Send request.
+
+GitHub returns data in JSON format.
+
+* * *
+
+## Example — create repository via API
+
+POST request:
+
+```plaintext
+curl -X POST https://api.github.com/user/repos \
+-H "Authorization: Bearer YOUR_PERSONAL_ACCESS_TOKEN" \
+-H "Accept: application/vnd.github+json" \
+-d '{"name":"my-new-repo","private":false}'
+```
+
+Replace `YOUR_PERSONAL_ACCESS_TOKEN` with your token.
+
+Replace `my-new-repo` with repository name.
+
+* * *
+
+## Example response
+
+GitHub responds with structured JSON data:
+
+```json
+{
+  "name": "my-new-repo",
+  "private": false,
+  "owner": {
+    "login": "username"
+  }
+}
+```
+
+The API confirms repository creation and returns metadata.
+
+* * *
+
+## Why learn GitHub API?
+
+Understanding the API allows you to:
+
+*   automate workflows
+*   build developer tools
+*   create dashboards
+*   manage repositories programmatically
+*   integrate GitHub with apps
+
+Git becomes more than version control.
+
+It becomes programmable infrastructure.
+
+* * *
+
+## Mental model
+
+*   **Git CLI** → manage code locally
+*   **GitHub UI** → manage repos visually
+*   **GitHub API** → manage everything programmatically
+
+* * *
+
+## If you're just starting
+
+Focus on understanding:
+
+*   request
+*   response
+*   authentication
+
+Everything else becomes easier with practice.
+
+* * *
+
+Exploring curiously, one commit at a time 🚀
