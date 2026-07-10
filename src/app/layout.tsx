@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Syne, Playfair_Display } from "next/font/google";
+import { Space_Grotesk, Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -14,10 +14,10 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const syne = Syne({
+const outfit = Outfit({
   variable: "--font-syne",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const playfair = Playfair_Display({
@@ -26,6 +26,7 @@ const playfair = Playfair_Display({
   style: ["normal", "italic"],
   weight: ["400", "500", "600", "700", "800", "900"],
 });
+
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://my-blog-tan-tau.vercel.app"),
@@ -90,7 +91,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${syne.variable} ${playfair.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${spaceGrotesk.variable} ${outfit.variable} ${playfair.variable} antialiased`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
