@@ -1,4 +1,4 @@
-import HorizontalPostCard from "@/components/HorizontalPostCard";
+import PostCard from "@/components/PostCard";
 import { getPosts } from "../../../lib/mdx";
 import { supabase } from "@/lib/supabase";
 import GradientText from "@/components/GradientText";
@@ -53,7 +53,7 @@ export default async function PostsPage({
 
   return (
     <main className="min-h-screen pt-32 pb-16 flex flex-col items-center">
-      <div className="w-full max-w-[1100px] px-4">
+      <div className="w-full max-w-[1200px] px-6">
         <GradientText
           as="h1"
           className="font-syne text-4xl md:text-5xl font-extrabold mb-4"
@@ -64,14 +64,15 @@ export default async function PostsPage({
           <span className="text-purple-500/80 mr-2">{"//"}</span> everything written so far.
         </p>
 
-        <div className="flex flex-col gap-5 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {posts.map((post: any, i: number) => {
             const slug = post.href.split('/').pop() || "";
             return (
-              <HorizontalPostCard 
+              <PostCard 
                 key={i} 
                 {...post} 
-                priority={i < 2} 
+                priority={i < 4} 
+                variant="recent"
                 views={viewsMap[slug] || 0}
               />
             );

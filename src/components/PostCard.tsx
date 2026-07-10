@@ -46,13 +46,17 @@ export default function PostCard({
         className="rounded-[24px] h-full transition-all duration-300 group-hover:-translate-y-1"
       >
         <div
-          className="rounded-[23px] overflow-hidden h-full flex flex-col shadow-[var(--card-shadow)] bg-[var(--bg-secondary)]"
+          className={
+            isRecent
+              ? "h-full flex flex-col"
+              : "rounded-[23px] overflow-hidden h-full flex flex-col shadow-[var(--card-shadow)] bg-[var(--bg-secondary)]"
+          }
         >
           {/* Image Area */}
           <div
             className={
               isRecent
-                ? `relative aspect-[16/9] ${imageBg} overflow-hidden mx-6 my-6 w-[calc(100%-48px)] rounded-2xl border border-white/10`
+                ? `relative aspect-[16/9] w-full ${imageBg} overflow-hidden rounded-2xl border border-white/10`
                 : `relative w-full aspect-[16/9] ${imageBg} overflow-hidden`
             }
           >
@@ -67,7 +71,7 @@ export default function PostCard({
           </div>
 
           {/* Content */}
-          <div className={`p-6 md:p-8 flex flex-col flex-1 ${isRecent ? "bg-shadow-200 p-5 md:p-6" : "bg-shadow-200"}`}>
+          <div className={isRecent ? "pt-5 flex flex-col flex-1" : "p-6 md:p-8 flex flex-col flex-1 bg-shadow-200"}>
             {!isRecent && (
               <>
                 {/* Metadata Badges */}
@@ -160,29 +164,6 @@ export default function PostCard({
 
             {isRecent && (
               <>
-                {/* Meta */}
-                <div className="mb-3 flex items-center gap-2 text-[12px] font-medium text-[var(--text-secondary)]/80">
-                  <span className="bg-foreground/5 px-2 py-0.5 rounded-md border border-foreground/5">
-                    {date}
-                  </span>
-                  <span className="opacity-40">•</span>
-                  <span className="bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/10 text-purple-400/80">
-                    {readingTime || "3 min read"}
-                  </span>
-                  {views !== undefined && (
-                    <>
-                      <span className="opacity-40">•</span>
-                      <div className="flex items-center gap-1.5 bg-sky-500/10 px-2.5 py-0.5 rounded-md border border-sky-500/20 text-sky-400 group-hover:bg-sky-500/20 group-hover:border-sky-500/30 transition-all duration-300 shadow-[0_0_10px_rgba(56,189,248,0.05)]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_5px_rgba(56,189,248,0.5)]">
-                          <path d="M2.062 12.348a12.97 12.97 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 12.97 12.97 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                        <span className="font-syne font-bold text-[12px]">{views.toLocaleString()}</span>
-                      </div>
-                    </>
-                  )}
-                </div>
-
                 {/* Title */}
                 <GradientText
                   as="h3"
@@ -190,11 +171,6 @@ export default function PostCard({
                 >
                   {title}
                 </GradientText>
-
-                {/* Description */}
-                <p className="text-[var(--text-secondary)] text-[13px] leading-relaxed line-clamp-3 mt-auto">
-                  {description}
-                </p>
               </>
             )}
           </div>
