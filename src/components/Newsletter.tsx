@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { subscribeToNewsletter } from "@/app/actions/newsletter";
 
@@ -36,9 +37,42 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="w-full flex justify-center px-4 py-12" aria-labelledby="newsletter-heading">
-      <div className="w-full max-w-[1100px]">
-        <div className="glow-border-strong rounded-3xl bg-[var(--section-bg)] backdrop-blur-md px-6 md:px-10 py-8 md:py-10">
+    <section className="w-full relative mt-32">
+      {/* Convex curve that matches the section background */}
+      <div className="absolute top-[-10vw] left-0 w-full h-[10vw] overflow-hidden pointer-events-none z-10">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-full">
+          <path d="M0,120 Q600,0 1200,120 Z" className="fill-[var(--bg-secondary)]" />
+        </svg>
+      </div>
+
+      <div className="bg-[var(--bg-secondary)] w-full pt-16 pb-24 md:pt-24 md:pb-24 px-6 flex flex-col items-center justify-center relative z-0">
+        
+        {/* Main Header Container with Floating Badges */}
+        <div className="relative w-full max-w-4xl flex flex-col items-center justify-center text-center">
+          
+          <div className="relative w-72 h-72 sm:w-96 sm:h-96 mb-6 opacity-90 drop-shadow-[0_0_12px_rgba(99,103,255,0.2)]">
+            <Image 
+              src="/images/macbook.svg"
+              alt="Macbook"
+              fill
+              className="object-contain"
+            />
+          </div>
+
+          <h2 className="font-playfair text-foreground text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight relative z-10 max-w-2xl">
+            watch me figure <br className="hidden sm:block" />
+            <span className="italic font-medium text-[1.15em] text-foreground lowercase">it all</span> out.
+          </h2>
+
+
+        </div>
+
+        {/* Subtext and Form */}
+        <div className="mt-8 md:mt-12 max-w-[420px] w-full flex flex-col items-center text-center relative z-10">
+          <p className="text-muted text-[15px] md:text-base font-medium mb-8 leading-relaxed">
+            Nothing great is ever built alone, so why not make the next big thing together?
+          </p>
+          
           <AnimatePresence mode="wait">
             {status === "success" ? (
               <motion.div
@@ -46,102 +80,66 @@ export default function Newsletter() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="flex flex-col items-center text-center py-4"
-                role="status"
+                className="flex flex-col items-center py-4 w-full"
               >
-                <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mb-4 border border-purple-500/30">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <div className="w-12 h-12 bg-foreground/5 rounded-full flex items-center justify-center mb-4 border border-foreground/10">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-foreground" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
-                <h2 id="newsletter-heading" className="font-syne text-2xl font-bold text-foreground mb-2 underline decoration-purple-500/30">
-                  {successMessage}
-                </h2>
-                <p className="text-muted max-w-sm">Keep an eye on your inbox for new logs!</p>
+                <h3 className="font-playfair text-3xl text-foreground italic font-medium">{successMessage}</h3>
+                <p className="text-muted text-sm mt-3">I&apos;ll be in touch soon.</p>
                 <button 
                   onClick={() => setStatus("idle")}
-                  className="mt-6 text-xs font-bold text-gray-500 hover:text-purple-400 transition-colors uppercase tracking-widest"
+                  className="mt-6 text-xs text-muted hover:text-foreground transition-colors uppercase tracking-widest border border-transparent hover:border-foreground/30 px-4 py-2 rounded-full"
                 >
-                  Back to form
+                  Back
                 </button>
               </motion.div>
-            ) : <motion.div
+            ) : (
+              <motion.form 
                 key="form"
-                className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-12 w-full"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onSubmit={handleSubscribe}
+                className="w-full flex flex-col gap-3"
               >
-                {/* Left side: Icon + Text */}
-                <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8 flex-1">
-                  {/* Icon */}
-                  <div className="shrink-0">
-                    <img 
-                      src="/images/sideSmiley.svg" 
-                      alt="Smiley" 
-                      className="w-20 h-20 md:w-28 md:h-28 object-contain"
-                    />
-                  </div>
-                  
-                  {/* Text Container */}
-                  <div className="flex flex-col max-w-md">
-                    <h2 id="newsletter-heading" className="font-syne text-2xl md:text-[28px] font-extrabold text-foreground mb-2">
-                      Stay in the loop
-                    </h2>
-                    <p className="text-sm text-muted font-medium mb-3">
-                      Be the first to get updates on my latest posts, thoughts, and new projects.
-                    </p>
-                    <p className="text-[10px] text-muted/60 leading-tight max-w-sm">
-                      By signing up, you're agreeing to receive emails from me. No spam, ever.
-                    </p>
-                  </div>
+                <div className="relative w-full">
+                  <label htmlFor="newsletter-email" className="sr-only">Email Address</label>
+                  <input
+                    id="newsletter-email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    disabled={status === "loading"}
+                    className="bg-transparent border border-foreground/20 text-foreground rounded-full px-6 py-3.5 w-full focus:outline-none focus:border-foreground/50 transition-colors placeholder:text-muted/60 text-center shadow-inner"
+                  />
                 </div>
-
-                {/* Right side: Form */}
-                <div className="flex flex-col gap-2 w-full lg:w-auto shrink-0 mt-4 lg:mt-0">
-                  <form 
-                    onSubmit={handleSubscribe}
-                    className="flex flex-col sm:flex-row items-center gap-3 w-full"
-                  >
-                    <div className="relative w-full sm:w-64">
-                      <label htmlFor="newsletter-email" className="sr-only">Email Address</label>
-                      <input
-                        id="newsletter-email"
-                        type="email"
-                        autoComplete="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email address"
-                        aria-label="Email Address"
-                        disabled={status === "loading"}
-                        aria-invalid={status === "error"}
-                        aria-describedby={status === "error" ? "newsletter-error" : undefined}
-                        className={`bg-[var(--bg-primary)] border text-sm text-foreground rounded-full px-5 py-3 w-full focus:outline-none transition-all placeholder:text-muted/60 disabled:opacity-50 ${
-                          status === "error" ? "border-red-500/50 ring-1 ring-red-500/10" : "border-[var(--border-subtle)] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/10"
-                        }`}
-                      />
-                    </div>
-                    <button 
-                      type="submit"
-                      disabled={status === "loading"}
-                      className="bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black text-sm font-bold px-7 py-3 rounded-full transition-colors cursor-pointer disabled:grayscale disabled:opacity-50 relative min-w-[120px] w-full sm:w-auto"
-                    >
-                      {status === "loading" ? (
-                        <div className="flex items-center justify-center gap-2">
-                          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                          <span>Wait</span>
-                        </div>
-                      ) : (
-                        "Subscribe"
-                      )}
-                    </button>
-                  </form>
-                  {status === "error" && (
-                    <p id="newsletter-error" className="text-[10px] md:text-xs text-red-500/90 font-medium animate-pulse sm:ml-4 mt-1" role="alert">
-                      {errorMessage}
-                    </p>
+                <button 
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="bg-foreground text-[var(--bg-secondary)] font-semibold rounded-full px-6 py-3.5 w-full hover:scale-[1.02] transition-all active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                >
+                  {status === "loading" ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-[var(--bg-secondary)]/30 border-t-[var(--bg-secondary)] rounded-full animate-spin" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    "Subscribe"
                   )}
-                </div>
-              </motion.div>}
+                </button>
+                {status === "error" && (
+                  <p className="text-sm text-red-400 mt-2 font-medium">{errorMessage}</p>
+                )}
+              </motion.form>
+            )}
           </AnimatePresence>
+          
+
         </div>
       </div>
     </section>

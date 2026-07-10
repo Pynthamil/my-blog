@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
+import Script from "next/script";
 import ShareButtons from "@/components/ShareButtons";
 import LikeButton from "@/components/LikeButton";
 import Comments from "@/components/Comments";
@@ -166,7 +167,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="flex-1 flex flex-col">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <Script id={`json-ld-${post.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ReadingProgress />
       <SyntaxHighlighter />
       <ImageZoom />
