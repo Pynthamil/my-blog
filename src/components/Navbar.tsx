@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -87,9 +86,6 @@ export default function Navbar() {
               <path d="m21 21-4.3-4.3" />
             </svg>
           </Link>
-
-          {/* Theme Toggle */}
-          <ThemeToggle />
 
           {/* GitHub Icon */}
           <a

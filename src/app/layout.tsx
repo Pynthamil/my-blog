@@ -104,13 +104,8 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var savedTheme = localStorage.getItem('theme');
-                  var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-                  if (!savedTheme && supportDarkMode) savedTheme = 'dark';
-                  if (!savedTheme && !supportDarkMode) savedTheme = 'light';
-                  if (savedTheme) {
-                    document.documentElement.setAttribute('data-theme', savedTheme);
-                  }
+                  localStorage.removeItem('theme');
+                  document.documentElement.removeAttribute('data-theme');
                 } catch (e) {}
               })();
             `,
