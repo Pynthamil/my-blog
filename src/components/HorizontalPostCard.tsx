@@ -31,7 +31,7 @@ export default function HorizontalPostCard({
     <a href={href} className="block group w-full">
       {/* Container wrapper */}
       <div
-        className="rounded-[24px] p-[2px] md:p-[2.5px] transition-all duration-300 group-hover:-translate-y-1 gradient-border shadow-[var(--card-shadow)]"
+        className="rounded-[24px] transition-all duration-300 group-hover:-translate-y-1 shadow-[var(--card-shadow)] border border-[var(--navbar-border)]"
       >
         <div className="rounded-[20px] overflow-hidden flex flex-col md:flex-row bg-[var(--bg-secondary)]">
           
