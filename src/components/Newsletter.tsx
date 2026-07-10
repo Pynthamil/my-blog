@@ -65,28 +65,42 @@ export default function Newsletter() {
                   Back to form
                 </button>
               </motion.div>
-            ) : (
-              <motion.div
+            ) : <motion.div
                 key="form"
-                className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 w-full"
+                className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-12 w-full"
               >
-                {/* Text */}
-                <div className="flex-shrink-0">
-                  <h2 id="newsletter-heading" className="font-syne text-2xl md:text-3xl font-extrabold text-foreground mb-1.5">
-                    Stay in the loop.
-                  </h2>
-                  <p className="text-sm text-muted font-medium">
-                    {"//"}<span className="text-muted ml-1 opacity-60">New post every week. Let&apos;s grind together!!!</span>
-                  </p>
+                {/* Left side: Icon + Text */}
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8 flex-1">
+                  {/* Icon */}
+                  <div className="shrink-0">
+                    <img 
+                      src="/images/sideSmiley.svg" 
+                      alt="Smiley" 
+                      className="w-20 h-20 md:w-28 md:h-28 object-contain"
+                    />
+                  </div>
+                  
+                  {/* Text Container */}
+                  <div className="flex flex-col max-w-md">
+                    <h2 id="newsletter-heading" className="font-syne text-2xl md:text-[28px] font-extrabold text-foreground mb-2">
+                      Stay in the loop
+                    </h2>
+                    <p className="text-sm text-muted font-medium mb-3">
+                      Be the first to get updates on my latest posts, thoughts, and new projects.
+                    </p>
+                    <p className="text-[10px] text-muted/60 leading-tight max-w-sm">
+                      By signing up, you're agreeing to receive emails from me. No spam, ever.
+                    </p>
+                  </div>
                 </div>
 
-                {/* Form */}
-                <div className="flex flex-col gap-2 w-full md:w-auto">
+                {/* Right side: Form */}
+                <div className="flex flex-col gap-2 w-full lg:w-auto shrink-0 mt-4 lg:mt-0">
                   <form 
                     onSubmit={handleSubscribe}
-                    className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto"
+                    className="flex flex-col sm:flex-row items-center gap-3 w-full"
                   >
-                    <div className="relative w-full md:w-64">
+                    <div className="relative w-full sm:w-64">
                       <label htmlFor="newsletter-email" className="sr-only">Email Address</label>
                       <input
                         id="newsletter-email"
@@ -95,12 +109,12 @@ export default function Newsletter() {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="your@email.com"
+                        placeholder="Email address"
                         aria-label="Email Address"
                         disabled={status === "loading"}
                         aria-invalid={status === "error"}
                         aria-describedby={status === "error" ? "newsletter-error" : undefined}
-                        className={`bg-[var(--bg-primary)] border text-sm text-foreground rounded-lg px-4 py-2.5 w-full focus:outline-none transition-all placeholder:text-muted/60 disabled:opacity-50 ${
+                        className={`bg-[var(--bg-primary)] border text-sm text-foreground rounded-full px-5 py-3 w-full focus:outline-none transition-all placeholder:text-muted/60 disabled:opacity-50 ${
                           status === "error" ? "border-red-500/50 ring-1 ring-red-500/10" : "border-[var(--border-subtle)] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/10"
                         }`}
                       />
@@ -108,12 +122,12 @@ export default function Newsletter() {
                     <button 
                       type="submit"
                       disabled={status === "loading"}
-                      className="btn-purple text-white text-xs font-bold px-6 py-2.5 rounded-lg uppercase tracking-wider whitespace-nowrap cursor-pointer disabled:grayscale disabled:opacity-50 relative min-w-[120px] w-full md:w-auto"
+                      className="bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black text-sm font-bold px-7 py-3 rounded-full transition-colors cursor-pointer disabled:grayscale disabled:opacity-50 relative min-w-[120px] w-full sm:w-auto"
                     >
                       {status === "loading" ? (
                         <div className="flex items-center justify-center gap-2">
-                          <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span>Joining...</span>
+                          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                          <span>Wait</span>
                         </div>
                       ) : (
                         "Subscribe"
@@ -121,13 +135,12 @@ export default function Newsletter() {
                     </button>
                   </form>
                   {status === "error" && (
-                    <p id="newsletter-error" className="text-[10px] md:text-xs text-red-500/90 font-medium animate-pulse ml-1" role="alert">
+                    <p id="newsletter-error" className="text-[10px] md:text-xs text-red-500/90 font-medium animate-pulse sm:ml-4 mt-1" role="alert">
                       {errorMessage}
                     </p>
                   )}
                 </div>
-              </motion.div>
-            )}
+              </motion.div>}
           </AnimatePresence>
         </div>
       </div>

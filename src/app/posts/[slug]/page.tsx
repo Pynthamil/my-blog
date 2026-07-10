@@ -34,10 +34,20 @@ const components = {
   img: (props: any) => {
     const caption = props.title || props.alt || "";
     if (caption && !["image", "blog post cover", "cover", "undefined", "null"].includes(caption.toLowerCase())) {
-      return <figure><img {...props} /><figcaption>{caption}</figcaption></figure>;
+      return (
+        <span className="block my-6">
+          <img {...props} />
+          <span className="block text-center text-sm text-muted mt-2">{caption}</span>
+        </span>
+      );
     }
-    return <figure><img {...props} /></figure>;
-  }
+    return (
+      <span className="block my-6">
+        <img {...props} />
+      </span>
+    );
+  },
+  p: (props: any) => <div className="mb-[1.35rem]" {...props} />
 };
 
 
@@ -219,7 +229,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           {/* Title */}
           <GradientText
             as="h1"
-            className="font-syne text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-[-0.03em]"
+            className="font-syne text-2xl md:text-3xl lg:text-4xl font-extrabold leading-[1.1] tracking-[-0.03em]"
           >
             {post.title}
           </GradientText>
@@ -311,7 +321,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             >
               Related Posts
             </GradientText>
-            <div className="glow-border-strong rounded-3xl bg-[var(--section-bg)] backdrop-blur-md p-6 md:p-8">
+            <div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedPosts.map((rp: PostCardProps, i: number) => (
                   <PostCard key={i} {...rp} variant="recent" />
