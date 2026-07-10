@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { apiRatelimit } from "./lib/supabase-ratelimit";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const ip = request.headers.get("x-forwarded-for") || "127.0.0.1";
 
@@ -43,7 +43,7 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
-// Ensure middleware runs for all routes except static assets
+// Ensure proxy runs for all routes except static assets
 export const config = {
   matcher: [
     /*

@@ -19,7 +19,7 @@ export default function CategoryPostsSection({ category, posts, viewsMap }: Cate
             Latest {category} articles
           </h2>
           <Link
-            href={`/posts?category=${category.toLowerCase()}`}
+            href={`/categories/${category.toLowerCase()}`}
             className="text-sm md:text-base font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1.5 group mb-1"
           >
             View all

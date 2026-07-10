@@ -55,6 +55,7 @@ export default function Newsletter() {
               src="/images/macbook.svg"
               alt="Macbook"
               fill
+              priority
               className="object-contain"
             />
           </div>

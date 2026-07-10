@@ -69,9 +69,14 @@ function getRawPosts(): FullPost[] {
   return posts;
 }
 
-export async function getPosts(first: number = 20, after: string | null = null) {
-  const allPosts = getRawPosts();
+export async function getPosts(first: number = 20, after: string | null = null, category: string | null = null) {
+  let allPosts = getRawPosts();
   
+  if (category) {
+    const lowerCat = category.toLowerCase();
+    allPosts = allPosts.filter(p => p.tags && p.tags.map(t => t.toLowerCase()).includes(lowerCat));
+  }
+
   // Basic cursor-based pagination simulation (very naive)
   let startIndex = 0;
   if (after) {
