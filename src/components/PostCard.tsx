@@ -43,22 +43,14 @@ export default function PostCard({
   return (
     <a href={href} className="block group">
       {/* Card wrapper */}
-      <div
-        className="rounded-[24px] h-full transition-all duration-300 group-hover:-translate-y-1"
-      >
-        <div
-          className={
-            isRecent || isFeatured
-              ? "h-full flex flex-col"
-              : "rounded-[23px] overflow-hidden h-full flex flex-col shadow-[var(--card-shadow)] bg-[var(--bg-secondary)]"
-          }
-        >
+      <div className="h-full transition-all duration-300 group-hover:-translate-y-1">
+        <div className="h-full flex flex-col">
           {/* Image Area */}
           <div
             className={
               isRecent || isFeatured
                 ? `relative aspect-[4/3] w-full ${imageBg} overflow-hidden rounded-2xl border border-white/10`
-                : `relative w-full aspect-[4/3] ${imageBg} overflow-hidden`
+                : `relative w-full aspect-[4/3] md:aspect-[16/10] ${imageBg} overflow-hidden rounded-[12px] md:rounded-[16px]`
             }
           >
             <Image
@@ -69,96 +61,38 @@ export default function PostCard({
               priority={priority}
               className="object-cover"
             />
+            
+            {!isRecent && !isFeatured && (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-white pl-3 pr-1 py-1 rounded-full shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black ml-1">
+                  <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                  <path d="M5 3v4M3 5h4"/>
+                </svg>
+                <span className="text-[14px] font-medium text-black whitespace-nowrap px-1">
+                  {category}
+                </span>
+                <div className="w-8 h-8 rounded-full bg-[#333333] flex items-center justify-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Content */}
-          <div className={isRecent || isFeatured ? "pt-5 flex flex-col flex-1" : "p-6 md:p-8 flex flex-col flex-1 bg-shadow-200"}>
+          <div className="pt-5 flex flex-col flex-1">
             {!isRecent && !isFeatured && (
               <>
-                {/* Metadata Badges */}
-                <div className="flex flex-wrap items-center gap-3 mb-5">
-                  {/* Category Badge */}
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--bg-secondary)]">
-                    <div className="shadow-sm bg-[var(--bg-primary)] border border-[var(--border-glow)] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
-                      {categoryIcon === "folder" ? (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="text-blue-500"
-                        >
-                          <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-1.22-1.8A2 2 0 0 0 7.53 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
-                        </svg>
-                      ) : (
-                        <span className="text-[13px] font-bold text-[var(--text-primary)] font-serif italic pr-0.5">
-                          AI
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-sm font-semibold text-[var(--text-primary)] tracking-tight">
-                      {category}
-                    </span>
-                  </div>
-
-                  {/* Date Badge */}
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--bg-secondary)] shadow-sm">
-                    <div className="shadow-sm bg-[var(--bg-primary)] border border-[var(--border-glow)] p-1 rounded-lg w-8 h-8 flex items-center justify-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="text-blue-400"
-                      >
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                        <line x1="16" y1="2" x2="16" y2="6" />
-                        <line x1="8" y1="2" x2="8" y2="6" />
-                        <line x1="3" y1="10" x2="21" y2="10" />
-                        <rect x="8" y="14" width="2" height="2" fill="currentColor" stroke="none" />
-                        <rect x="12" y="14" width="2" height="2" fill="currentColor" stroke="none" />
-                        <rect x="16" y="14" width="2" height="2" fill="currentColor" stroke="none" />
-                      </svg>
-                    </div>
-                    <span className="text-sm font-semibold text-[var(--text-primary)] tracking-tight">
-                      {date}
-                    </span>
-                  </div>
-
-                  {/* Tags */}
-                  {tags && tags.length > 0 && tags.slice(0, 2).map((tag) => (
-                    <div
-                      key={tag}
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--bg-secondary)] shadow-sm border border-[var(--purple-500)]/10"
-                    >
-                      <span className="text-xs font-semibold text-[var(--purple-500)] tracking-wider uppercase">
-                        {tag}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
                 {/* Title */}
-                <GradientText
-                  as="h3"
-                  className="font-syne text-[26px] md:text-[28px] font-extrabold mb-3 leading-[1.1] tracking-[-0.03em]"
-                >
+                <h3 className="text-[24px] md:text-[28px] font-bold text-[var(--text-primary)] leading-[1.2] tracking-tight mb-2">
                   {title}
-                </GradientText>
-
-                {/* Description */}
-                <p className="text-[var(--text-secondary)] text-[15px] leading-relaxed mt-auto tracking-[-0.01em] line-clamp-2">
-                  {description}
+                </h3>
+                
+                {/* Date */}
+                <p className="text-[#888888] font-medium text-[15px]">
+                  {date}
                 </p>
               </>
             )}
