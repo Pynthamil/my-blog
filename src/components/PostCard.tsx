@@ -44,7 +44,7 @@ export default function PostCard({
     <a href={href} className="block group">
       {/* Card wrapper */}
       <div className="h-full transition-all duration-300 group-hover:-translate-y-1">
-        <div className={isFeatured ? "h-full flex flex-col md:flex-row gap-6 md:gap-10 items-center" : "h-full flex flex-col"}>
+        <div className={isFeatured ? "h-full flex flex-col md:flex-row gap-6 md:gap-10 items-start" : "h-full flex flex-col"}>
           {/* Image Area */}
           <div
             className={
@@ -84,7 +84,7 @@ export default function PostCard({
           </div>
 
           {/* Content */}
-          <div className={isFeatured ? "pt-2 md:pt-0 flex flex-col flex-1 w-full md:w-1/2" : "pt-5 flex flex-col flex-1"}>
+          <div className={isFeatured ? "pt-2 md:pt-4 flex flex-col flex-1 w-full md:w-1/2" : "pt-5 flex flex-col flex-1"}>
             {!isRecent && !isFeatured && (
               <>
                 {/* Title */}
@@ -133,9 +133,19 @@ export default function PostCard({
                   {title}
                 </GradientText>
                 {/* Description */}
-                <p className="text-[var(--text-secondary)] text-[16px] md:text-[18px] leading-relaxed line-clamp-3">
+                <p className="text-[var(--text-secondary)] text-[16px] md:text-[18px] leading-relaxed line-clamp-3 mb-6">
                   {description}
                 </p>
+                {/* Button */}
+                <div>
+                  <span className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--text-primary)] text-[var(--bg-primary)] font-semibold text-sm transition-transform hover:scale-105">
+                    Read Post
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </span>
+                </div>
               </>
             )}
           </div>
