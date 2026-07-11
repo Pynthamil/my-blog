@@ -44,20 +44,22 @@ export default function PostCard({
     <a href={href} className="block group">
       {/* Card wrapper */}
       <div className="h-full transition-all duration-300 group-hover:-translate-y-1">
-        <div className="h-full flex flex-col">
+        <div className={isFeatured ? "h-full flex flex-col md:flex-row gap-6 md:gap-10 items-center" : "h-full flex flex-col"}>
           {/* Image Area */}
           <div
             className={
-              isRecent || isFeatured
-                ? `relative aspect-[4/3] w-full ${imageBg} overflow-hidden rounded-2xl border border-white/10`
-                : `relative w-full aspect-[4/3] md:aspect-[16/10] ${imageBg} overflow-hidden rounded-[12px] md:rounded-[16px]`
+              isFeatured
+                ? `relative aspect-[16/9] md:aspect-[4/3] w-full md:w-1/2 flex-shrink-0 ${imageBg} overflow-hidden rounded-2xl border border-white/10`
+                : isRecent
+                ? `relative aspect-[4/3] w-full flex-shrink-0 ${imageBg} overflow-hidden rounded-2xl border border-white/10`
+                : `relative w-full flex-shrink-0 aspect-[4/3] md:aspect-[16/10] ${imageBg} overflow-hidden rounded-[12px] md:rounded-[16px]`
             }
           >
             <Image
               src={imageUrl}
               alt={rawTitle || (typeof title === 'string' ? title : "Blog post cover")}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes={isFeatured ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
               priority={priority}
               className="object-cover"
             />
@@ -82,7 +84,7 @@ export default function PostCard({
           </div>
 
           {/* Content */}
-          <div className="pt-5 flex flex-col flex-1">
+          <div className={isFeatured ? "pt-2 md:pt-0 flex flex-col flex-1 w-full md:w-1/2" : "pt-5 flex flex-col flex-1"}>
             {!isRecent && !isFeatured && (
               <>
                 {/* Title */}
@@ -113,7 +115,7 @@ export default function PostCard({
               <>
                 {/* Tags (just the first one for minimalism) */}
                 {tags && tags.length > 0 && (
-                  <div className="flex gap-2 mb-3">
+                  <div className="flex gap-2 mb-4">
                     <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">
                       {tags[0]}
                     </span>
@@ -126,12 +128,12 @@ export default function PostCard({
                 {/* Title */}
                 <GradientText
                   as="h3"
-                  className="font-syne text-[22px] md:text-[26px] font-extrabold leading-tight tracking-tight mb-3 line-clamp-2"
+                  className="font-syne text-[28px] md:text-[40px] font-extrabold leading-[1.1] tracking-tight mb-4"
                 >
                   {title}
                 </GradientText>
                 {/* Description */}
-                <p className="text-[var(--text-secondary)] text-[14px] md:text-[15px] leading-relaxed line-clamp-2">
+                <p className="text-[var(--text-secondary)] text-[16px] md:text-[18px] leading-relaxed line-clamp-3">
                   {description}
                 </p>
               </>
