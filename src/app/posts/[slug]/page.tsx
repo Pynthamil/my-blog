@@ -239,7 +239,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         {/* ── Cover Image ── */}
         <div className="w-full max-w-[720px] mb-12">
           <div
-            className={`relative w-full aspect-[16/9] ${post.imageBg} rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/10 bg-white`}
+            className={`relative w-full aspect-[16/9] ${post.imageBg} rounded-lg overflow-hidden shadow-2xl shadow-purple-900/10 bg-white`}
           >
             <Image
               src={post.imageUrl}
